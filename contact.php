@@ -80,8 +80,8 @@
 			<div class="row">
 				<!-- include map.php -->
 				<?php
-	require_once('includes/map.php');
-	?>
+				require_once('includes/map.php');
+				?>
 			</div>
 		</div>
 	</div>

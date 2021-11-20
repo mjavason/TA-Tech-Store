@@ -40,26 +40,31 @@
 					<h3> SHOPPING CART [ <small>3 Item(s) </small>]<a href="products.php" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
 					<hr class="soft" />
 
-					<table class="table table-bordered">
+					<button class="btn-large btn-danger" id="clear_cart" onclick="clearProductTable();">Clear Cart</button>
+					<button class="btn-large btn-success" id="checkout">Checkout</button>
+
+
+					<table id="product_table" class="table table-bordered">
 						<!-- include checkout.php -->
 						<?php
 						require_once('includes/checkout.php');
 						?>
 					</table>
 
-					<table class="table table-bordered">
-						<!-- include voucher.php -->
+					<!-- <table class="table table-bordered">
+						 include voucher.php
 						<?php
 						require_once('includes/voucher.php');
 						?>
+
 					</table>
 
 					<table class="table table-bordered">
-						<!-- include shipping.php -->
+						include shipping.php
 						<?php
 						require_once('includes/shipping.php');
 						?>
-					</table>
+					</table> -->
 					<a href="products.php" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
 					<a href="login.php" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
 

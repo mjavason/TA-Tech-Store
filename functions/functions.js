@@ -2,6 +2,7 @@ var topCartInfoCount = document.getElementById('top_product_summary_count');
 var topCartInfoTotal = document.getElementById('top_product_summary_total');
 var sideCartInfoCount = document.getElementById('side_product_summary_count');
 var sideCartInfoTotal = document.getElementById('side_product_summary_total');
+var productTable = document.querySelector('#product_table tbody');
 
 topCartInfoCount.innerHTML = getProductCount();
 topCartInfoTotal.innerHTML = getTotalPrice();
@@ -98,4 +99,52 @@ function setFrontendItems() {
     topCartInfoTotal.innerHTML = getTotalPrice();
     sideCartInfoCount.innerHTML = getProductCount();
     sideCartInfoTotal.innerHTML = getTotalPrice();
+}
+
+function loadCartSummary() {
+    let productsLS = getProductsInLocalStorage();
+
+    for (var i = 0; i < productsLS.length; i++) {
+        // total += productsLS[i]['price'];
+        var item_total = (productls[i].quantity) * ((productls[i].price) - (productls[i].discount));
+        const row = document.createElement('tr');
+        row.innerHTML = `
+    <td>${productsLS[i].image}</td>
+      <td>${productsLS[i].title}</td>
+
+      <td>
+      <div class="input-append"><input class="span1" style="max-width:34px" placeholder="${productls[i].quantity}" id="appendedInputButtons" size="16" type="text">
+      <button class="btn" type="button" onclick="reduceQuantity(${productLS[i].id});"><i class="icon-minus"></i></button>
+      <button class="btn" type="button" onclick="increaseQuantity(${productLS[i].id});"><i class="icon-plus"></i></button>
+      <button class="btn btn-danger" type="button" onclick="removeProduct(${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
+      </div>
+  </td>
+
+      <td>${productLS[i].price}</td>
+      <td>${productls[i].discount}</td>
+      <td>${productls[i].tax}</td>
+      <td>${productls[i].total}</td>
+      
+      <td>
+      <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
+      </td>
+      `;
+    }
+
+}
+
+function clearProductTable(){
+    
+        // forma lenta
+        // listaCursos.innerHTML = '';
+        // forma rapida (recomendada)
+        while(productTable.firstChild) {
+          productTable.removeChild(productTable.firstChild);
+        }
+      
+        // Vaciar Local Storage
+        console.log('sucessfully cleared')
+        clearLocalStorage();
+        setFrontendItems();
+        return false;
 }

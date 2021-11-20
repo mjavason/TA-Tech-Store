@@ -59,4 +59,5 @@
 								<td colspan="6" style="text-align:right"><strong>TOTAL ($228 - $50 + $31) =</strong></td>
 								<td class="label label-important" style="display:block"> <strong> $155.00 </strong></td>
 							</tr>
+
 						</tbody>
