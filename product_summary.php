@@ -40,8 +40,8 @@
 					<h3> SHOPPING CART [ <small>3 Item(s) </small>]<a href="products.php" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
 					<hr class="soft" />
 
-					<button class="btn-large btn-danger" id="clear_cart" onclick="clearProductTable();">Clear Cart</button>
-					<button class="btn-large btn-success" id="checkout">Checkout</button>
+					
+					
 
 
 					<table id="product_table" class="table table-bordered">
@@ -50,6 +50,7 @@
 						require_once('includes/checkout.php');
 						?>
 					</table>
+					
 
 					<!-- <table class="table table-bordered">
 						 include voucher.php
@@ -65,8 +66,10 @@
 						require_once('includes/shipping.php');
 						?>
 					</table> -->
-					<a href="products.php" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-					<a href="login.php" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+					<button class="btn-large btn-danger pull-left" id="clear_cart" onclick="deleteAllCartItems();">Clear Cart</button>
+					<button class="btn-large btn-success pull-right" id="checkout" onclick="loadCartSummary()">Checkout</button>
+					<!-- <a href="products.php" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+					<a href="login.php" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a> -->
 
 				</div>
 			</div>
@@ -85,6 +88,7 @@
 <?php
 require_once('includes/frontScripts.php');
 ?>
+
 
 	<!-- Themes switcher section ============================================================================================= -->
 	<div id="secectionBox">

@@ -9,17 +9,40 @@ topCartInfoTotal.innerHTML = getTotalPrice();
 sideCartInfoCount.innerHTML = getProductCount();
 sideCartInfoTotal.innerHTML = getTotalPrice();
 
-function getProductData(title, price, id, quantity) {
+loadCartSummary();
+
+function getProductData(image, discount, title, price, id, quantity, tax) {
     // create a small array to hold the product info
     const productInfo = {
+        image: image,
+        discount: discount,
         title: title,
         price: price,
         quantity: quantity,
-        id: id
+        id: id,
+        tax: tax
     }
 
     // add the product info array to the others previously created
-    insertProductIntoLocalStorage(productInfo);
+    if (!validateProductId(id)) {
+        insertProductIntoLocalStorage(productInfo);
+    } else {
+        window.alert('Product is already in cart. If you want to increase the quantity, go to the cart page.');
+    }
+}
+
+function validateProductId(productId) {
+    var found = false;
+    let productsLS;
+    // get all the products in localstorage
+    productsLS = getProductsInLocalStorage();
+    // this following loop simply scans through the products list and checks if any of the items are equal to the id passed into the function
+    productsLS.forEach(function (productLS, index) {
+        if (productLS.id === productId) {
+            found = true;
+        }
+    });
+    return found;
 }
 
 function insertProductIntoLocalStorage(product) {
@@ -62,7 +85,7 @@ function clearLocalStorage() {
     localStorage.clear();
 }
 
-function deleteItemInLocalStorage(productId) {
+function deleteCartItem(productId) {
     let productsLS;
     // get all the products in localstorage
     productsLS = getProductsInLocalStorage();
@@ -74,13 +97,15 @@ function deleteItemInLocalStorage(productId) {
     });
     // after everything, add the products back to local storage
     localStorage.setItem('products', JSON.stringify(productsLS));
+    loadCartSummary();
+    setFrontendItems();
 }
 
 function getTotalPrice() {
     var total = 0;
     let productsLS = getProductsInLocalStorage();
     for (var i = 0; i < productsLS.length; i++) {
-        total += productsLS[i]['price'];
+        total += (productsLS[i].quantity * productsLS[i].price);
     }
     //console.log(productsLS[0]['price']);
     //console.log(total);
@@ -102,49 +127,121 @@ function setFrontendItems() {
 }
 
 function loadCartSummary() {
-    let productsLS = getProductsInLocalStorage();
+    var totalVal = 0;
+    var totalDiscountVal = 0;
+    var totalTaxVal = 0;
+    var grossTotalVal = 0;
 
-    for (var i = 0; i < productsLS.length; i++) {
-        // total += productsLS[i]['price'];
-        var item_total = (productls[i].quantity) * ((productls[i].price) - (productls[i].discount));
-        const row = document.createElement('tr');
+    var tax = 0;
+    var discount = 0;
+
+    clearProductTable();
+    let productLS = getProductsInLocalStorage();
+
+    for (var i = 0; i < productLS.length; i++) {
+        // total += productLS[i]['price'];
+        discount = productLS[i].discount * productLS[i].quantity
+        tax = productLS[i].tax * productLS[i].quantity;
+        var itemTotal = (productLS[i].quantity * productLS[i].price) + tax - discount;
+
+        var row = document.createElement('tr');
         row.innerHTML = `
-    <td>${productsLS[i].image}</td>
-      <td>${productsLS[i].title}</td>
+    <td> <img width="60" src="themes/images/products/${productLS[i].image}" alt="" /></td>
+
+      <td>${productLS[i].title}</td>
 
       <td>
-      <div class="input-append"><input class="span1" style="max-width:34px" placeholder="${productls[i].quantity}" id="appendedInputButtons" size="16" type="text">
+      <div class="input-append"><input class="span1" style="max-width:34px" disabled placeholder="${productLS[i].quantity}" id="appendedInputButtons" size="16" type="text">
       <button class="btn" type="button" onclick="reduceQuantity(${productLS[i].id});"><i class="icon-minus"></i></button>
       <button class="btn" type="button" onclick="increaseQuantity(${productLS[i].id});"><i class="icon-plus"></i></button>
-      <button class="btn btn-danger" type="button" onclick="removeProduct(${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
+      <button class="btn btn-danger" type="button" onclick="deleteCartItem(${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
       </div>
   </td>
 
       <td>${productLS[i].price}</td>
-      <td>${productls[i].discount}</td>
-      <td>${productls[i].tax}</td>
-      <td>${productls[i].total}</td>
-      
-      <td>
-      <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
-      </td>
+      <td>${discount}</td>
+      <td>${tax}</td>
+      <td>${itemTotal}</td>
       `;
-    }
+        productTable.appendChild(row);
 
+        totalVal += productLS[i].price * productLS[i].quantity;
+        totalDiscountVal += discount;
+        totalTaxVal += tax;
+
+    }
+    grossTotalVal = totalVal - totalDiscountVal + totalTaxVal;
+
+    var totalRow = document.createElement('tr');
+    var totalDiscountRow = document.createElement('tr');
+    var totalTaxRow = document.createElement('tr');
+    var grossTotalRow = document.createElement('tr');
+
+    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ${totalVal}</td> `;
+    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ${totalDiscountVal}</td>`;
+    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${totalTaxVal}</td>`;
+    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${totalVal} - ${totalDiscountVal} + ${totalTaxVal}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${grossTotalVal} </strong></td>`;
+
+    productTable.appendChild(totalRow);
+    productTable.appendChild(totalDiscountRow);
+    productTable.appendChild(totalTaxRow);
+    productTable.appendChild(grossTotalRow);
 }
 
-function clearProductTable(){
-    
-        // forma lenta
-        // listaCursos.innerHTML = '';
-        // forma rapida (recomendada)
-        while(productTable.firstChild) {
-          productTable.removeChild(productTable.firstChild);
+function clearProductTable() {
+
+    // forma lenta
+    // listaCursos.innerHTML = '';
+    // forma rapida (recomendada)
+    while (productTable.firstChild) {
+        productTable.removeChild(productTable.firstChild);
+    }
+}
+
+function deleteAllCartItems() {
+
+    clearProductTable();
+
+    // Vaciar Local Storage
+    console.log('sucessfully cleared')
+    clearLocalStorage();
+    setFrontendItems();
+    return false;
+}
+
+function reduceQuantity(productId) {
+    let productsLS;
+    // get all the products in localstorage
+    productsLS = getProductsInLocalStorage();
+    // this following loop simply scans through the products list and checks if any of the items are equal to the id passed into the function
+    productsLS.forEach(function (productLS, index) {
+        if (productLS.id === productId) {
+            if (productLS.quantity > 1) {
+                productLS.quantity--;
+
+            }
         }
-      
-        // Vaciar Local Storage
-        console.log('sucessfully cleared')
-        clearLocalStorage();
-        setFrontendItems();
-        return false;
+    });
+    // after everything, add the products back to local storage
+    localStorage.setItem('products', JSON.stringify(productsLS));
+    loadCartSummary();
+    setFrontendItems();
+}
+
+function increaseQuantity(productId) {
+    let productsLS;
+    // get all the products in localstorage
+    productsLS = getProductsInLocalStorage();
+    // this following loop simply scans through the products list and checks if any of the items are equal to the id passed into the function
+    productsLS.forEach(function (productLS, index) {
+        if (productLS.id === productId) {
+            productLS.quantity++;
+        }
+    });
+    // after everything, add the products back to local storage
+    localStorage.setItem('products', JSON.stringify(productsLS));
+
+    loadCartSummary();
+    setFrontendItems();
+
 }
