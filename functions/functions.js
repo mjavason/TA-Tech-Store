@@ -1,0 +1,101 @@
+var topCartInfoCount = document.getElementById('top_product_summary_count');
+var topCartInfoTotal = document.getElementById('top_product_summary_total');
+var sideCartInfoCount = document.getElementById('side_product_summary_count');
+var sideCartInfoTotal = document.getElementById('side_product_summary_total');
+
+topCartInfoCount.innerHTML = getProductCount();
+topCartInfoTotal.innerHTML = getTotalPrice();
+sideCartInfoCount.innerHTML = getProductCount();
+sideCartInfoTotal.innerHTML = getTotalPrice();
+
+function getProductData(title, price, id, quantity) {
+    // create a small array to hold the product info
+    const productInfo = {
+        title: title,
+        price: price,
+        quantity: quantity,
+        id: id
+    }
+
+    // add the product info array to the others previously created
+    insertProductIntoLocalStorage(productInfo);
+}
+
+function insertProductIntoLocalStorage(product) {
+    let mainProducts;
+
+    // get all the items inside the local storage and set it to mainProducts
+    mainProducts = getProductsInLocalStorage();
+
+    //     const row = document.createElement('tr');
+    //   row.innerHTML = `
+    //   <td>${product.title}</td>
+    //   <td>${product.price}</td>
+    //   <td>${product.quantity}</td>
+    //   <td>
+    //   <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
+    //   </td>
+    //   `;
+
+    // then add the newly clicked product into the mainProducts storage
+    mainProducts.push(product);
+    localStorage.setItem('products', JSON.stringify(mainProducts));
+    console.log('succesful');
+    console.log(localStorage.getItem('products'));
+    setFrontendItems();
+    window.alert('Product has been added to cart');
+}
+
+function getProductsInLocalStorage() {
+    let productsLS;
+    if (localStorage.getItem('products') === null) {
+        productsLS = [];
+    } else {
+        // sets the items inside the localStorage to productsLS array
+        productsLS = JSON.parse(localStorage.getItem('products'));
+    }
+    return productsLS;
+}
+
+function clearLocalStorage() {
+    localStorage.clear();
+}
+
+function deleteItemInLocalStorage(productId) {
+    let productsLS;
+    // get all the products in localstorage
+    productsLS = getProductsInLocalStorage();
+    // this following loop simply scans through the products list and checks if any of the items are equal to the id passed into the function
+    productsLS.forEach(function (productLS, index) {
+        if (productLS.id === productId) {
+            productsLS.splice(index, 1);
+        }
+    });
+    // after everything, add the products back to local storage
+    localStorage.setItem('products', JSON.stringify(productsLS));
+}
+
+function getTotalPrice() {
+    var total = 0;
+    let productsLS = getProductsInLocalStorage();
+    for (var i = 0; i < productsLS.length; i++) {
+        total += productsLS[i]['price'];
+    }
+    //console.log(productsLS[0]['price']);
+    //console.log(total);
+    return total;
+}
+
+function getProductCount() {
+    let productsLS = getProductsInLocalStorage();
+    console.log(productsLS.length);
+    //console.log(total);
+    return productsLS.length;
+}
+
+function setFrontendItems() {
+    topCartInfoCount.innerHTML = getProductCount();
+    topCartInfoTotal.innerHTML = getTotalPrice();
+    sideCartInfoCount.innerHTML = getProductCount();
+    sideCartInfoTotal.innerHTML = getTotalPrice();
+}

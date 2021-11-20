@@ -4,3 +4,10 @@
 
 <script src="themes/js/bootshop.js"></script>
 <script src="themes/js/jquery.lightbox-0.5.js"></script>
+<script src="functions/functions.js"></script>
+
+	<script>
+	$(document).load(function (){
+		//setFrontEndItems();
+	});
+	</script>

@@ -135,7 +135,7 @@
 							<a href="product_details.php"><img src="themes/images/products/2.jpg" alt=""></a>
 							<div class="caption">
 								<h5>Product name</h5>
-								<h4><a class="btn" href="product_details.php">VIEW</a> <span class="pull-right">$222.00</span></h4>
+								<h4><a class="btn"  href="product_details.php">VIEW</a> <span class="pull-right">$222.00</span></h4>
 							</div>
 						</div>
 					</li>

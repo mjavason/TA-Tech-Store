@@ -92,7 +92,7 @@
 		<!-- Footer ================================================================== -->
 		<div id="footerSection">
 			<?php
-			// include footer.php
+			require_once('includes/footer.php');
 			?>
 		</div>
 		<!-- Placed at the end of the document so the pages load faster ============================================= -->

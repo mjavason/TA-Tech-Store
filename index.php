@@ -14,6 +14,7 @@
 </head>
 
 <body>
+	
 	<div id="header">
 		<!-- include topbar.php -->
 		<?php
@@ -79,6 +80,7 @@
 		?>
 	</div>
 	<span id="themesBtn"></span>
+	
 </body>
 
 </html>
