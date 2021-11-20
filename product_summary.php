@@ -77,6 +77,9 @@
 	<!-- Placed at the end of the document so the pages load faster ============================================= -->
 
 	<!-- include frontScripts.php -->
+<?php
+require_once('includes/frontScripts.php');
+?>
 
 	<!-- Themes switcher section ============================================================================================= -->
 	<div id="secectionBox">
