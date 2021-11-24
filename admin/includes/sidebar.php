@@ -5,7 +5,7 @@
     <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">TA Tech Blog</div>
+    <div class="sidebar-brand-text mx-3">TA Tech Store</div>
 </a>
 
 <!-- Divider -->
@@ -32,7 +32,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Content Screens:</h6>
         <a class="collapse-item" href="newproduct.php">New Product</a>
-        <a class="collapse-item" href="posts.php">Posts</a>
+        <a class="collapse-item" href="posts.php">Products</a>
 
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="login.php">Login</a>
