@@ -32,7 +32,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Content Screens:</h6>
         <a class="collapse-item" href="newproduct.php">New Product</a>
-        <a class="collapse-item" href="posts.php">Products</a>
+        <a class="collapse-item" href="products.php">Products</a>
 
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="login.php">Login</a>

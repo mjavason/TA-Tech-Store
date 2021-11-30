@@ -9,15 +9,19 @@ if (!isset($_SESSION['log'])) {
 if (isset($_GET['edit'])) {
     $_SESSION['editpost'] = true;
     $_SESSION['editId'] = $_GET['id'];
-    $_SESSION['editImage'] = $_GET['image'];
+    $_SESSION['editImage1'] = $_GET['image1'];
+    $_SESSION['editImage2'] = $_GET['image2'];
+    $_SESSION['editImage3'] = $_GET['image3'];
+    $_SESSION['editImage4'] = $_GET['image4'];
+
 }
 
 if (isset($_SESSION['editpost'])) {
-    $datamissing = processNewPost($_POST, $_SESSION['editId']);
+    $datamissing = processNewProduct($_POST, $_SESSION['editId']);
     // print_r($datamissing);
     //  die;
 } else {
-    $datamissing = processNewPost($_POST);
+    $datamissing = processNewProduct($_POST);
 }
 
 ?>
@@ -42,8 +46,10 @@ if (isset($_SESSION['editpost'])) {
     <script src="vendor/ckeditor/ckeditor.js"></script>
 
     <style>
-        .jsonformatted{
+        .jsonformatted, .jsondiv {
             /* display: none; */
+            background-color: white;
+            color: white;
         }
     </style>
 
@@ -167,15 +173,33 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- full specs -->
                                 <div class="mb-5">
                                     <label for="fullspecs">Product Specs</label>
-                                    <input type="text" name="fullspecs" id="fullspecs" class="container" required <?php
-                                                                                                                    if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                                                        echo 'value="';
-                                                                                                                        echo $_GET['fullspecs'];
-                                                                                                                        echo '"';
-                                                                                                                    }
-                                                                                                                    ?>>
-                                    <button class="btn-primary m-1" id="addSpec" onclick="">Add</button>
-                                    <div class="items_preview" id="specItems"></div>
+
+                                    <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container" required <?php
+                                                                                                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                                                                                                echo 'value="';
+                                                                                                                                                                echo $_GET['fullspecs'];
+                                                                                                                                                                echo '"';
+                                                                                                                                                            }
+                                                                                                                                                            ?>></div>
+                                    <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container" required <?php
+                                                                                                                                                                    if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                                                                                                        echo 'value="';
+                                                                                                                                                                        echo $_GET['fullspecs'];
+                                                                                                                                                                        echo '"';
+                                                                                                                                                                    }
+                                                                                                                                                                    ?>></div>
+                                    <button type="button" onclick="createProductData('fullspecs','fullspecs2','spec');" class="btn-primary m-1" id="addSpec">Add</button>
+                                    <div class="items_preview" id="specItems">
+                                        <table class="table" id="spectable">
+                                            <!-- <tr>
+                                                <th>Title</th>
+                                                <th>Content</th>
+                                                <th>Delete</th>
+                                            </tr> -->
+                                            <tr>
+                                            </tr>
+                                        </table>
+                                    </div>
 
                                 </div>
 
@@ -189,8 +213,18 @@ if (isset($_SESSION['editpost'])) {
                                                                                                                 echo '"';
                                                                                                             }
                                                                                                             ?>>
-                                    <button class="btn-primary m-1" id="addcolor" onclick="">Add</button>
-                                    <div class="items_preview" id="colorItems"></div>
+                                    <button onclick="createProductData('colors','-','color');" type="button" class="btn-primary m-1" id="addcolor" onclick="">Add</button>
+                                    <div class="items_preview" id="colorItems">
+                                        <table class="table" id="colortable">
+                                            <!-- <tr>
+                                                <th>Title</th>
+                                                <th>Content</th>
+                                                <th>Delete</th>
+                                            </tr> -->
+                                            <tr>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 <!-- categories -->
@@ -203,8 +237,18 @@ if (isset($_SESSION['editpost'])) {
                                                                                                                         echo '"';
                                                                                                                     }
                                                                                                                     ?>>
-                                    <button class="btn-primary m-1" id="addcategory" onclick="">Add</button>
-                                    <div class="items_preview" id="categoryItems"></div>
+                                    <button type="button" class="btn-primary m-1" id="addcategory" onclick="createProductData('categories','-','category');">Add</button>
+                                    <div class="items_preview" id="categoryItems">
+                                        <table class="table" id="categorytable">
+                                            <!-- <tr>
+                                                <th>Title</th>
+                                                <th>Content</th>
+                                                <th>Delete</th>
+                                            </tr> -->
+                                            <tr>
+                                            </tr>
+                                        </table>
+                                    </div>
 
                                 </div>
 
@@ -254,10 +298,12 @@ if (isset($_SESSION['editpost'])) {
                                 </div>
 
 
-                                <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
+                                <span>Do not edit these values. they are used by the system.</span>
+                                <div class="jsondiv"><input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
                                 <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required>
-                                <input class="jsonformatted" type="text" id="productcolorjson" name="categoriesjson" required>
-
+                                <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required>
+</div>
+                                
 
                                 <!-- <a href="" onclick="showMissingItems()" class="btn btn-danger btn-user btn-block invisible">Process</a> -->
                                 <button type="submit" class="btn btn-primary btn-user btn-block" id="submit" name="submit">Submit</button>

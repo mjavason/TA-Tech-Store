@@ -24,8 +24,10 @@ function Sanitize($data, $case = null)
     return $result;
 }
 
+//CREATE start
+
 //this collects and prepares all the data entered for a new post for storage
-function processNewPost($formstream, $editId = null)
+function processNewProduct($formstream, $editId = null)
 {
     //This function processes what user data is being stored and checks if they are accurate or entered at all.
     //It also helps in confirming if what the user entered is Okay, like someone entering two different things in the password and confirm password box
@@ -72,22 +74,22 @@ function processNewPost($formstream, $editId = null)
             $specsummary = trim(Sanitize($specsummary));
         }
 
-        if (empty($fullspecs)) {
+        if (empty($specsjson)) {
             $datamissing['fs'] = "Missing product full specs";
         } else {
-            $specsjson = htmlentities($fullspecs, ENT_QUOTES);
+            $specsjson = htmlentities($specsjson, ENT_QUOTES);
         }
 
-        if (empty($colors)) {
+        if (empty($colorsjson)) {
             $datamissing['c'] = "Missing product colors";
         } else {
-            $colorsjson = htmlentities($colors, ENT_QUOTES);
+            $colorsjson = htmlentities($colorsjson, ENT_QUOTES);
         }
 
-        if (empty($categories)) {
+        if (empty($categoriesjson)) {
             $datamissing['pc'] = "Missing product categories";
         } else {
-            $categoriesjson = htmlentities($categories, ENT_QUOTES);
+            $categoriesjson = htmlentities($categoriesjson, ENT_QUOTES);
         }
 
         if (empty($features)) {
@@ -273,7 +275,7 @@ function processNewPost($formstream, $editId = null)
                 EditPost($editId, $title, $bp, $tag, $imagename, $minread);
                 $_SESSION['editpost'] = null;
             } else {
-                AddPost($title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $imagename, $imagename1, $imagename2, $imagename3);
+                AddPost($title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
                 // die;
             }
         } else {
@@ -287,18 +289,161 @@ function AddPost($title, $price, $stock, $discount, $tax, $specsummary, $fullspe
 {
     //This simply adds the filtered and cleansed data into the database 
     global $db;
-    $admin = 1;//$_SESSION['admin_id'];
+    $admin = 1; //$_SESSION['admin_id'];
     $sql = "INSERT INTO item(title, 	price, stock, 	discount,	tax,  spec_summary, full_spec, colors, categories, features, main_img, side_img1, side_img2, side_img3, created_by) VALUES ('$title', '$price', '$stock', '$discount', '$tax', '$specsummary', '$fullspecs', '$colors', '$categories', '$features', '$mi', '$si1', '$si2', '$si3', '$admin')";
 
     if (mysqli_query($db, $sql)) {
         //$_SESSION['postJustAdded'] = 1;
-        gotoPage("posts.php");
+        gotoPage("products.php");
     } else {
 
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        die;
     }
     mysqli_close($db);
 }
+
+//CREATE end
+
+//READ start
+
+function loadProducts()
+{
+    global $db;
+    // $user = $_SESSION['username'];
+    // if (!empty($user)) {
+    $query = "SELECT id, title, price, stock, sold, 	discount,	tax,  spec_summary, full_spec, colors, categories, features, main_img, side_img1, side_img2, side_img3, created_by  FROM item ORDER BY `id` DESC ";
+    $response = @mysqli_query($db, $query);
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            $checker = $row['id'];
+
+            adminProductView($row);
+        }
+        if (empty($checker)) {
+            echo '<p class="text-center">No Posts Added Yet</p>';
+        }
+    }
+    //}
+}
+
+function adminProductView($productsArray)
+{
+    //id===========================
+    echo '<tr><td>';
+    echo $productsArray['id'];
+    echo '</td>';
+
+    //title============================
+    echo  '<td>';
+    $string = substr($productsArray['title'], 0, 25);
+    echo ucwords(strtolower($string));
+    echo '</td>';
+
+    //specification summary
+    echo '<td>';
+    $string = substr($productsArray['spec_summary'], 0, 25);
+    echo $string;
+    echo '</td>';
+
+    //price
+    echo '<td>';
+    echo $productsArray['price'];
+    echo '</td>';
+
+    //discount
+    echo '<td>';
+    echo $productsArray['discount'];
+    echo '</td>';
+
+    //tax
+    echo '<td>';
+    echo $productsArray['tax'];
+    echo '</td>';
+
+    //stock
+    echo '<td>';
+    echo $productsArray['stock'];
+    echo '</td>';
+
+    //How many sold
+    echo '<td>';
+    echo $productsArray['sold'];
+    echo '</td>';
+
+    //created by
+    echo '<td>';
+    echo $productsArray['created_by'];
+    echo '</td>';
+
+    //edit
+    echo '<td>';
+    echo '<a href="newproduct.php?id=';
+    echo $productsArray['id'];
+
+    echo '&title=';
+    echo ucwords(strtolower($productsArray['title']));
+
+    echo '&spec_summary=';
+    echo ucwords(strtolower($productsArray['spec_summary']));
+
+    echo '&features=';
+    echo ucwords(strtoupper($productsArray['features']));
+
+    echo '&price=';
+    echo ucwords(strtoupper($productsArray['price']));
+
+    echo '&discount=';
+    echo ucwords(strtoupper($productsArray['discount']));
+
+    echo '&tax=';
+    echo ucwords(strtoupper($productsArray['tax']));
+
+    echo '&stock=';
+    echo ucwords(strtoupper($productsArray['stock']));
+
+    echo '&tax=';
+    echo ucwords(strtoupper($productsArray['colors']));
+
+    echo '&fullspec=';
+    echo ucwords(strtoupper($productsArray['full_spec']));
+
+    echo '&sold=';
+    echo ucwords(strtoupper($productsArray['sold']));
+
+    echo '&categories=';
+    echo ucwords(strtoupper($productsArray['categories']));
+
+    echo '&image1=';
+    echo ucwords(strtoupper($productsArray['main_img']));
+
+    echo '&image2=';
+    echo ucwords(strtoupper($productsArray['side_img1']));
+
+    echo '&image3=';
+    echo ucwords(strtoupper($productsArray['side_img2']));
+
+    echo '&image4=';
+    echo ucwords(strtoupper($productsArray['side_img3']));
+
+
+    echo '&edit=1';
+
+    echo '">';
+    echo '<i class="fa fa-edit"></i></a></td>';
+
+
+    //delete
+    echo '<td><a href="deletepost.php?id=';
+    echo $productsArray['id'];
+    echo '"';
+    echo '><i class="fa fa-trash"></i></a></td>';
+
+    echo '</tr>';
+
+    return true;
+}
+//READ end
 
 function EditPost($id, $title, $bp, $tag, $imagename, $minread)
 {
@@ -310,7 +455,7 @@ function EditPost($id, $title, $bp, $tag, $imagename, $minread)
     if (mysqli_query($db, $sql)) {
         //$_SESSION['postJustAdded'] = 1;
         $_SESSION['editpost'] = null;
-        gotoPage("posts.php");
+        gotoPage("products.php");
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }

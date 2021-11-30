@@ -3,7 +3,7 @@ require_once "config/connect.php";
 require_once "functions/functions.php";
 
 if (!isset($_SESSION['log'])) {
-    gotoPage("login.php");
+    //gotoPage("login.php");
 }
 
 
@@ -61,7 +61,7 @@ if (!isset($_SESSION['log'])) {
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Posts</h1>
-                        <a href="newpost.php" class="btn btn-primary btn-user">
+                        <a href="newproduct.php" class="btn btn-primary btn-user">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -82,11 +82,13 @@ if (!isset($_SESSION['log'])) {
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Title</th>
-                                                    <th>Post</th>
-                                                    <th>image</th>
-                                                    <th>Created</th>
-                                                    <th>Updated</th>
-                                                    <th>Min Read</th>
+                                                    <th>Spec Summary</th>
+                                                    <th>Price</th>
+                                                    <th>Discount</th>
+                                                    <th>Tax</th>
+                                                    <th>Stock</th>
+                                                    <th>Sold</th>
+                                                    <th>Created By</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>
@@ -95,17 +97,19 @@ if (!isset($_SESSION['log'])) {
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Title</th>
-                                                    <th>Post</th>
-                                                    <th>image</th>
-                                                    <th>Created</th>
-                                                    <th>Updated</th>
-                                                    <th>Min Read</th>
+                                                    <th>Spec Summary</th>
+                                                    <th>Price</th>
+                                                    <th>Discount</th>
+                                                    <th>Tax</th>
+                                                    <th>Stock</th>
+                                                    <th>Sold</th>
+                                                    <th>Created By</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                <?php loadPosts(); ?>
+                                                <?php loadProducts(); ?>
                                             </tbody>
                                         </table>
 
