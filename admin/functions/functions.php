@@ -276,10 +276,10 @@ function processNewProduct($formstream, $editId = null)
                 unlink("../product_images/" . $_SESSION['editImage3']);
                 unlink("../product_images/" . $_SESSION['editImage4']);
 
-                EditPost($editId, $title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
-                $_SESSION['editpost'] = null;
+                EditProduct($editId, $title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
+                $_SESSION['editproduct'] = null;
             } else {
-                AddPost($title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
+                AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
                 // die;
             }
         } else {
@@ -289,7 +289,7 @@ function processNewProduct($formstream, $editId = null)
 }
 
 //adds the prepared data into the database
-function AddPost($title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $mi, $si1, $si2, $si3)
+function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $mi, $si1, $si2, $si3)
 {
     //This simply adds the filtered and cleansed data into the database 
     global $db;
@@ -297,7 +297,7 @@ function AddPost($title, $price, $stock, $discount, $tax, $specsummary, $fullspe
     $sql = "INSERT INTO item(title, 	price, stock, 	discount,	tax,  spec_summary, full_spec, colors, categories, features, main_img, side_img1, side_img2, side_img3, created_by) VALUES ('$title', '$price', '$stock', '$discount', '$tax', '$specsummary', '$fullspecs', '$colors', '$categories', '$features', '$mi', '$si1', '$si2', '$si3', '$admin')";
 
     if (mysqli_query($db, $sql)) {
-        //$_SESSION['postJustAdded'] = 1;
+        //$_SESSION['ProductJustAdded'] = 1;
         gotoPage("products.php");
     } else {
 
@@ -325,7 +325,7 @@ function loadProducts()
             adminProductView($row);
         }
         if (empty($checker)) {
-            echo '<p class="text-center">No Posts Added Yet</p>';
+            echo '<p class="text-center">No Products Added Yet</p>';
         }
     }
     //}
@@ -426,7 +426,7 @@ function adminProductView($productsArray)
 
 
     //delete
-    echo '<td><a href="deletepost.php?id=';
+    echo '<td><a href="deleteproduct.php?id=';
     echo $productsArray['id'];
 
     echo '&image1=';
@@ -471,7 +471,7 @@ function showDataMissing($datamissing, $showSuccess = null)
 
 // UPDATE start
 
-function EditPost($id, $title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $mi, $si1, $si2, $si3)
+function EditProduct($id, $title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $mi, $si1, $si2, $si3)
 {
     //This simply adds the filtered and cleansed data that is edited into the database 
     global $db;
@@ -480,7 +480,7 @@ function EditPost($id, $title, $price, $stock, $discount, $tax, $specsummary, $f
 
     if (mysqli_query($db, $sql)) {
         //$_SESSION['postJustAdded'] = 1;
-        $_SESSION['editpost'] = null;
+        $_SESSION['editproduct'] = null;
         gotoPage("products.php");
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
@@ -492,7 +492,7 @@ function EditPost($id, $title, $price, $stock, $discount, $tax, $specsummary, $f
 
 //DELETE start
 
-function deletePost($id, $imagename, $imagename1, $imagename2, $imagename3)
+function deleteProduct($id, $imagename, $imagename1, $imagename2, $imagename3)
 {
     global $db;
 
