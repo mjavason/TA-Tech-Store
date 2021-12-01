@@ -3,7 +3,7 @@ require_once "config/connect.php";
 require_once "functions/functions.php";
 
 if (!isset($_SESSION['log'])) {
-    //gotoPage("login.php");
+    gotoPage("login.php");
 }
 
 if (isset($_GET['edit'])) {
@@ -13,7 +13,6 @@ if (isset($_GET['edit'])) {
     $_SESSION['editImage2'] = $_GET['image2'];
     $_SESSION['editImage3'] = $_GET['image3'];
     $_SESSION['editImage4'] = $_GET['image4'];
-
 }
 
 if (isset($_SESSION['editpost'])) {
@@ -46,7 +45,8 @@ if (isset($_SESSION['editpost'])) {
     <script src="vendor/ckeditor/ckeditor.js"></script>
 
     <style>
-        .jsonformatted, .jsondiv {
+        .jsonformatted,
+        .jsondiv {
             /* display: none; */
             background-color: white;
             color: white;
@@ -128,7 +128,7 @@ if (isset($_SESSION['editpost'])) {
                                     <input type="number" name="stock" id="stock" class="container" required <?php
                                                                                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                                                                 echo 'value="';
-                                                                                                                echo $_GET['price'];
+                                                                                                                echo $_GET['stock'];
                                                                                                                 echo '"';
                                                                                                             }
                                                                                                             ?>>
@@ -174,20 +174,8 @@ if (isset($_SESSION['editpost'])) {
                                 <div class="mb-5">
                                     <label for="fullspecs">Product Specs</label>
 
-                                    <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container" required <?php
-                                                                                                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                                                                                                echo 'value="';
-                                                                                                                                                                echo $_GET['fullspecs'];
-                                                                                                                                                                echo '"';
-                                                                                                                                                            }
-                                                                                                                                                            ?>></div>
-                                    <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container" required <?php
-                                                                                                                                                                    if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                                                                                                        echo 'value="';
-                                                                                                                                                                        echo $_GET['fullspecs'];
-                                                                                                                                                                        echo '"';
-                                                                                                                                                                    }
-                                                                                                                                                                    ?>></div>
+                                    <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container" required></div>
+                                    <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container" required></div>
                                     <button type="button" onclick="createProductData('fullspecs','fullspecs2','spec');" class="btn-primary m-1" id="addSpec">Add</button>
                                     <div class="items_preview" id="specItems">
                                         <table class="table" id="spectable">
@@ -206,13 +194,7 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- colors -->
                                 <div class="mb-5">
                                     <label for="colors">Product Colours</label>
-                                    <input type="text" name="colors" id="colors" class="container" required <?php
-                                                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                                                echo 'value="';
-                                                                                                                echo $_GET['colors'];
-                                                                                                                echo '"';
-                                                                                                            }
-                                                                                                            ?>>
+                                    <input type="text" name="colors" id="colors" class="container" required>
                                     <button onclick="createProductData('colors','-','color');" type="button" class="btn-primary m-1" id="addcolor" onclick="">Add</button>
                                     <div class="items_preview" id="colorItems">
                                         <table class="table" id="colortable">
@@ -230,13 +212,7 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- categories -->
                                 <div class="mb-5">
                                     <label for="categories">Product Categories</label>
-                                    <input type="text" name="categories" id="categories" class="container" required <?php
-                                                                                                                    if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                                                        echo 'value="';
-                                                                                                                        echo $_GET['categories'];
-                                                                                                                        echo '"';
-                                                                                                                    }
-                                                                                                                    ?>>
+                                    <input type="text" name="categories" id="categories" class="container" required>
                                     <button type="button" class="btn-primary m-1" id="addcategory" onclick="createProductData('categories','-','category');">Add</button>
                                     <div class="items_preview" id="categoryItems">
                                         <table class="table" id="categorytable">
@@ -258,10 +234,13 @@ if (isset($_SESSION['editpost'])) {
                                     <!-- <div id="editor" class="edit"></div>
                                     <input type="text" name="rbp" id="editor" class="invisible"> -->
                                     <p>To add code to the text or change classes, just click source after your done and submit. if you undo source before submitting, the changes you make will be removed</p>
-                                    <textarea name="features" id="editor">
-                                        <?php if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                            //adminLoadBlogPost($_GET['id']);
-                                        } ?>
+                                    <textarea name="features" id="editor" <?php
+                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                echo 'value="';
+                                                                                echo $_GET['features'];
+                                                                                echo '"';
+                                                                            }
+                                                                            ?>>
                                     </textarea>
                                     <script>
                                         CKEDITOR.replace('editor', {
@@ -299,11 +278,12 @@ if (isset($_SESSION['editpost'])) {
 
 
                                 <span>Do not edit these values. they are used by the system.</span>
-                                <div class="jsondiv"><input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
-                                <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required>
-                                <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required>
-</div>
-                                
+                                <div class="jsondiv">
+                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
+                                    <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required>
+                                    <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required>
+                                </div>
+
 
                                 <!-- <a href="" onclick="showMissingItems()" class="btn btn-danger btn-user btn-block invisible">Process</a> -->
                                 <button type="submit" class="btn btn-primary btn-user btn-block" id="submit" name="submit">Submit</button>
