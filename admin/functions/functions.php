@@ -836,3 +836,12 @@ function deleteAdmin($id)
     }
     mysqli_close($db);
 }
+
+function findActivePage($pages){
+    for ($i = 0; $i < count($pages); $i++) {
+
+    if (strpos($_SERVER["PHP_SELF"], $pages[$i])) {
+        echo 'active';
+    }
+}
+}
