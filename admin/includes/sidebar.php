@@ -33,6 +33,7 @@
         <h6 class="collapse-header">Content Screens:</h6>
         <a class="collapse-item" href="newproduct.php">New Product</a>
         <a class="collapse-item" href="products.php">Products</a>
+        <a class="collapse-item" href="admins.php">Admins</a>
 
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="login.php">Login</a>

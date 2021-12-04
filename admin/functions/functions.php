@@ -725,3 +725,114 @@ function processLogin($formstream)
         }
     }
 }
+
+function getAdminName()
+{
+    $id = $_SESSION['admin_id'];
+    global $db;
+
+    $query = "SELECT lastname, firstname FROM admins WHERE id = $id";
+    $result = mysqli_query($db, $query);
+    if (!$result) {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    } else {
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                echo ucwords(strtolower($row['lastname']));
+                echo " ";
+                echo ucwords(strtolower($row['firstname']));
+            }
+        }
+        // $total_visitors = mysqli_num_rows($result);
+    }
+}
+
+function loadAdmins()
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT id, firstname, lastname, email, joined FROM admins ORDER BY `id` DESC ";
+    $response = @mysqli_query($db, $query);
+    
+    if ($response) {
+        
+        while ($row = mysqli_fetch_array($response)) {
+
+            //$query2 = "SELECT profilepic FROM users WHERE emailaddress = '$master' ";
+
+            echo '<tr><td>';
+            echo $row['id'];
+            echo '</td>';
+
+            echo  '<td>';
+            //echo '<a href="admin_details.php?id=';
+            //echo $row['id'];
+            //echo '"> ';
+            echo ucwords(strtolower($row['firstname']));
+            //echo '</a>';
+            echo '</td>';
+
+            echo '<td>';
+            echo ucwords(strtolower($row['lastname']));
+            echo '</td>';
+
+
+            echo '<td>';
+            echo ucwords(strtolower($row['email']));
+            echo '</td>';
+
+            echo '<td>';
+            echo $row['joined'];
+            echo '</td>';
+
+
+
+
+            // echo '<td><a href="new_exam.php?id=';
+            // echo $row['id'];
+            // echo '&coursename=';
+            // echo ucwords(strtolower($row['title']));
+            // echo '"><i class="fa fa-plus"></i></a></td>';
+
+            // echo '<td><a href="edit_admin.php?id=';
+            // echo $row['id'];
+            // echo '"';
+            // echo '>';
+            // echo '<i class="fa fa-edit"></i></a></td>';
+
+
+            if ($row['id'] == 1) {
+                echo '<td></td>';
+            } else {
+                echo '<td><a href="delete_admin.php?id=';
+                echo $row['id'];
+                echo '"';
+                // echo 'data-toggle="modal" data-target="#deleteModal"';
+                echo '><i class="fa fa-trash"></i></a></td>';
+            }
+
+            echo '</tr>';
+        }
+    } else {
+        echo '<tr>Though Impossible, there are no admins yet</tr>';
+    }
+}
+
+function deleteAdmin($id)
+{
+    global $db;
+    if ($id == 1) {
+        header("location:admins.php");
+    } else {
+        //This sql statement deletes the course with the mentioned id
+        $sql = "DELETE FROM `admins`  WHERE admins.id = '$id' ";
+        if (mysqli_query($db, $sql)) {
+            header("location:admins.php");
+        } else {
+            //header("location:course_detail.php?exam_id=$id&coursename=$course");
+            header("location:courses.php");
+        }
+    }
+    mysqli_close($db);
+}

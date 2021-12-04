@@ -3,9 +3,9 @@ require_once "config/connect.php";
 require_once "functions/functions.php";
 
 if (!isset($_SESSION['log'])) {
-    //gotoPage("index.php");
+    gotoPage("index.php");
 }
-$datamissing = ResetPassword($_POST);
+//$datamissing = ResetPassword($_POST);
 ?>
 
 <!DOCTYPE html>
