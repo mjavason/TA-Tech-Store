@@ -25,18 +25,18 @@ if (isset($_SESSION['editpost'])) {
 
 <head>
 
-<title>REGISTER ADMIN</title>
-	<meta name="description" content="<?= 'Admin Registration' ?>">
-	<!-- <meta property='og:title' content="TATB HOME"> -->
-	<meta property='og:url' content="https://techac.net/tatb">
-	<!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
-	<meta property='keywords' content="Admin, Register, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
-	<!-- <meta property='og:locale' content="">
+    <title>REGISTER ADMIN</title>
+    <meta name="description" content="<?= 'Admin Registration' ?>">
+    <!-- <meta property='og:title' content="TATB HOME"> -->
+    <meta property='og:url' content="https://techac.net/tatb">
+    <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
+    <meta property='keywords' content="Admin, Register, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
+    <!-- <meta property='og:locale' content="">
 	<meta property='og:type' content=""> -->
 
-	<!-- Meta -->
-	<meta name="author" content="Orji Michael Chukwuebuka at Tech Acoustic">
-	
+    <!-- Meta -->
+    <meta name="author" content="Orji Michael Chukwuebuka at Tech Acoustic">
+
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

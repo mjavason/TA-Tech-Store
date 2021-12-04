@@ -13,5 +13,3 @@ if (isset($_GET['id'])) {
 }else{
     gotoPage('admins.php');
 }
-
-?>

@@ -754,9 +754,9 @@ function loadAdmins()
 
     $query = "SELECT id, firstname, lastname, email, joined FROM admins ORDER BY `id` DESC ";
     $response = @mysqli_query($db, $query);
-    
+
     if ($response) {
-        
+
         while ($row = mysqli_fetch_array($response)) {
 
             //$query2 = "SELECT profilepic FROM users WHERE emailaddress = '$master' ";
@@ -837,11 +837,12 @@ function deleteAdmin($id)
     mysqli_close($db);
 }
 
-function findActivePage($pages){
+function findActivePage($pages)
+{
     for ($i = 0; $i < count($pages); $i++) {
 
-    if (strpos($_SERVER["PHP_SELF"], $pages[$i])) {
-        echo 'active';
+        if (strpos($_SERVER["PHP_SELF"], $pages[$i])) {
+            echo 'active';
+        }
     }
-}
 }

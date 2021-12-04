@@ -15,5 +15,3 @@ if (isset($_GET['id'])) {
     $_SESSION['editImage4'] = $_GET['image4'];
 }
 deleteProduct($_SESSION['product_id'],  $_SESSION['editImage1'], $_SESSION['editImage2'], $_SESSION['editImage3'], $_SESSION['editImage4']);
- 
-?>

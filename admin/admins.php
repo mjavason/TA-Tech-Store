@@ -84,7 +84,7 @@ if (!isset($_SESSION['log'])) {
                                                     <th>ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    
+
                                                     <th>Email</th>
                                                     <th>Date Joined</th>
                                                     <!-- <th>Edit</th> -->
@@ -96,7 +96,7 @@ if (!isset($_SESSION['log'])) {
                                                     <th>ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    
+
                                                     <th>Email</th>
                                                     <th>Date Joined</th>
                                                     <!-- <th>Edit</th> -->
