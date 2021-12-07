@@ -36,7 +36,7 @@
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
 						<li><a href="products.php">Products</a> <span class="divider">/</span></li>
-						<li class="active">product Details</li>
+						<li class="active">Product Details</li>
 					</ul>
 					<div class="row">
 						<div id="gallery" class="span3">

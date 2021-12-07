@@ -1,6 +1,6 @@
 <div class="container">
 	<div id="welcomeLine" class="row">
-		<div class="span6">Welcome!<strong> User</strong></div>
+		<div class="span6"></div>
 		<div class="span6">
 			<div class="pull-right">
 				<!-- <a href="product_summary.php"><span class="">Fr</span></a>

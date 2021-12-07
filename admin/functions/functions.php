@@ -846,3 +846,277 @@ function findActivePage($pages)
         }
     }
 }
+
+//this is the paystack javascript code containing all the functions it needs, including the API keys. For security reasons, it has to be echoed from here.
+function loadPaystackCode()
+{
+    $paystackCode = "<script>
+    const paymentForm = document.getElementById('paymentForm');
+
+    paymentForm.addEventListener('submit', payWithPaystack, false);
+
+    function payWithPaystack(e) {
+
+        e.preventDefault();
+
+        let handler = PaystackPop.setup({
+
+            //pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7
+            //pk_live_21bba98bf9a683dc3215452aa76419d4204ce121
+
+            key: 'pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7', // Replace with your public key
+
+            //email: document.getElementById('email-address').value,
+            email: 'nomail@mail.com',
+
+            //amount: document.getElementById('amount').value * 100,
+            amount: getGrossTotalPrice() * 100,
+
+            // ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+
+            // label: 'Customer'
+
+            onClose: function() {
+
+                alert('Window closed.');
+
+            },
+
+            callback: function(response) {
+
+                let message = 'Payment complete! Reference: ' + response.reference;
+                //clearProductTable();
+                //deleteAllCartItems();
+                window.location = 'admin/verify_transaction.php?reference=' + response.reference + '&cart=' + getJsonFromObject(getProductsInLocalStorage());
+                //alert(message);
+
+            }
+
+        });
+
+        handler.openIframe();
+
+        }</script>";
+
+    return $paystackCode;
+}
+
+//after a user finishes paying, another page opens('verify_transaction.php') that makes sure we received the payment. if yes it takes us to the payment confirmed page('payment_confirmed.php').
+function verifyPayment()
+{
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+
+        CURLOPT_URL => "https://api.paystack.co/transaction/verify/:reference",
+
+        CURLOPT_RETURNTRANSFER => true,
+
+        CURLOPT_ENCODING => "",
+
+        CURLOPT_MAXREDIRS => 10,
+
+        CURLOPT_TIMEOUT => 30,
+
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+
+        CURLOPT_CUSTOMREQUEST => "GET",
+
+        CURLOPT_HTTPHEADER => array(
+
+            "Authorization: Bearer SECRET_KEY",
+
+            "Cache-Control: no-cache",
+
+        ),
+
+    ));
+
+
+
+    $response = curl_exec($curl);
+
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+
+
+    if ($err) {
+
+        echo "cURL Error #:" . $err;
+    } else {
+
+        $response = '{
+            "status": true,
+            "message": "Verification successful",
+            "data": {
+              "id": 690075529,
+              "domain": "test",
+              "status": "success",
+              "reference": "nms6uvr1pl",
+              "amount": 20000,
+              "message": null,
+              "gateway_response": "Successful",
+              "paid_at": "2020-05-19T12:30:56.000Z",
+              "created_at": "2020-05-19T12:26:44.000Z",
+              "channel": "card",
+              "currency": "NGN",
+              "ip_address": "154.118.28.239",
+              "metadata": "",
+              "log": {
+                "start_time": 1589891451,
+                "time_spent": 6,
+                "attempts": 1,
+                "errors": 0,
+                "success": true,
+                "mobile": false,
+                "input": [],
+                "history": [
+                  {
+                    "type": "action",
+                    "message": "Attempted to pay with card",
+                    "time": 5
+                  },
+                  {
+                    "type": "success",
+                    "message": "Successfully paid with card",
+                    "time": 6
+                  }
+                ]
+              },
+              "fees": 300,
+              "fees_split": {
+                "paystack": 300,
+                "integration": 40,
+                "subaccount": 19660,
+                "params": {
+                  "bearer": "account",
+                  "transaction_charge": "",
+                  "percentage_charge": "0.2"
+                }
+              },
+              "authorization": {
+                "authorization_code": "AUTH_xxxxxxxxxx",
+                "bin": "408408",
+                "last4": "4081",
+                "exp_month": "12",
+                "exp_year": "2020",
+                "channel": "card",
+                "card_type": "visa DEBIT",
+                "bank": "Test Bank",
+                "country_code": "NG",
+                "brand": "visa",
+                "reusable": true,
+                "signature": "SIG_xxxxxxxxxxxxxxx",
+                "account_name": null
+              },
+              "customer": {
+                "id": 24259516,
+                "first_name": null,
+                "last_name": null,
+                "email": "customer@email.com",
+                "customer_code": "CUS_xxxxxxxxxxx",
+                "phone": null,
+                "metadata": null,
+                "risk_action": "default"
+              },
+              "plan": null,
+              "order_id": null,
+              "paidAt": "2020-05-19T12:30:56.000Z",
+              "createdAt": "2020-05-19T12:26:44.000Z",
+              "requested_amount": 20000,
+              "transaction_date": "2020-05-19T12:26:44.000Z",
+              "plan_object": {},
+              "subaccount": {
+                "id": 37614,
+                "subaccount_code": "ACCT_xxxxxxxxxx",
+                "business_name": "Cheese Sticks",
+                "description": "Cheese Sticks",
+                "primary_contact_name": null,
+                "primary_contact_email": null,
+                "primary_contact_phone": null,
+                "metadata": null,
+                "percentage_charge": 0.2,
+                "settlement_bank": "Guaranty Trust Bank",
+                "account_number": "0123456789"
+              }
+            }
+          }';
+       // echo '<pre>';
+        //echo $response;
+        if (isset($_GET['cart'])) {
+            $cart = $_GET['cart'];
+        } else {
+            $cart = null;
+        }
+
+        processVerifyTransactionResult($response, $cart);
+    }
+}
+
+//This is the real function that confirms if the payment went through by reading through a paystack API response
+function processVerifyTransactionResult($response, $cart)
+{
+    $phpclassresponse = json_decode($response, true);
+
+    $status = $phpclassresponse['data']['status'];
+    $redeem_code = $phpclassresponse['data']['id'];
+    $amount = $phpclassresponse['data']['amount'];
+    $channel = $phpclassresponse['data']['channel'];
+    $ip = $phpclassresponse['data']['ip_address'];
+    $paid_at = $phpclassresponse['data']['paid_at'];
+    $created_at = $phpclassresponse['data']['created_at'];
+    $fees = $phpclassresponse['data']['fees'];
+    $full_transaction_info_json = json_encode($phpclassresponse);
+
+    // echo '<pre>';
+    // print_r($phpclassresponse);
+    // gotoPage('payment_confirmed.php?redeem_code=' . $phpclassresponse['message']);
+
+    //$phpclassresponse['status'] === 'false' 
+    if ($phpclassresponse['data']['status'] === 'success') {
+        addTransactionDetail($status, $redeem_code, $cart, $amount, $channel, $ip, $paid_at, $created_at, $fees, $full_transaction_info_json);
+       
+    } else {
+        gotoPage('../index.php');
+    }
+}
+
+//This function stores the paystack API response(including the redeem code(message)) into the database for future reference.
+function addTransactionDetail($status, $redeem_code, $cart_items, $amount, $channel, $ip, $paid_at, $created_at, $fees, $full_transaction_info_json)
+{
+    //This simply adds the filtered and cleansed data into the database 
+    global $db;
+    //$_SESSION['admin_id'];
+
+    $sql = "INSERT INTO transactions(status, redeem_code, cart_items, 	amount, 	channel, 	ip, 	paid_at, 	created_at, 	fees, full_transaction_info_json) VALUES ('$status', '$redeem_code', '$cart_items', '$amount', '$channel', '$ip', '$paid_at', '$created_at', '$fees', '$full_transaction_info_json')";
+
+    if (mysqli_query($db, $sql)) {
+        //$_SESSION['ProductJustAdded'] = 1;
+        //gotoPage("products.php");
+        gotoPage('payment_confirmed.php?redeem_code=' . $redeem_code);
+    } else {
+        // echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        // die;
+    }
+    mysqli_close($db);
+}
+
+//This function adds some extra details to the transaction table. these details are name and phone number which are not compulsory
+function UpdateTransactionDetail($redeem_code, $name, $phone)
+{
+    $name = trim(Sanitize($name));
+    $phone = trim(Sanitize($phone));
+
+   //This simply adds the filtered and cleansed data that is edited into the database 
+   global $db;
+   $sql = "UPDATE `transactions` SET `customer_name` = '$name', `customer_phone` = '$phone' WHERE `transactions`.`redeem_code` = '$redeem_code' ";
+  
+   if (mysqli_query($db, $sql)) {
+    gotoPage('../clear_transaction.php');
+   } else {
+       echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+   }
+   mysqli_close($db);
+}

@@ -1,17 +1,24 @@
 var topCartInfoCount = document.getElementById('top_product_summary_count');
 var topCartInfoTotal = document.getElementById('top_product_summary_total');
 var sideCartInfoCount = document.getElementById('side_product_summary_count');
+var midCartInfoCount = document.getElementById('mid_product_summary_count');
 var sideCartInfoTotal = document.getElementById('side_product_summary_total');
+
 var productTable = document.querySelector('#product_table tbody');
 
 topCartInfoCount.innerHTML = getProductCount();
 topCartInfoTotal.innerHTML = getTotalPrice();
 sideCartInfoCount.innerHTML = getProductCount();
 sideCartInfoTotal.innerHTML = getTotalPrice();
+var cartToggleButton;
+
 
 loadCartSummary();
+showItemsAlreadyInCart();
 
 function getProductData(image, discount, title, price, id, quantity, tax) {
+    cartToggleButton = document.getElementById('cartToggleButton' + id);
+
     // create a small array to hold the product info
     const productInfo = {
         image: image,
@@ -26,6 +33,7 @@ function getProductData(image, discount, title, price, id, quantity, tax) {
     // add the product info array to the others previously created
     if (!validateProductId(id)) {
         insertProductIntoLocalStorage(productInfo);
+
     } else {
         window.alert('Product is already in cart. If you want to increase the quantity, go to the cart page.');
     }
@@ -66,7 +74,9 @@ function insertProductIntoLocalStorage(product) {
     localStorage.setItem('products', JSON.stringify(mainProducts));
     console.log('succesful');
     console.log(localStorage.getItem('products'));
+    showItemsAlreadyInCart();
     setFrontendItems();
+    cartToggleButton.style.display = 'none';
     window.alert('Product has been added to cart');
 }
 
@@ -114,7 +124,6 @@ function getTotalPrice() {
 
 function getProductCount() {
     let productsLS = getProductsInLocalStorage();
-    console.log(productsLS.length);
     //console.log(total);
     return productsLS.length;
 }
@@ -124,6 +133,8 @@ function setFrontendItems() {
     topCartInfoTotal.innerHTML = getTotalPrice();
     sideCartInfoCount.innerHTML = getProductCount();
     sideCartInfoTotal.innerHTML = getTotalPrice();
+    midCartInfoCount.innerHTML = getProductCount();
+    showItemsAlreadyInCart();
 }
 
 function loadCartSummary() {
@@ -163,7 +174,9 @@ function loadCartSummary() {
       <td>${tax}</td>
       <td>${itemTotal}</td>
       `;
-        productTable.appendChild(row);
+        if (productTable != null) {
+            productTable.appendChild(row);
+        }
 
         totalVal += productLS[i].price * productLS[i].quantity;
         totalDiscountVal += discount;
@@ -182,10 +195,12 @@ function loadCartSummary() {
     totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${totalTaxVal}</td>`;
     grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${totalVal} - ${totalDiscountVal} + ${totalTaxVal}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${grossTotalVal} </strong></td>`;
 
-    productTable.appendChild(totalRow);
-    productTable.appendChild(totalDiscountRow);
-    productTable.appendChild(totalTaxRow);
-    productTable.appendChild(grossTotalRow);
+    if (productTable != null) {
+        productTable.appendChild(totalRow);
+        productTable.appendChild(totalDiscountRow);
+        productTable.appendChild(totalTaxRow);
+        productTable.appendChild(grossTotalRow);
+    }
 }
 
 function clearProductTable() {
@@ -193,8 +208,12 @@ function clearProductTable() {
     // forma lenta
     // listaCursos.innerHTML = '';
     // forma rapida (recomendada)
-    while (productTable.firstChild) {
-        productTable.removeChild(productTable.firstChild);
+    if (productTable != null) {
+
+
+        while (productTable.firstChild) {
+            productTable.removeChild(productTable.firstChild);
+        }
     }
 }
 
@@ -245,3 +264,48 @@ function increaseQuantity(productId) {
     setFrontendItems();
 
 }
+
+function getGrossTotalPrice() {
+    var totalVal = 0;
+    var totalDiscountVal = 0;
+    var totalTaxVal = 0;
+    var grossTotalVal = 0;
+
+    var tax = 0;
+    var discount = 0;
+
+    let productLS = getProductsInLocalStorage();
+
+    for (var i = 0; i < productLS.length; i++) {
+        // total += productLS[i]['price'];
+        discount = productLS[i].discount * productLS[i].quantity
+        tax = productLS[i].tax * productLS[i].quantity;
+        var itemTotal = (productLS[i].quantity * productLS[i].price) + tax - discount;
+
+        totalVal += productLS[i].price * productLS[i].quantity;
+        totalDiscountVal += discount;
+        totalTaxVal += tax;
+
+    }
+    grossTotalVal = totalVal - totalDiscountVal + totalTaxVal;
+    return grossTotalVal;
+}
+
+function showItemsAlreadyInCart() {
+    //console.log('test 1 passed');
+    let productLS = getProductsInLocalStorage();
+    for (var i = 0; i < productLS.length; i++) {
+        //console.log('test 2 passed')
+        // total += productLS[i]['price'];
+        productInCart = productLS[i].id;
+        cartToggleButton = document.getElementById('cartToggleButton' + productInCart);
+        cartToggleButton.style.display = 'none';
+        //console.log('test 3 passed.')
+    }
+}
+
+function getJsonFromObject(productsObject) {
+    return JSON.stringify(productsObject);
+}
+
+

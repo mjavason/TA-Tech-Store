@@ -1,3 +1,13 @@
+<?php
+require_once "admin/config/connect.php";
+require_once "admin/functions/functions.php";
+
+// if (!isset($_SESSION['log'])) {
+//     gotoPage("login.php");
+// }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +20,7 @@
 	<?php
 	require_once('includes/head.php');
 	?>
+	
 </head>
 
 <body>
@@ -37,20 +48,22 @@
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
 						<li class="active"> SHOPPING CART</li>
 					</ul>
-					<h3> SHOPPING CART [ <small>3 Item(s) </small>]<a href="products.php" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
+					<h3> <span id="mid_product_summary_count"></span> Items <a href="products.php" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>
 					<hr class="soft" />
 
-					
-					
 
 
-					<table id="product_table" class="table table-bordered">
-						<!-- include checkout.php -->
-						<?php
-						require_once('includes/checkout.php');
-						?>
-					</table>
+
 					
+						<table id="product_table" class="table table-bordered">
+							<!-- include checkout.php -->
+							<?php
+							require_once('includes/checkout.php');
+							?>
+						</table>
+		
+
+
 
 					<!-- <table class="table table-bordered">
 						 include voucher.php
@@ -67,12 +80,26 @@
 						?>
 					</table> -->
 					<button class="btn-large btn-danger pull-left" id="clear_cart" onclick="deleteAllCartItems();">Clear Cart</button>
-					<button class="btn-large btn-success pull-right" id="checkout" onclick="loadCartSummary()">Checkout</button>
+
+					<div>
+						<form id="paymentForm">
+							<div class="form-submit">
+								<button type="submit" class="btn-large btn-success pull-right" id="checkout" onclick="payWithPaystack()">Checkout</button>
+								
+							</div>
+						</form>
+					</div>
+
+
+					<!-- <button class="btn-large btn-success pull-right" id="checkout" onclick="payWithPaystack()">Checkout</button> -->
 					<!-- <a href="products.php" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
 					<a href="login.php" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a> -->
 
 				</div>
+
 			</div>
+
+
 		</div>
 	</div>
 	<!-- MainBody End ============================= -->
@@ -85,9 +112,27 @@
 	<!-- Placed at the end of the document so the pages load faster ============================================= -->
 
 	<!-- include frontScripts.php -->
+	<?php
+	require_once('includes/frontScripts.php');
+	?>
+
+	
 <?php
-require_once('includes/frontScripts.php');
-?>
+	if ($_GET['fin'] == true) {
+	?>
+		<script>
+			clearLocalStorage();
+			clearProductTable();
+			deleteAllCartItems();
+			setFrontendItems();
+			
+		</script>
+	<?php } ?>
+
+	<?php echo loadPaystackCode();
+	?>
+
+	<script src="https://js.paystack.co/v1/inline.js"></script>
 
 
 	<!-- Themes switcher section ============================================================================================= -->

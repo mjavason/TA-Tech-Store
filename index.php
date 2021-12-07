@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	
+
 	<div id="header">
 		<!-- include topbar.php -->
 		<?php
@@ -41,12 +41,13 @@
 				<!-- Sidebar end=============================================== -->
 				<div class="span9">
 
-					<div class="well well-small">
-						<!-- include featured.php -->
+					<!-- <div class="well well-small">
+						 include featured.php
 						<?php
-						require_once('includes/featured.php');
+						//require_once('includes/featured.php');
+						//require_once('includes/latest.php');
 						?>
-					</div>
+					</div> -->
 					<h4>Latest Products </h4>
 					<ul class="thumbnails">
 						<!-- include latest.php -->
@@ -80,7 +81,7 @@
 		?>
 	</div>
 	<span id="themesBtn"></span>
-	
+
 </body>
 
 </html>
