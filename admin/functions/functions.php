@@ -455,14 +455,37 @@ function showDataMissing($datamissing, $showSuccess = null)
     //this function checks if the datamissing array passed in is empty. if it isnt it prints out all of its contents. if it is empty nothing happens
     if (isset($datamissing)) {
         foreach ($datamissing as $miss) {
-            echo '<p class="text-danger">';
-            echo $miss;
-            echo '</p>';
+
+            //     echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+            //     <strong>Holy guacamole!</strong> Your username or password are incorrect.
+            //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //       <span aria-hidden="true">&times;</span>
+            //     </button>
+            //   </div>';
+
+
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole! </strong>' . $miss . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+
+            // echo '<p class="text-danger">';
+            // echo $miss;
+            // echo '</p>';
         }
     } elseif (isset($showSuccess)) {
-        echo '<p class="text-success">';
-        echo "Successful";
-        echo '</p>';
+        // echo '<p class="text-success">';
+        // echo "Successful";
+        // echo '</p>';
+
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole! </strong> Successful
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
     }
 }
 
@@ -837,6 +860,11 @@ function deleteAdmin($id)
     mysqli_close($db);
 }
 
+function showPrice()
+{
+    echo '15000';
+}
+
 function findActivePage($pages)
 {
     for ($i = 0; $i < count($pages); $i++) {
@@ -951,7 +979,7 @@ function verifyPayment()
             "status": true,
             "message": "Verification successful",
             "data": {
-              "id": 690075529,
+              "id": 690075520,
               "domain": "test",
               "status": "success",
               "reference": "nms6uvr1pl",
@@ -1043,7 +1071,7 @@ function verifyPayment()
               }
             }
           }';
-       // echo '<pre>';
+        // echo '<pre>';
         //echo $response;
         if (isset($_GET['cart'])) {
             $cart = $_GET['cart'];
@@ -1077,7 +1105,6 @@ function processVerifyTransactionResult($response, $cart)
     //$phpclassresponse['status'] === 'false' 
     if ($phpclassresponse['data']['status'] === 'success') {
         addTransactionDetail($status, $redeem_code, $cart, $amount, $channel, $ip, $paid_at, $created_at, $fees, $full_transaction_info_json);
-       
     } else {
         gotoPage('../index.php');
     }
@@ -1109,14 +1136,160 @@ function UpdateTransactionDetail($redeem_code, $name, $phone)
     $name = trim(Sanitize($name));
     $phone = trim(Sanitize($phone));
 
-   //This simply adds the filtered and cleansed data that is edited into the database 
-   global $db;
-   $sql = "UPDATE `transactions` SET `customer_name` = '$name', `customer_phone` = '$phone' WHERE `transactions`.`redeem_code` = '$redeem_code' ";
-  
-   if (mysqli_query($db, $sql)) {
-    gotoPage('../clear_transaction.php');
-   } else {
-       echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
-   }
-   mysqli_close($db);
+    //This simply adds the filtered and cleansed data that is edited into the database 
+    global $db;
+    $sql = "UPDATE `transactions` SET `customer_name` = '$name', `customer_phone` = '$phone' WHERE `transactions`.`redeem_code` = '$redeem_code' ";
+
+    if (mysqli_query($db, $sql)) {
+        gotoPage('../clear_transaction.php');
+    } else {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    }
+    mysqli_close($db);
 }
+
+function processRedeemCode($formstream)
+{
+    //This simply queries the database to see if the users data is really available then sets the users data to a session to show theyve logged in
+    extract($formstream);
+    global $db;
+
+
+    if (isset($submit)) {
+
+        $result = mysqli_query($db, "SELECT * FROM transactions WHERE redeem_code ='$redeem_code' AND status = 'success'ORDER BY `id` DESC      ");
+
+        if (mysqli_num_rows($result) > 0 && mysqli_num_rows($result) > 1) {
+            $result = $result->fetch_assoc();
+
+            $_SESSION['username'] = $result['id'];
+
+
+            gotoPage('showcart.php?redeem_id=' . $result['id'] . '&' . 'redeem_code=' . $result['redeem_code'] . '&' . 'customer_name=' . $result['customer_name'] . '&' . 'customer_phone=' . $result['customer_phone'] . '&' . 'cart=' . $result['cart_items']);
+        } else {
+
+            //     echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+            //     <strong>Holy guacamole!</strong> Your username or password are incorrect.
+            //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            //       <span aria-hidden="true">&times;</span>
+            //     </button>
+            //   </div>';
+            $datamissing['redeem_error'] = 'Redeem code is Invalid';
+            return $datamissing;
+        }
+    }
+}
+
+function layoutCart($jsonCart)
+{
+    $phpClassCart = json_decode($jsonCart, true);
+    $itemsCount = count($phpClassCart);
+    $confirmed = true;
+    $total = 0;
+
+    for ($i = 0; $i < $itemsCount; $i++) {
+        $id = $phpClassCart[$i]['id'];
+        $price = $phpClassCart[$i]['price'];
+        $discount = $phpClassCart[$i]['discount'];
+        $title = $phpClassCart[$i]['title'];
+        $quantity = $phpClassCart[$i]['quantity'];
+        $tax = $phpClassCart[$i]['tax'];
+        $temptotal = ($price - $discount + $tax) * $quantity;
+        $total += $temptotal;
+
+        if (confirmItemData($id, $price, $discount, $tax) == true) {
+            echo ' <tr>
+            <td><strong>' . $i + 1 . '</strong></td>
+            <td>' . $quantity . '</td>
+            <td>' . $title . '</td>
+            <td class="text-success">' . $temptotal . '</td>
+            <td>' . getRealItemPrice($id, $quantity) . '</td>
+        </tr>';
+        } else {
+            echo ' <tr>
+            <td><strong>' . $i + 1 . '</strong></td>
+            <td>' . $quantity . '</td>
+            <td>' . $title . '</td>
+            <td class="text-danger">' . $temptotal . '</td>
+            <td>' . getRealItemPrice($id, $quantity) . '</td>
+        </tr>';
+        }
+    }
+}
+
+function getCartBasicInfo($jsonCart)
+{
+    $phpClassCart = json_decode($jsonCart, true);
+    $itemsCount = count($phpClassCart);
+    $confirmed = true;
+    $total = 0;
+
+    echo ' <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h4 mb-0 text-gray-800">Number of Items:  ' . $itemsCount . '</h3></div>';
+
+    for ($i = 0; $i < $itemsCount; $i++) {
+        $id = $phpClassCart[$i]['id'];
+        $price = $phpClassCart[$i]['price'];
+        $discount = $phpClassCart[$i]['discount'];
+        $title = $phpClassCart[$i]['title'];
+        $quantity = $phpClassCart[$i]['quantity'];
+        $tax = $phpClassCart[$i]['tax'];
+        $temptotal = ($price - $discount + $tax) * $quantity;
+        $total += $temptotal;
+
+        if (confirmItemData($id, $price, $discount, $tax) == true) {
+        } else {
+            $confirmed = false;
+        }
+    }
+
+    if ($confirmed == true) {
+        echo '<div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h3 class="h4 mb-0 text-success">Total paid: ' . $total . '</h3>
+         </div>';
+    } else {
+        echo '<div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h3 class="h4 mb-0 text-danger">Total paid: ' . $total . '</h3>
+         </div>';
+    }
+}
+
+
+
+
+function confirmItemData($id, $price, $discount, $tax)
+{
+    global $db;
+    $sql = "SELECT * FROM `item` WHERE `id`='$id'";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        $result = $result->fetch_assoc();
+        if ($price == isset($result['price']) && $tax == isset($result['tax']) && $discount == isset($result['discount'])) {
+            //nothing has been tampered with
+            return true;
+        } else {
+            //something is wrong somewhere
+            return $result['price'] + $result['tax'] - $result['discount'];
+        }
+    } else {
+        //something is definitely wrong somewhere;
+        return false;
+    }
+}
+
+function getRealItemPrice($id, $quantity)
+{
+    global $db;
+    $sql = "SELECT * FROM `item` WHERE `id`='$id'";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        $result = $result->fetch_assoc();
+        return ($result['price'] - $result['discount'] + $result['tax']) * $quantity;
+    } else {
+        //something is definitely wrong somewhere;
+        return 0;
+    }
+}
+
+
+//https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]

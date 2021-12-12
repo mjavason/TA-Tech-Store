@@ -30,6 +30,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Content Screens:</h6>
+                <a class="collapse-item" href="redeem.php">Redeem Product</a>
                 <a class="collapse-item" href="newproduct.php">New Product</a>
                 <a class="collapse-item" href="products.php">Products</a>
                 <a class="collapse-item" href="admins.php">Admins</a>

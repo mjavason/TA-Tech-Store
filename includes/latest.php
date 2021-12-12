@@ -8,7 +8,7 @@
             </p>
 
             <h4 style="text-align:center">
-                <a class="btn" id="cartToggleButton1" onclick="getProductData('4.jpg', 700, 'Camera', 15000, 1, 1, 200);">Add to <i class="icon-shopping-cart"></i></a>
+                <a class="btn" id="cartToggleButton7" onclick="getProductData('4.jpg', 700, 'Camera', 15000, 7, 1, 200);">Add to <i class="icon-shopping-cart"></i></a>
                 <a class="btn btn-primary" href="product_summary.php">$10000</a>
             </h4>
         </div>

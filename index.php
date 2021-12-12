@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<?php
+
+require_once "admin/config/connect.php";
+require_once "admin/functions/functions.php";
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>

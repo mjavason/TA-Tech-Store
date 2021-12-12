@@ -7,5 +7,3 @@ die("Error Occured".$db->connect_error);
 }else{
     //echo "Connection Established";
 }
-
-?>
