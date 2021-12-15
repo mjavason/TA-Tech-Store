@@ -54,7 +54,7 @@ if (!isset($_SESSION['log'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Items for <?php echo $_GET['redeem_code'] ?></h1>
+                        <h1 class="h3 mb-0 text-gray-800">Items for <strong><?php echo $_GET['redeem_code'] ?></strong></h1>
                     </div>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h3 class="h4 mb-0 text-gray-800">Name: <?php echo $_GET['customer_name'] ?></h3>
@@ -73,7 +73,7 @@ if (!isset($_SESSION['log'])) {
                                 <td>Qt</td>
                                 <td>Item</td>
                                 <td>Paid</td>
-                                <td>Price</td>
+                                <td>Confirmation</td>
                             </tr>
                         </thead>
 
@@ -81,9 +81,9 @@ if (!isset($_SESSION['log'])) {
                             <tr>
                                 <td>S/N</td>
                                 <td>Qt</td>
-                                <td>Item</td>
+                                <td>Itm</td>
                                 <td>Paid</td>
-                                <td>Price</td>
+                                <td>Real</td>
                             </tr>
                         </tfoot>
 
@@ -122,6 +122,7 @@ if (!isset($_SESSION['log'])) {
                     </table>
 
 
+                    <a type="submit" class="btn btn-primary btn-user btn-block" href="finish_redeem.php?redeem_id=<?php echo $_GET['redeem_id']; ?>" name="finish_redeem">Finish</a>
 
 
 

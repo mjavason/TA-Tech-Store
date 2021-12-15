@@ -892,7 +892,7 @@ function loadPaystackCode()
             //pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7
             //pk_live_21bba98bf9a683dc3215452aa76419d4204ce121
 
-            key: 'pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7', // Replace with your public key
+            key: 'pk_live_21bba98bf9a683dc3215452aa76419d4204ce121', // Replace with your public key
 
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
@@ -932,11 +932,14 @@ function loadPaystackCode()
 //after a user finishes paying, another page opens('verify_transaction.php') that makes sure we received the payment. if yes it takes us to the payment confirmed page('payment_confirmed.php').
 function verifyPayment()
 {
+    if (isset($_GET['reference'])) {
+        $reference = $_GET['reference'];
+    }
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
 
-        CURLOPT_URL => "https://api.paystack.co/transaction/verify/:reference",
+        CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . rawurlencode($reference),
 
         CURLOPT_RETURNTRANSFER => true,
 
@@ -952,7 +955,7 @@ function verifyPayment()
 
         CURLOPT_HTTPHEADER => array(
 
-            "Authorization: Bearer SECRET_KEY",
+            "Authorization: Bearer sk_live_eb443ca5a5686ca06797b9bbccd044f9d9e97e70",
 
             "Cache-Control: no-cache",
 
@@ -975,103 +978,103 @@ function verifyPayment()
         echo "cURL Error #:" . $err;
     } else {
 
-        $response = '{
-            "status": true,
-            "message": "Verification successful",
-            "data": {
-              "id": 690075520,
-              "domain": "test",
-              "status": "success",
-              "reference": "nms6uvr1pl",
-              "amount": 20000,
-              "message": null,
-              "gateway_response": "Successful",
-              "paid_at": "2020-05-19T12:30:56.000Z",
-              "created_at": "2020-05-19T12:26:44.000Z",
-              "channel": "card",
-              "currency": "NGN",
-              "ip_address": "154.118.28.239",
-              "metadata": "",
-              "log": {
-                "start_time": 1589891451,
-                "time_spent": 6,
-                "attempts": 1,
-                "errors": 0,
-                "success": true,
-                "mobile": false,
-                "input": [],
-                "history": [
-                  {
-                    "type": "action",
-                    "message": "Attempted to pay with card",
-                    "time": 5
-                  },
-                  {
-                    "type": "success",
-                    "message": "Successfully paid with card",
-                    "time": 6
-                  }
-                ]
-              },
-              "fees": 300,
-              "fees_split": {
-                "paystack": 300,
-                "integration": 40,
-                "subaccount": 19660,
-                "params": {
-                  "bearer": "account",
-                  "transaction_charge": "",
-                  "percentage_charge": "0.2"
-                }
-              },
-              "authorization": {
-                "authorization_code": "AUTH_xxxxxxxxxx",
-                "bin": "408408",
-                "last4": "4081",
-                "exp_month": "12",
-                "exp_year": "2020",
-                "channel": "card",
-                "card_type": "visa DEBIT",
-                "bank": "Test Bank",
-                "country_code": "NG",
-                "brand": "visa",
-                "reusable": true,
-                "signature": "SIG_xxxxxxxxxxxxxxx",
-                "account_name": null
-              },
-              "customer": {
-                "id": 24259516,
-                "first_name": null,
-                "last_name": null,
-                "email": "customer@email.com",
-                "customer_code": "CUS_xxxxxxxxxxx",
-                "phone": null,
-                "metadata": null,
-                "risk_action": "default"
-              },
-              "plan": null,
-              "order_id": null,
-              "paidAt": "2020-05-19T12:30:56.000Z",
-              "createdAt": "2020-05-19T12:26:44.000Z",
-              "requested_amount": 20000,
-              "transaction_date": "2020-05-19T12:26:44.000Z",
-              "plan_object": {},
-              "subaccount": {
-                "id": 37614,
-                "subaccount_code": "ACCT_xxxxxxxxxx",
-                "business_name": "Cheese Sticks",
-                "description": "Cheese Sticks",
-                "primary_contact_name": null,
-                "primary_contact_email": null,
-                "primary_contact_phone": null,
-                "metadata": null,
-                "percentage_charge": 0.2,
-                "settlement_bank": "Guaranty Trust Bank",
-                "account_number": "0123456789"
-              }
-            }
-          }';
-        // echo '<pre>';
+        // $response = '{
+        //     "status": true,
+        //     "message": "Verification successful",
+        //     "data": {
+        //       "id": 690075520,
+        //       "domain": "test",
+        //       "status": "success",
+        //       "reference": "nms6uvr1pl",
+        //       "amount": 20000,
+        //       "message": null,
+        //       "gateway_response": "Successful",
+        //       "paid_at": "2020-05-19T12:30:56.000Z",
+        //       "created_at": "2020-05-19T12:26:44.000Z",
+        //       "channel": "card",
+        //       "currency": "NGN",
+        //       "ip_address": "154.118.28.239",
+        //       "metadata": "",
+        //       "log": {
+        //         "start_time": 1589891451,
+        //         "time_spent": 6,
+        //         "attempts": 1,
+        //         "errors": 0,
+        //         "success": true,
+        //         "mobile": false,
+        //         "input": [],
+        //         "history": [
+        //           {
+        //             "type": "action",
+        //             "message": "Attempted to pay with card",
+        //             "time": 5
+        //           },
+        //           {
+        //             "type": "success",
+        //             "message": "Successfully paid with card",
+        //             "time": 6
+        //           }
+        //         ]
+        //       },
+        //       "fees": 300,
+        //       "fees_split": {
+        //         "paystack": 300,
+        //         "integration": 40,
+        //         "subaccount": 19660,
+        //         "params": {
+        //           "bearer": "account",
+        //           "transaction_charge": "",
+        //           "percentage_charge": "0.2"
+        //         }
+        //       },
+        //       "authorization": {
+        //         "authorization_code": "AUTH_xxxxxxxxxx",
+        //         "bin": "408408",
+        //         "last4": "4081",
+        //         "exp_month": "12",
+        //         "exp_year": "2020",
+        //         "channel": "card",
+        //         "card_type": "visa DEBIT",
+        //         "bank": "Test Bank",
+        //         "country_code": "NG",
+        //         "brand": "visa",
+        //         "reusable": true,
+        //         "signature": "SIG_xxxxxxxxxxxxxxx",
+        //         "account_name": null
+        //       },
+        //       "customer": {
+        //         "id": 24259516,
+        //         "first_name": null,
+        //         "last_name": null,
+        //         "email": "customer@email.com",
+        //         "customer_code": "CUS_xxxxxxxxxxx",
+        //         "phone": null,
+        //         "metadata": null,
+        //         "risk_action": "default"
+        //       },
+        //       "plan": null,
+        //       "order_id": null,
+        //       "paidAt": "2020-05-19T12:30:56.000Z",
+        //       "createdAt": "2020-05-19T12:26:44.000Z",
+        //       "requested_amount": 20000,
+        //       "transaction_date": "2020-05-19T12:26:44.000Z",
+        //       "plan_object": {},
+        //       "subaccount": {
+        //         "id": 37614,
+        //         "subaccount_code": "ACCT_xxxxxxxxxx",
+        //         "business_name": "Cheese Sticks",
+        //         "description": "Cheese Sticks",
+        //         "primary_contact_name": null,
+        //         "primary_contact_email": null,
+        //         "primary_contact_phone": null,
+        //         "metadata": null,
+        //         "percentage_charge": 0.2,
+        //         "settlement_bank": "Guaranty Trust Bank",
+        //         "account_number": "0123456789"
+        //       }
+        //     }
+        //   }';
+        //echo '<pre>';
         //echo $response;
         if (isset($_GET['cart'])) {
             $cart = $_GET['cart'];
@@ -1141,7 +1144,7 @@ function UpdateTransactionDetail($redeem_code, $name, $phone)
     $sql = "UPDATE `transactions` SET `customer_name` = '$name', `customer_phone` = '$phone' WHERE `transactions`.`redeem_code` = '$redeem_code' ";
 
     if (mysqli_query($db, $sql)) {
-        gotoPage('../clear_transaction.php');
+        gotoPage('../product_summary.php?fin=true');
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
@@ -1157,15 +1160,19 @@ function processRedeemCode($formstream)
 
     if (isset($submit)) {
 
-        $result = mysqli_query($db, "SELECT * FROM transactions WHERE redeem_code ='$redeem_code' AND status = 'success'ORDER BY `id` DESC      ");
+        $result = mysqli_query($db, "SELECT * FROM transactions WHERE redeem_code ='$redeem_code' AND status = 'success' ORDER BY `id` DESC      ");
 
-        if (mysqli_num_rows($result) > 0 && mysqli_num_rows($result) > 1) {
+        if (mysqli_num_rows($result) > 0 && mysqli_num_rows($result) == 1) {
             $result = $result->fetch_assoc();
 
             $_SESSION['username'] = $result['id'];
 
-
-            gotoPage('showcart.php?redeem_id=' . $result['id'] . '&' . 'redeem_code=' . $result['redeem_code'] . '&' . 'customer_name=' . $result['customer_name'] . '&' . 'customer_phone=' . $result['customer_phone'] . '&' . 'cart=' . $result['cart_items']);
+            if ($result['id'] == 0) {
+                gotoPage('showcart.php?redeem_id=' . $result['id'] . '&' . 'redeem_code=' . $result['redeem_code'] . '&' . 'customer_name=' . $result['customer_name'] . '&' . 'customer_phone=' . $result['customer_phone'] . '&' . 'cart=' . $result['cart_items']);
+            } else {
+                $datamissing['redeem_error'] = 'Items have already been redeemed by the customer';
+                return $datamissing;
+            }
         } else {
 
             //     echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -1254,9 +1261,6 @@ function getCartBasicInfo($jsonCart)
     }
 }
 
-
-
-
 function confirmItemData($id, $price, $discount, $tax)
 {
     global $db;
@@ -1264,12 +1268,13 @@ function confirmItemData($id, $price, $discount, $tax)
     $result = $db->query($sql);
     if ($result->num_rows > 0) {
         $result = $result->fetch_assoc();
-        if ($price == isset($result['price']) && $tax == isset($result['tax']) && $discount == isset($result['discount'])) {
+        if ($price == $result['price'] && $tax == $result['tax'] && $discount == $result['discount']) {
             //nothing has been tampered with
             return true;
         } else {
             //something is wrong somewhere
-            return $result['price'] + $result['tax'] - $result['discount'];
+            //return $result['price'] + $result['tax'] - $result['discount'];
+            return false;
         }
     } else {
         //something is definitely wrong somewhere;
@@ -1290,6 +1295,21 @@ function getRealItemPrice($id, $quantity)
         return 0;
     }
 }
+
+function finish_redeem($redeem_id)
+{
+    //This simply adds the filtered and cleansed data that is edited into the database 
+    global $db;
+    $sql = "UPDATE `transactions` SET `redeemed` = 1 WHERE `transactions`.`id` = '$redeem_id' ";
+
+    if (mysqli_query($db, $sql)) {
+        gotoPage('redeem.php');
+    } else {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    }
+    mysqli_close($db);
+}
+
 
 
 //https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]
