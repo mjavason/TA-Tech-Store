@@ -1527,30 +1527,30 @@ function loadProductCartInfo($id)
 
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            
+
             echo "getProductData('";
 
             echo $row['main_img'];
             echo "', ";
 
-              echo $row['discount'];
-                 echo ", '";
+            echo $row['discount'];
+            echo ", '";
 
-                 echo $row['title'];
-                 echo "', ";
+            echo $row['title'];
+            echo "', ";
 
-                  echo $row['price'];
-                  echo ", ";
+            echo $row['price'];
+            echo ", ";
 
-                   echo  $row['id'];
-                     echo ", ";
-                     
-                      echo 1;
-                      echo ", ";
+            echo  $row['id'];
+            echo ", ";
 
-                      echo $row['tax'];
+            echo 1;
+            echo ", ";
 
-                    echo ");";
+            echo $row['tax'];
+
+            echo ");";
 
             //echo html_entity_decode($row['full_spec']);
         }
@@ -1560,7 +1560,8 @@ function loadProductCartInfo($id)
     }
 }
 
-function returnProductCartInfo($id){
+function returnProductCartInfo($id)
+{
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
@@ -1569,8 +1570,8 @@ function returnProductCartInfo($id){
 
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            
-            $jsCartFunction = "getProductData('". $row['main_img']. "', " . $row['discount']. ", '". $row['title']. "', ". $row['price'] . ", " .  $row['id'] . ", " . 1 . ", " . $row['tax'] . ');"';
+
+            $jsCartFunction = "getProductData('" . $row['main_img'] . "', " . $row['discount'] . ", '" . $row['title'] . "', " . $row['price'] . ", " .  $row['id'] . ", " . 1 . ", " . $row['tax'] . ');"';
 
             return $jsCartFunction;
             //echo html_entity_decode($row['full_spec']);
@@ -1581,40 +1582,40 @@ function returnProductCartInfo($id){
     }
 }
 
-function loadLatestProducts(){
+function loadLatestProducts()
+{
 
-//This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
-global $db;
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
 
-$query = "SELECT * FROM item";
-$response = @mysqli_query($db, $query);
-// echo returnProductCartInfo(7);
-// die;
-if ($response) {
-    while ($row = mysqli_fetch_array($response)) {
-        //echo $row['side_img3'];
+    $query = "SELECT * FROM item";
+    $response = @mysqli_query($db, $query);
+    // echo returnProductCartInfo(7);
+    // die;
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            //echo $row['side_img3'];
 
-        echo ' <li class="span3">
+            echo ' <li class="span3">
         <div class="thumbnail">
-            <a href="product_details.php?id='.$row['id'].'"><img src="product_images/'.$row['main_img'].'" alt="picture of '.$row['title'].'" /></a>
+            <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
             <div class="caption">
-                <h5>'.$row['title'].'</h5>
-                <p>'.$row['spec_summary'].'
+                <h5>' . $row['title'] . '</h5>
+                <p>' . $row['spec_summary'] . '
                 </p>
     
                 <h4 style="text-align:center">
-                    <a class="btn" id="cartToggleButton'.$row['id'].'" onclick="'.returnProductCartInfo($row['id']).'>Add to <i class="icon-shopping-cart"></i></a>
-                    <a class="btn btn-primary" href="product_summary.php">&#8358;'.$row['price'].'</a>
+                    <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
+                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
                 </h4>
             </div>
         </div>
     </li>';
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
     }
-} else {
-    echo 'Error! Not found.';
-    die;
-}
-   
 }
 
 //https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]
