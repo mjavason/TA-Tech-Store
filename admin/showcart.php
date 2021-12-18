@@ -69,17 +69,17 @@ if (!isset($_SESSION['log'])) {
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <td>S/N</td>
+                               
                                 <td>Qt</td>
-                                <td>Item</td>
+                                <td>Itm</td>
                                 <td>Paid</td>
-                                <td>Confirmation</td>
+                                <td>Real</td>
                             </tr>
                         </thead>
 
                         <tfoot>
                             <tr>
-                                <td>S/N</td>
+                               
                                 <td>Qt</td>
                                 <td>Itm</td>
                                 <td>Paid</td>
@@ -88,35 +88,9 @@ if (!isset($_SESSION['log'])) {
                         </tfoot>
 
                         <tbody>
+                            
                             <?php layoutCart($_GET['cart']) ?>
-                            <!-- <tr>
-                                <td><strong>1</strong></td>
-                                <td>4</td>
-                                <td>30 MP CAMERA</td>
-                                <td class="text-danger">5000</td>
-                                <td>50000</td>
-                            </tr>
-                            <tr>
-                                <td><strong>2</strong></td>
-                                <td>1</td>
-                                <td>32 GIG USB</td>
-                                <td class="text-danger">5000</td>
-                                <td>50000</td>
-                            </tr>
-                            <tr>
-                                <td><strong>3</strong></td>
-                                <td>1</td>
-                                <td>PEN</td>
-                                <td class="text-danger">5000</td>
-                                <td>50000</td>
-                            </tr>
-                            <tr>
-                                <td><strong>4</strong></td>
-                                <td>2</td>
-                                <td>TV</td>
-                                <td class="text-success">50000</td>
-                                <td>50000</td>
-                            </tr> -->
+                           
                         </tbody>
 
                     </table>

@@ -860,11 +860,6 @@ function deleteAdmin($id)
     mysqli_close($db);
 }
 
-function showPrice()
-{
-    echo '15000';
-}
-
 function findActivePage($pages)
 {
     for ($i = 0; $i < count($pages); $i++) {
@@ -1167,7 +1162,7 @@ function processRedeemCode($formstream)
 
             $_SESSION['username'] = $result['id'];
 
-            if ($result['id'] == 0) {
+            if ($result['redeemed'] == 0) {
                 gotoPage('showcart.php?redeem_id=' . $result['id'] . '&' . 'redeem_code=' . $result['redeem_code'] . '&' . 'customer_name=' . $result['customer_name'] . '&' . 'customer_phone=' . $result['customer_phone'] . '&' . 'cart=' . $result['cart_items']);
             } else {
                 $datamissing['redeem_error'] = 'Items have already been redeemed by the customer';
@@ -1206,7 +1201,6 @@ function layoutCart($jsonCart)
 
         if (confirmItemData($id, $price, $discount, $tax) == true) {
             echo ' <tr>
-            <td><strong>' . $i + 1 . '</strong></td>
             <td>' . $quantity . '</td>
             <td>' . $title . '</td>
             <td class="text-success">' . $temptotal . '</td>
@@ -1214,7 +1208,7 @@ function layoutCart($jsonCart)
         </tr>';
         } else {
             echo ' <tr>
-            <td><strong>' . $i + 1 . '</strong></td>
+           
             <td>' . $quantity . '</td>
             <td>' . $title . '</td>
             <td class="text-danger">' . $temptotal . '</td>
@@ -1310,6 +1304,317 @@ function finish_redeem($redeem_id)
     mysqli_close($db);
 }
 
+function loadProductTitle($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
 
+    $query = "SELECT title FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['title'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+
+function loadSpecSummary($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT spec_summary FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['spec_summary'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductImage1($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT main_img FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['main_img'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductImage2($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT side_img1 FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['side_img1'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductImage3($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT side_img2 FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['side_img2'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductImage4($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT side_img3 FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['side_img3'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadFullSpecs($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT full_spec FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            $fullspecs = json_decode(html_entity_decode($row['full_spec']), true);
+            //    echo '<pre>';
+            //    print_r($fullspecs);
+            for ($i = 0; $i < count($fullspecs); $i++) {
+                echo '<tr class="techSpecRow">';
+                echo '<td class= "techSpecTD1">' . $fullspecs[$i]["title"] . '</td>';
+                echo '<td class = "techSpecTD2">' . $fullspecs[$i]["value"] . '</td>';
+                echo '</tr>';
+            }
+
+            //echo html_entity_decode($row['full_spec']);
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductColors($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT colors FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            $colors = json_decode(html_entity_decode($row['colors']), true);
+            //    echo '<pre>';
+            //    print_r($fullspecs);
+            for ($i = 0; $i < count($colors); $i++) {
+                echo '<tr class="techSpecRow">';
+                echo '<td class= "techSpecTD1">' . $colors[$i]["title"] . '</td>';
+                // echo '<td class = "techSpecTD2">' . $colors[$i]["value"] . '</td>';
+                echo '</tr>';
+            }
+
+            //echo html_entity_decode($row['full_spec']);
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductFeatures($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT features FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            echo $row['features'];
+
+            //echo html_entity_decode($row['full_spec']);
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductCategories($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT categories FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            $categories = json_decode(html_entity_decode($row['categories']), true);
+            //    echo '<pre>';
+            //    print_r($fullspecs);
+            for ($i = 0; $i < count($categories); $i++) {
+                if ($i > 0) {
+                    echo ',';
+                }
+                echo $categories[$i]["title"];
+            }
+
+            //echo html_entity_decode($row['full_spec']);
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadProductCartInfo($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT * FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            
+            echo "getProductData('";
+
+            echo $row['main_img'];
+            echo "', ";
+
+              echo $row['discount'];
+                 echo ", '";
+
+                 echo $row['title'];
+                 echo "', ";
+
+                  echo $row['price'];
+                  echo ", ";
+
+                   echo  $row['id'];
+                     echo ", ";
+                     
+                      echo 1;
+                      echo ", ";
+
+                      echo $row['tax'];
+
+                    echo ");";
+
+            //echo html_entity_decode($row['full_spec']);
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function returnProductCartInfo($id){
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT * FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            
+            $jsCartFunction = "getProductData('". $row['main_img']. "', " . $row['discount']. ", '". $row['title']. "', ". $row['price'] . ", " .  $row['id'] . ", " . 1 . ", " . $row['tax'] . ');"';
+
+            return $jsCartFunction;
+            //echo html_entity_decode($row['full_spec']);
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadLatestProducts(){
+
+//This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+global $db;
+
+$query = "SELECT * FROM item";
+$response = @mysqli_query($db, $query);
+// echo returnProductCartInfo(7);
+// die;
+if ($response) {
+    while ($row = mysqli_fetch_array($response)) {
+        //echo $row['side_img3'];
+
+        echo ' <li class="span3">
+        <div class="thumbnail">
+            <a href="product_details.php?id='.$row['id'].'"><img src="product_images/'.$row['main_img'].'" alt="picture of '.$row['title'].'" /></a>
+            <div class="caption">
+                <h5>'.$row['title'].'</h5>
+                <p>'.$row['spec_summary'].'
+                </p>
+    
+                <h4 style="text-align:center">
+                    <a class="btn" id="cartToggleButton'.$row['id'].'" onclick="'.returnProductCartInfo($row['id']).'>Add to <i class="icon-shopping-cart"></i></a>
+                    <a class="btn btn-primary" href="product_summary.php">&#8358;'.$row['price'].'</a>
+                </h4>
+            </div>
+        </div>
+    </li>';
+    }
+} else {
+    echo 'Error! Not found.';
+    die;
+}
+   
+}
 
 //https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]

@@ -118,6 +118,7 @@ require_once "admin/functions/functions.php";
 
 	
 <?php
+if(isset($_GET['fin'])){
 	if ($_GET['fin'] == true) {
 	?>
 		<script>
@@ -127,7 +128,7 @@ require_once "admin/functions/functions.php";
 			setFrontendItems();
 			
 		</script>
-	<?php } ?>
+	<?php } }?>
 
 	<?php echo loadPaystackCode();
 	?>

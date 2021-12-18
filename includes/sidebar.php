@@ -13,7 +13,7 @@
 			</li>
 		</ul>
 	</li>
-	<li class="subMenu"><a> CLOTHES [840] </a>
+	<!-- <li class="subMenu"><a> CLOTHES [840] </a>
 		<ul style="display:none">
 			<li><a href="products.php"><i class="icon-chevron-right"></i>Women's Clothing (45)</a>
 			</li>
@@ -42,9 +42,9 @@
 			<li><a href="products.php"><i class="icon-chevron-right"></i>Garden (3)</a></li>
 			<li><a href="products.php"><i class="icon-chevron-right"></i>Khao Shong (11)</a></li>
 		</ul>
-	</li>
-	<li><a href="products.php">HEALTH & BEAUTY [18]</a></li>
+	</li> -->
+	<!-- <li><a href="products.php">HEALTH & BEAUTY [18]</a></li>
 	<li><a href="products.php">SPORTS & LEISURE [58]</a></li>
-	<li><a href="products.php">BOOKS & ENTERTAINMENTS [14]</a></li>
+	<li><a href="products.php">BOOKS & ENTERTAINMENTS [14]</a></li> -->
 </ul>
 <br />

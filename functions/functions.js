@@ -157,7 +157,7 @@ function loadCartSummary() {
 
         var row = document.createElement('tr');
         row.innerHTML = `
-    <td> <img width="60" src="themes/images/products/${productLS[i].image}" alt="" /></td>
+    <td> <img width="60" src="product_images/${productLS[i].image}" alt="" /></td>
 
       <td>${productLS[i].title}</td>
 

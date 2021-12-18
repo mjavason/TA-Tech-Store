@@ -1,21 +1,21 @@
-<h3>Fujifilm FinePix S2950 Digital Camera </h3>
-<small>- (14MP, 18x Optical Zoom) 3-inch LCD</small>
+<h3><?php loadProductTitle($_GET['id']); ?></h3>
+<small><?php loadSpecSummary($_GET['id']); ?></small>
 <hr class="soft" />
 
 	<div class="control-group">
 	
 		<div class="controls">
-			<button id="cartToggleButton1" onclick="getProductData('4.jpg', 1000, 'Camera', 10000, 1, 1, 230);" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+			<button id="cartToggleButton7" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
 		</div>
 	</div>
 
 <hr class="soft clr" />
-<p>
+<!-- <p>
 	14 Megapixels. 18.0 x Optical Zoom. 3.0-inch LCD Screen. Full HD photos and 1280 x 720p HD movie capture. ISO sensitivity ISO6400 at reduced resolution.
 	Tracking Auto Focus. Motion Panorama Mode. Face Detection technology with Blink detection and Smile and shoot mode. 4 x AA batteries not included. WxDxH 110.2 ×81.4x73.4mm.
 	Weight 0.341kg (excluding battery and memory card). Weight 0.437kg (including battery and memory card).
 
-</p>
+</p> -->
 <!-- <a class="btn btn-small pull-right" href="#detail">More Details</a> -->
 <br class="clr" />
 <a href="#" name="detail"></a>

@@ -1,4 +1,4 @@
-		<div class="container">
+		<!-- <div class="container">
 			<div class="row">
 
 				<div class="span3">
@@ -28,4 +28,7 @@
 				</div>
 			</div>
 			<p class="pull-right">&copy; Bootshop</p>
-		</div><!-- Container End -->
+		</div>Container End -->
+
+		
+                   
