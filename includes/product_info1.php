@@ -5,7 +5,7 @@
 	<div class="control-group">
 	
 		<div class="controls">
-			<button id="cartToggleButton7" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+			<button id="cartToggleButton<?php echo $_GET['id'];?>" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
 		</div>
 	</div>
 

@@ -73,7 +73,7 @@ require_once "admin/functions/functions.php";
 								</div>
 								<div class="tab-pane fade" id="profile">
 									<div id="myTab" class="pull-right">
-										<!-- <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a> -->
+										<a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
 										<a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
 									</div>
 									<br class="clr" />

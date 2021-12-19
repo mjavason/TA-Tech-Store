@@ -1,4 +1,6 @@
+
 <?php loadLatestProducts(); ?>
+
 <!-- <li class="span3">
     <div class="thumbnail">
         <a href="product_details.php?id=7"><img src="themes/images/products/4.jpg" alt="" /></a>
@@ -9,7 +11,7 @@
             </p>
 
             <h4 style="text-align:center">
-                <a class="btn" id="cartToggleButton7" onclick="getProductData('4.jpg', 700, 'Camera', 15000, 7, 1, 2000);">Add to <i class="icon-shopping-cart"></i></a>
+             <a class="btn" id="cartToggleButton7" onclick="getProductData('4.jpg', 700, 'Camera', 15000, 7, 1, 2000);">Add to <i class="icon-shopping-cart"></i></a>
                 <a class="btn btn-primary" href="product_summary.php">$10000</a>
             </h4>
             

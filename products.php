@@ -34,15 +34,15 @@
 				<div class="span9">
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
-						<li class="active">Products Name</li>
+						<li class="active">Cameras</li>
 					</ul>
-					<h3> Products Name <small class="pull-right"> 40 products are available </small></h3>
+					<h3> Cameras <small class="pull-right"> 40 products are available </small></h3>
 					<hr class="soft" />
-					<p>
+					<!-- <p>
 						Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.
-					</p>
+					</p> -->
 					<hr class="soft" />
-					<form class="form-horizontal span6">
+					<form class="form-horizontal span6" action="" method="post">
 						<div class="control-group">
 							<label class="control-label alignL">Sort By </label>
 							<select>
@@ -51,7 +51,9 @@
 								<option>Priduct Stoke</option>
 								<option>Price Lowest first</option>
 							</select>
+							<input type="submit" value="Sort">
 						</div>
+						
 					</form>
 
 					<div id="myTab" class="pull-right">

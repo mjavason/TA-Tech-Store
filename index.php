@@ -17,6 +17,7 @@ require_once "admin/functions/functions.php";
 	<?php
 	require_once('includes/head.php');
 	?>
+	
 </head>
 
 <body>
@@ -78,6 +79,7 @@ require_once "admin/functions/functions.php";
 	<?php
 	require_once('includes/frontScripts.php');
 	?>
+	
 
 	<!-- Themes switcher section ============================================================================================= -->
 	<div id="secectionBox">

@@ -50,20 +50,23 @@ function processNewProduct($formstream, $editId = null)
         }
 
         if (empty($stock)) {
-            $datamissing['st'] = "Missing product stock";
+            //$datamissing['st'] = "Missing product stock";
+            $stock = 0;
         } else {
             $stock = htmlentities($stock, ENT_QUOTES);
         }
 
 
         if (empty($discount)) {
-            $datamissing['d'] = "Missing product discount";
+            //$datamissing['d'] = "Missing product discount";
+            $discount = 0;
         } else {
             $discount = trim(Sanitize($discount));
         }
 
         if (empty($tax)) {
-            $datamissing['t'] = "Missing product tax";
+            $tax = 0;
+            //$datamissing['t'] = "Missing product tax";
         } else {
             $tax = trim(Sanitize($tax));
         }
@@ -294,6 +297,7 @@ function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $full
     //This simply adds the filtered and cleansed data into the database 
     global $db;
     $admin = 1; //$_SESSION['admin_id'];
+
     $sql = "INSERT INTO item(title, 	price, stock, 	discount,	tax,  spec_summary, full_spec, colors, categories, features, main_img, side_img1, side_img2, side_img3, created_by) VALUES ('$title', '$price', '$stock', '$discount', '$tax', '$specsummary', '$fullspecs', '$colors', '$categories', '$features', '$mi', '$si1', '$si2', '$si3', '$admin')";
 
     if (mysqli_query($db, $sql)) {
@@ -1322,7 +1326,6 @@ function loadProductTitle($id)
     }
 }
 
-
 function loadSpecSummary($id)
 {
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
@@ -1582,10 +1585,10 @@ function returnProductCartInfo($id)
     }
 }
 
-function loadLatestProducts()
+function loadLatestProducts($id = null)
 {
 
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    //this loads up all the latest products in the database
     global $db;
 
     $query = "SELECT * FROM item";
@@ -1593,10 +1596,32 @@ function loadLatestProducts()
     // echo returnProductCartInfo(7);
     // die;
     if ($response) {
-        while ($row = mysqli_fetch_array($response)) {
-            //echo $row['side_img3'];
+        if (isset($id)) {
+            while ($row = mysqli_fetch_array($response)) {
+                //echo $row['side_img3'];
+                if ($row['id'] == $id) {
+                } else {
+                    echo ' <li class="span3">
+            <div class="thumbnail">
+                <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+                <div class="caption">
+                    <h5>' . $row['title'] . '</h5>
+                    <p>' . $row['spec_summary'] . '
+                    </p>
 
-            echo ' <li class="span3">
+                    <h4 style="text-align:center">
+                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                </h4>
+                </div>
+            </div>
+        </li>';
+                }
+            }
+        } else {
+            while ($row = mysqli_fetch_array($response)) {
+                //echo $row['side_img3'];
+
+                echo ' <li class="span3">
         <div class="thumbnail">
             <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
             <div class="caption">
@@ -1611,11 +1636,82 @@ function loadLatestProducts()
             </div>
         </div>
     </li>';
+            }
         }
     } else {
         echo 'Error! Not found.';
         die;
     }
 }
+
+function loadLatestProductsBlock($id = null)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT * FROM item";
+    $response = @mysqli_query($db, $query);
+    // echo returnProductCartInfo(7);
+    // die;
+    if ($response) {
+
+        if (isset($id)) {
+            while ($row = mysqli_fetch_array($response)) {
+                //echo $row['side_img3'];
+                if ($row['id'] == $id) {
+                } else {
+                    echo '
+                    <hr class="soft" /><div class="row">
+                    <div class="span2">
+                    <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>	</div>
+                    <div class="span4">
+                    <h3>' . $row['title'] . '</h3>
+                        <hr class="soft" />
+                        <p>' . $row['spec_summary'] . '
+                                </p>
+                        <a class="btn btn-small pull-right" href="product_details.php?id=' . $row['id'] . '">View Details</a>
+                        <br class="clr" />
+                    </div>
+                    <div class="span3 alignR">
+                            <h3>&#8358;' . $row['price'] . '</h3>
+                    </div>
+                    </div>';
+                }
+            }
+        } else {
+            while ($row = mysqli_fetch_array($response)) {
+
+                echo '
+    <hr class="soft" /><div class="row">
+	<div class="span2">
+    <img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" />	</div>
+	<div class="span4">
+    <h3>' . $row['title'] . '</h3>
+		<hr class="soft" />
+		<p>' . $row['spec_summary'] . '
+                </p>
+		<a class="btn btn-small pull-right" href="product_details.php?id=' . $row['id'] . '">View Details</a>
+		<br class="clr" />
+	</div>
+	<div class="span3 alignR">
+		<form class="form-horizontal qtyFrm">
+			<h3>&#8358;' . $row['price'] . '</h3>
+			<br />
+			<div class="btn-group">
+                <a class="btn btn-large btn-primary" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
+                <a href="product_summary.php?id=' . $row['id'] . '" class="btn btn-large"> Go to <i class=" icon-shopping-cart"></i></a>
+			</div>
+		</form>
+	</div>
+    </div>';
+            }
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+
 
 //https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]

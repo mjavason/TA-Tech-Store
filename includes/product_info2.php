@@ -12,5 +12,5 @@
 	</tbody>
 </table>
 
-<h5>Features</h5>
+<h4>Features</h4>
 <?php loadProductFeatures($_GET['id']); ?>
