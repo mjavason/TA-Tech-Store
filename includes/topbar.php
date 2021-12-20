@@ -18,7 +18,7 @@
 	</div>
 	<!-- Navbar ================================================== -->
 	<div id="logoArea" class="navbar">
-		<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
+		<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar collapsed">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -37,7 +37,7 @@
 				</select>
 				<button type="submit" id="submitButton" class="btn btn-primary">Go</button>
 			</form>
-			<ul id="topMenu" class="nav pull-right">
+			<ul id="topMenu" class="nav pull-right collapse" style="height: 0px;">
 				<li class=""><a href="products.php?category=SPECIAL">Special Offers</a></li>
 				<!-- <li class=""><a href="normal.php">Delivery</a></li> -->
 				<li class=""><a href="contact.php">Contact</a></li>
