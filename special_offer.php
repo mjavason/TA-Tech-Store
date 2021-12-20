@@ -45,7 +45,7 @@ require_once "admin/functions/functions.php";
 					</ul>
 					<h4> 20% Discount Special offer<small class="pull-right"> 40 products are available </small></h4>
 					<hr class="soft" />
-					<form class="form-horizontal span6">
+					<!-- <form class="form-horizontal span6">
 						<div class="control-group">
 							<label class="control-label alignL">Sort By </label>
 							<select>
@@ -55,7 +55,7 @@ require_once "admin/functions/functions.php";
 								<option>Price Lowest first</option>
 							</select>
 						</div>
-					</form>
+					</form> -->
 					<div id="myTab" class="pull-right">
 						<a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
 						<a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>

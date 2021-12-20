@@ -38,7 +38,7 @@
 				<button type="submit" id="submitButton" class="btn btn-primary">Go</button>
 			</form>
 			<ul id="topMenu" class="nav pull-right">
-				<li class=""><a href="special_offer.php">Special Offers</a></li>
+				<li class=""><a href="products.php?category=SPECIAL">Special Offers</a></li>
 				<!-- <li class=""><a href="normal.php">Delivery</a></li> -->
 				<li class=""><a href="contact.php">Contact</a></li>
 

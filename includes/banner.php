@@ -3,7 +3,6 @@
 		<div class="item active">
 			<div class="container">
 				<a href="register.php"><img style="width:100%" src="themes/images/carousel/1.png" alt="special offers" /></a>
-
 			</div>
 		</div>
 		<div class="item">

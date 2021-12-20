@@ -1,3 +1,9 @@
+<?php
+
+require_once "admin/config/connect.php";
+require_once "admin/functions/functions.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,15 +40,16 @@
 				<div class="span9">
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
-						<li class="active">Cameras</li>
+						<li class="active"><?php echo $_GET['category']; ?></li>
 					</ul>
-					<h3> Cameras <small class="pull-right"> 40 products are available </small></h3>
+					<h3> <?php echo $_GET['category']; ?> <small class="pull-right"><?php echo numberOfProductsUnderCategory($_GET['category']) ?> available product(s)</small></h3>
 					<hr class="soft" />
 					<!-- <p>
 						Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.
 					</p> -->
 					<hr class="soft" />
-					<form class="form-horizontal span6" action="" method="post">
+				
+					<!-- <form class="form-horizontal span6" action="" method="post">
 						<div class="control-group">
 							<label class="control-label alignL">Sort By </label>
 							<select>
@@ -53,14 +60,15 @@
 							</select>
 							<input type="submit" value="Sort">
 						</div>
-						
-					</form>
+
+					</form> -->
 
 					<div id="myTab" class="pull-right">
 						<a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
 						<a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
 					</div>
 					<br class="clr" />
+					<br>
 					<div class="tab-content">
 						<!-- include products.php -->
 						<?php

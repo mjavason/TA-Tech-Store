@@ -1,16 +1,10 @@
 <div class="well well-small"><a id="myCart" href="product_summary.php"><img src="themes/images/ico-cart.png" alt="cart"><span class="cart_num "id = "side_product_summary_count"></span> Items in your cart <span class="badge badge-warning pull-right">&#8358;<span class="cart_total " id = "side_product_summary_total"></span></span></a></div>
 <ul id="sideManu" class="nav nav-tabs nav-stacked">
-	<li class="subMenu"><a> ELECTRONICS [230]</a>
+	<li class="subMenu"><a> ELECTRONICS [<?php echo count(formatAllProductCategories(getAllProductCategories())); ?>]</a>
 	<!-- <li class="subMenu open"><a> ELECTRONICS [230]</a> -->
 
 		<ul style="display:none">
-			<li><a class="active" href="products.php"><i class="icon-chevron-right"></i>Cameras
-					(100) </a></li>
-			<li><a href="products.php"><i class="icon-chevron-right"></i>Computers, Tablets &
-					laptop (30)</a></li>
-			<li><a href="products.php"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>
-			<li><a href="products.php"><i class="icon-chevron-right"></i>Sound & Vision (15)</a>
-			</li>
+		<?php loadCategories() ?>
 		</ul>
 	</li>
 	<!-- <li class="subMenu"><a> CLOTHES [840] </a>

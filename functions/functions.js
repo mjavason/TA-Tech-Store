@@ -309,21 +309,31 @@ function showItemsAlreadyInCart(productLS) {
     //console.log(productLS[0].title);
 
     for (var i = 0; i < productLS.length; i++) {
-        //console.log('test 2 passed')
+        console.log('test 2 passed')
         // total += productLS[i]['price'];
         productInCart = productLS[i].id;
         productInCart = productInCart.toString();
-        console.log(productInCart);
+        //console.log(productInCart);
         cartToggleButtonId = 'cartToggleButton' + productInCart;
         console.log(cartToggleButtonId);
         cartToggleButton = document.getElementById(cartToggleButtonId);
         console.log(cartToggleButton);
+
         if (cartToggleButton != null) {
+            console.log('button found.');
             cartToggleButton.style.display = 'none';
+           
         }
 
         //console.log('cartToggleButton' + productInCart);
-        //console.log('test 3 passed.')
+        if(cartToggleButton.style.display == 'none'){
+            console.log('button hidden.')
+        console.log('test 3 passed.')
+        }else{
+            console.log('button not succesfully hidden.')
+            console.log('test 3 failed.')
+        }
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     }
 }
 

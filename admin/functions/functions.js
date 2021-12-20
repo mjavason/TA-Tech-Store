@@ -7,6 +7,9 @@ var jsonCategories = document.getElementById('productcategoryjson');
 var jsonColors = document.getElementById('productcolorjson');
 var jsonSpecs = document.getElementById('productspecjson');
 
+clearLocalStorage();
+clearProductTable();
+
 loadProductInfoTable('spec');
 loadProductInfoTable('category');
 loadProductInfoTable('color');
@@ -18,6 +21,9 @@ function createProductData(titleinputid, valueinputid, productInfo) {
 
     var addSpecInput = document.getElementById(titleinputid);
     var addSpecInput2 = document.getElementById(valueinputid);
+
+    var vaddSpecInput = document.getElementById(titleinputid);
+    var vaddSpecInput2 = document.getElementById(valueinputid);
 
     addSpecInput = addSpecInput.value.toUpperCase().trim();
 
@@ -42,6 +48,10 @@ function createProductData(titleinputid, valueinputid, productInfo) {
             window.alert('text field empty');
         } else {
             insertProductIntoLocalStorage(SpecInfo, productInfo);
+            vaddSpecInput.value = "";
+            if (vaddSpecInput2 != null) {
+                vaddSpecInput2.value = "";
+            }
         }
 
     } else {

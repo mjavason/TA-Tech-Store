@@ -172,10 +172,13 @@ if (isset($_SESSION['editpost'])) {
 
                                 <!-- full specs -->
                                 <div class="mb-5">
-                                    <label for="fullspecs">Product Specs</label>
+                                    <label for="fullspecs">Product Specs <?php
+                                                                            // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                            //     echo '(Leave blank if you dont want to change the old values.)';
+                                                                            // } ?></label>
 
-                                    <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container" required></div>
-                                    <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container" required></div>
+                                    <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container"></div>
+                                    <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container"></div>
                                     <button type="button" onclick="createProductData('fullspecs','fullspecs2','spec');" class="btn-primary m-1" id="addSpec">Add</button>
                                     <div class="items_preview" id="specItems">
                                         <table class="table" id="spectable">
@@ -193,8 +196,11 @@ if (isset($_SESSION['editpost'])) {
 
                                 <!-- colors -->
                                 <div class="mb-5">
-                                    <label for="colors">Product Colours</label>
-                                    <input type="text" name="colors" id="colors" class="container" required>
+                                    <label for="colors">Product Colours <?php
+                                                                        // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                        //     echo '(Leave blank if you dont want to change the old values.)';
+                                                                        // } ?></label>
+                                    <input type="text" name="colors" id="colors" class="container">
                                     <button onclick="createProductData('colors','-','color');" type="button" class="btn-primary m-1" id="addcolor" onclick="">Add</button>
                                     <div class="items_preview" id="colorItems">
                                         <table class="table" id="colortable">
@@ -211,8 +217,11 @@ if (isset($_SESSION['editpost'])) {
 
                                 <!-- categories -->
                                 <div class="mb-5">
-                                    <label for="categories">Product Categories</label>
-                                    <input type="text" name="categories" id="categories" class="container" required>
+                                    <label for="categories">Product Categories <?php
+                                                                                // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                //     echo '(Leave blank if you dont want to change the old values.)';
+                                                                                // } ?></label>
+                                    <input type="text" name="categories" id="categories" class="container">
                                     <button type="button" class="btn-primary m-1" id="addcategory" onclick="createProductData('categories','-','category');">Add</button>
                                     <div class="items_preview" id="categoryItems">
                                         <table class="table" id="categorytable">
@@ -234,13 +243,11 @@ if (isset($_SESSION['editpost'])) {
                                     <!-- <div id="editor" class="edit"></div>
                                     <input type="text" name="rbp" id="editor" class="invisible"> -->
                                     <p>To add code to the text or change classes, just click source after your done and submit. if you undo source before submitting, the changes you make will be removed</p>
-                                    <textarea name="features" id="editor" <?php
+                                    <textarea name="features" id="editor"> <?php
                                                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                echo 'value="';
                                                                                 echo $_GET['features'];
-                                                                                echo '"';
                                                                             }
-                                                                            ?>>
+                                                                            ?>
                                     </textarea>
                                     <script>
                                         CKEDITOR.replace('editor', {
@@ -279,7 +286,7 @@ if (isset($_SESSION['editpost'])) {
 
                                 <span>Do not edit these values. they are used by the system.</span>
                                 <div class="jsondiv">
-                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
+                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required >
                                     <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required>
                                     <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required>
                                 </div>

@@ -1,21 +1,21 @@
-		<!-- <div class="container">
+		<div class="container">
 			<div class="row">
 
 				<div class="span3">
 					<h5>INFORMATION</h5>
 					<a href="contact.php">CONTACT</a>
-					<a href="register.php">REGISTRATION</a>
+					<!-- <a href="register.php">REGISTRATION</a> Never again -->
 					<a href="legal_notice.php">LEGAL NOTICE</a>
 					<a href="tac.php">TERMS AND CONDITIONS</a>
 					<a href="faq.php">FAQ</a>
 				</div>
 				<div class="span3">
 					<h5>OUR OFFERS</h5>
-					<a href="#">NEW PRODUCTS</a>
-					<a href="#">TOP SELLERS</a>
-					<a href="special_offer.php">SPECIAL OFFERS</a>
-					<a href="#">MANUFACTURERS</a>
-					<a href="#">SUPPLIERS</a>
+					<a href="index.php">NEW PRODUCTS</a>
+					<!-- <a href="#">TOP SELLERS</a> -->
+					<a href="products.php?category=SPECIAL">SPECIAL OFFERS</a>
+					<!-- <a href="#">MANUFACTURERS</a>
+					<a href="#">SUPPLIERS</a> -->
 				</div>
 				<div id="socialMedia" class="span3 pull-right">
 					<h5>SOCIAL MEDIA </h5>
@@ -27,8 +27,6 @@
 							alt="youtube" /></a>
 				</div>
 			</div>
-			<p class="pull-right">&copy; Bootshop</p>
-		</div>Container End -->
-
-		
-                   
+			<br>
+			<p class="pull-right">&copy; Tech Acoustic <?php echo date('Y') ?></p>
+		</div>

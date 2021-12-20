@@ -41,7 +41,7 @@ require_once "admin/functions/functions.php";
 				<div class="span9">
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
-						<li><a href="products.php">Products</a> <span class="divider">/</span></li>
+						<!-- <li><a href="products.php?category=ALL">Products</a> <span class="divider">/</span></li> -->
 						<li class="active">Product Details</li>
 					</ul>
 					<div class="row">

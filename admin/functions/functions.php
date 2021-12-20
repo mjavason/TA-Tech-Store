@@ -1492,27 +1492,85 @@ function loadProductFeatures($id)
     }
 }
 
-function loadProductCategories($id)
+function loadProductsWithCategories($category)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+
+
+    //this loads up all the latest products in the database
     global $db;
 
-    $query = "SELECT categories FROM item WHERE id = $id";
+    $query = "SELECT * FROM item";
     $response = @mysqli_query($db, $query);
-
+    // echo returnProductCartInfo(7);
+    // die;
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            $categories = json_decode(html_entity_decode($row['categories']), true);
-            //    echo '<pre>';
-            //    print_r($fullspecs);
-            for ($i = 0; $i < count($categories); $i++) {
-                if ($i > 0) {
-                    echo ',';
-                }
-                echo $categories[$i]["title"];
+            //echo $row['side_img3'];
+            if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
+            } else {
+                echo ' <li class="span3">
+        <div class="thumbnail">
+            <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+            <div class="caption">
+                <h5>' . $row['title'] . '</h5>
+                <p>' . $row['spec_summary'] . '
+                </p>
+    
+                <h4 style="text-align:center">
+                    <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
+                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                </h4>
+            </div>
+        </div>
+        </li>';
             }
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
 
-            //echo html_entity_decode($row['full_spec']);
+function loadProductsWithCategoriesBlock($category)
+{
+
+
+    //this loads up all the latest products in the database
+    global $db;
+
+    $query = "SELECT * FROM item";
+    $response = @mysqli_query($db, $query);
+    // echo returnProductCartInfo(7);
+    // die;
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            //echo $row['side_img3'];
+            // if($category != 'ALL'){
+
+            if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
+            } else {
+                echo '
+    <div class="row">
+	<div class="span2">
+    <img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" />	</div>
+	<div class="span4">
+    <h3>' . $row['title'] . '</h3>
+		<hr class="soft" />
+		<p>' . $row['spec_summary'] . '
+                </p>
+		<a class="btn btn-small pull-right" href="product_details.php?id=' . $row['id'] . '">View Details</a>
+		<br class="clr" />
+	</div>
+	<div class="span3 alignR">
+		<form class="form-horizontal qtyFrm">
+			<h3>&#8358;' . $row['price'] . '</h3>
+			<br />
+			
+		</form>
+	</div>
+    </div><hr class="soft" />';
+ 
+            }
         }
     } else {
         echo 'Error! Not found.';
@@ -1710,6 +1768,97 @@ function loadLatestProductsBlock($id = null)
         echo 'Error! Not found.';
         die;
     }
+}
+
+function getAllProductCategories()
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+    $allCategories = [];
+    $query = "SELECT categories FROM item";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            $categories = json_decode(html_entity_decode($row['categories']), true);
+            //    echo '<pre>';
+            //    print_r($fullspecs);
+
+            array_push($allCategories, $categories);
+
+            //echo html_entity_decode($row['full_spec']);
+        }
+        //    echo '<pre>';
+        //    print_r($allCategories);
+        return $allCategories;
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function formatAllProductCategories($allCategories)
+{
+    $allCategoriesFormatted = [];
+    for ($i = 0; $i < count($allCategories); $i++) {
+        for ($j = 0; $j < count($allCategories[$i]); $j++) {
+
+            if (in_array($allCategories[$i][$j]['title'], $allCategoriesFormatted) == false) {
+                array_push($allCategoriesFormatted, $allCategories[$i][$j]['title']);
+            }
+        }
+    }
+    // echo '<pre>';
+    //print_r($allCategoriesFormatted);
+    return $allCategoriesFormatted;
+}
+
+function loadCategories()
+{
+    $allCategories = formatAllProductCategories(getAllProductCategories());
+    $active = '';
+    for ($i = 0; $i < count($allCategories); $i++) {
+
+        if ($i == 0) {
+            $active = 'active';
+        } else {
+            $active = '';
+        }
+
+        echo '<li><a class="' . $active . '" href="products.php?category=' . $allCategories[$i] . '"><i class="icon-chevron-right"></i>' . $allCategories[$i] . '</a></li>';
+    }
+}
+
+function numberOfProductsUnderCategory($category)
+{
+    $allCategories = getAllProductCategories();
+    $count = 0;
+    for ($i = 0; $i < count($allCategories); $i++) {
+        for ($j = 0; $j < count($allCategories[$i]); $j++) {
+            //array_push($allCategoriesFormatted, $allCategories[$i][$j]['title']);
+            if ($category == $allCategories[$i][$j]['title']) {
+                $count++;
+            }
+        }
+    }
+    //echo '<pre>';
+    //print_r($allCategoriesFormatted);
+    return $count;
+}
+
+function validateProductCategory($category, $categoryjson)
+{
+    $productCategories = json_decode($categoryjson, true);
+    $result = false;
+    for ($i = 0; $i < count($productCategories); $i++) {
+        //array_push($allCategoriesFormatted, $allCategories[$i][$j]['title']);
+        //if (in_array($category, $productCategories[$i])) {
+            if($category == $productCategories[$i]['title']){
+            $result = true;
+        }
+    }
+    //echo $result;
+    return $result;
 }
 
 

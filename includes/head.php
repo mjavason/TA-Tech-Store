@@ -10,7 +10,7 @@
 
 <!-- Bootstrap style -->
 <link id="callCss" rel="stylesheet" href="themes/cerulean/bootstrap.min.css" media="screen" />
-<link href="themes/css/base.css" rel="stylesheet" media="screen" />
+<link href="themes/css/base.css?v=<?php echo time(); ?>" rel="stylesheet" media="screen" />
 <!-- Bootstrap style responsive -->
 <link href="themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
 <link href="themes/css/font-awesome.css" rel="stylesheet" type="text/css">

@@ -55,7 +55,7 @@ require_once "admin/functions/functions.php";
 						//require_once('includes/latest.php');
 						?>
 					</div> -->
-					<h4>Latest Products </h4>
+					<h3>Latest Products </h3>
 					<ul class="thumbnails">
 						<!-- include latest.php -->
 						<?php
