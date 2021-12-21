@@ -7,18 +7,20 @@ require_once "admin/functions/functions.php";
 
 //formatAllProductCategories(getAllProductCategories());
 
-echo validateProductCategory('CAMERAS', '[
-    {
-        "title": "CAMERAS",
-        "value": "8"
-    },
-    {
-        "title": "UI",
-        "value": "8"
-    },
-    {
-        "title": "JIK",
-        "value": "8"
-    }
-]');
+// echo validateProductCategory('CAMERAS', '[
+//     {
+//         "title": "CAMERAS",
+//         "value": "8"
+//     },
+//     {
+//         "title": "UI",
+//         "value": "8"
+//     },
+//     {
+//         "title": "JIK",
+//         "value": "8"
+//     }
+// ]');
+echo '<pre>';
+print_r($_POST);
 ?>

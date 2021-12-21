@@ -25,22 +25,20 @@
 		</a>
 		<div class="navbar-inner">
 			<a class="brand" href="index.php"><img src="themes/images/logo.png" alt="Bootsshop" /></a>
-			<form class="form-inline navbar-search" method="post" action="products.php">
-				<input id="srchFld" class="srchTxt" type="text" />
-				<select class="srchTxt">
-					<option>All</option>
-					<option>CLOTHES </option>
-					<option>FOOD AND BEVERAGES </option>
-					<option>HEALTH & BEAUTY </option>
-					<option>SPORTS & LEISURE </option>
-					<option>BOOKS & ENTERTAINMENTS </option>
+			<form class="form-inline navbar-search" method="post" action="index.php" >
+				<input id="srchFld" name="name" class="srchTxt" type="text" />
+				<select class="srchTxt" name="category">
+					<option value='0'>All</option>
+					<?php loadSearchBarCategories() ?>
 				</select>
-				<button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+				<button type="submit" id="submitButton" name="submit" class="btn btn-primary">Go</button>
 			</form>
 			<ul id="topMenu" class="nav pull-right collapse" style="height: 0px;">
-				<li class=""><a href="products.php?category=SPECIAL">Special Offers</a></li>
+				
+					<?php loadTopBarCategories() ?>
+				<!-- <li class=""><a href="products.php?category=SPECIAL">SPECIAL OFFERS</a></li> -->
 				<!-- <li class=""><a href="normal.php">Delivery</a></li> -->
-				<li class=""><a href="contact.php">Contact</a></li>
+				<!-- <li class=""><a href="contact.php">CONTACT</a></li> -->
 
 			</ul>
 		</div>

@@ -40,15 +40,32 @@ require_once "admin/functions/functions.php";
 				<div class="span9">
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
-						<li class="active"><?php echo $_GET['category']; ?></li>
+						<li class="active"><?php
+											if (isset($_GET['category'])) {
+												echo $_GET['category'];
+											} else {
+												echo 'ALL';
+											} ?></li>
 					</ul>
-					<h3> <?php echo $_GET['category']; ?> <small class="pull-right"><?php echo numberOfProductsUnderCategory($_GET['category']) ?> available product(s)</small></h3>
+					<h3> <?php
+							if (isset($_GET['category'])) {
+								echo $_GET['category'];
+							} else {
+								echo 'ALL';
+							} ?> <small class="pull-right"><?php
+
+															if (isset($_GET['category'])) {
+																echo numberOfProductsUnderCategory($_GET['category']);
+															} else {
+																echo getTotalNumberOfProducts();
+															}
+															?> available product(s)</small></h3>
 					<hr class="soft" />
 					<!-- <p>
 						Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.
 					</p> -->
 					<hr class="soft" />
-				
+
 					<!-- <form class="form-horizontal span6" action="" method="post">
 						<div class="control-group">
 							<label class="control-label alignL">Sort By </label>

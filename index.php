@@ -17,7 +17,7 @@ require_once "admin/functions/functions.php";
 	<?php
 	require_once('includes/head.php');
 	?>
-	
+
 </head>
 
 <body>
@@ -55,6 +55,20 @@ require_once "admin/functions/functions.php";
 						//require_once('includes/latest.php');
 						?>
 					</div> -->
+					<?php if (isset($_POST['submit'])) {
+						//if the user has clicked submit, then show the search results
+					?>
+						<h3>Search Results </h3>
+						<ul class="thumbnails">
+							<!-- include latest.php -->
+							<?php
+							loadProductSearchResults($_POST);
+							//advancedPostSearch($_POST);
+							//getSearchResults($_POST);
+							?>
+						</ul>
+					<?php } ?>
+					<br>
 					<h3>Latest Products </h3>
 					<ul class="thumbnails">
 						<!-- include latest.php -->
@@ -79,7 +93,7 @@ require_once "admin/functions/functions.php";
 	<?php
 	require_once('includes/frontScripts.php');
 	?>
-	
+
 
 	<!-- Themes switcher section ============================================================================================= -->
 	<div id="secectionBox">

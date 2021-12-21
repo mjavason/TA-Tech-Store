@@ -326,13 +326,13 @@ function showItemsAlreadyInCart(productLS) {
         }
 
         //console.log('cartToggleButton' + productInCart);
-        if(cartToggleButton.style.display == 'none'){
-            console.log('button hidden.')
-        console.log('test 3 passed.')
-        }else{
-            console.log('button not succesfully hidden.')
-            console.log('test 3 failed.')
-        }
+        // if(cartToggleButton.style.display == 'none'){
+        //     console.log('button hidden.')
+        // console.log('test 3 passed.')
+        // }else{
+        //     console.log('button not succesfully hidden.')
+        //     console.log('test 3 failed.')
+        // }
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     }
 }

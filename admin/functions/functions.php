@@ -905,7 +905,7 @@ function loadPaystackCode()
 
             onClose: function() {
 
-                alert('Window closed.');
+                //alert('Window closed.');
 
             },
 
@@ -1569,7 +1569,6 @@ function loadProductsWithCategoriesBlock($category)
 		</form>
 	</div>
     </div><hr class="soft" />';
- 
             }
         }
     } else {
@@ -1756,12 +1755,14 @@ function loadLatestProductsBlock($id = null)
 			<h3>&#8358;' . $row['price'] . '</h3>
 			<br />
 			<div class="btn-group">
-                <a class="btn btn-large btn-primary" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
-                <a href="product_summary.php?id=' . $row['id'] . '" class="btn btn-large"> Go to <i class=" icon-shopping-cart"></i></a>
+                
+               
 			</div>
 		</form>
 	</div>
     </div>';
+
+                // echo '<a class="btn btn-large btn-primary" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a> <a href="product_summary.php?id=' . $row['id'] . '" class="btn btn-large"> Go to <i class=" icon-shopping-cart"></i></a>';
             }
         }
     } else {
@@ -1853,12 +1854,140 @@ function validateProductCategory($category, $categoryjson)
     for ($i = 0; $i < count($productCategories); $i++) {
         //array_push($allCategoriesFormatted, $allCategories[$i][$j]['title']);
         //if (in_array($category, $productCategories[$i])) {
-            if($category == $productCategories[$i]['title']){
+        if ($category == $productCategories[$i]['title']) {
             $result = true;
         }
     }
     //echo $result;
     return $result;
+}
+
+function getTotalNumberOfProducts()
+{
+
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+    $allProducts = 0;
+    $query = "SELECT categories FROM item";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        $row = mysqli_fetch_array($response);
+        //while ()) {
+
+        //}
+        //return $allProducts;
+        return count($row) + 1;
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadTopBarCategories()
+{
+
+    $allCategories = formatAllProductCategories(getAllProductCategories());
+    $active = '';
+    for ($i = 0; $i < count($allCategories); $i++) {
+
+        if ($i == 0) {
+            $active = 'active';
+        } else {
+            $active = '';
+        }
+
+        echo '<li><a class="" href="products.php?category=' . $allCategories[$i] . '">' . $allCategories[$i] . '</a></li>';
+    }
+}
+
+function loadSearchBarCategories()
+{
+
+    $allCategories = formatAllProductCategories(getAllProductCategories());
+    $active = '';
+    for ($i = 0; $i < count($allCategories); $i++) {
+
+        if ($i == 0) {
+            $active = 'active';
+        } else {
+            $active = '';
+        }
+        echo '<option value="' . $allCategories[$i] . '">' . $allCategories[$i] . '</option>';
+    }
+}
+
+function loadProductSearchResults($formstream)
+{
+    global $db;
+    extract($formstream);
+
+    if (!empty($name)) {
+
+        //if (!empty($category)) {
+
+        $wordsAry = explode(" ", $name);
+        $wordsCount = count($wordsAry);
+        for ($i = 0; $i < $wordsCount; $i++) {
+
+            $queryCondition = "WHERE title LIKE '%" . $wordsAry[$i] . "%' OR spec_summary LIKE '%" . $wordsAry[$i] . "%' ";
+
+            if ($i != $wordsCount - 1) {
+                $queryCondition .= " OR ";
+            }
+        }
+        //  }
+    }
+
+    $orderby = " ORDER BY id desc";
+    //echo $queryCondition;
+    $sql = "SELECT * FROM item " . $queryCondition . $orderby;
+
+    $checker = null;
+    $response = @mysqli_query($db, $sql);
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+
+            if (validateProductCategory($category, html_entity_decode($row['categories']))) {
+                $checker = $row['id'];
+                echo ' <li class="span3">
+            <div class="thumbnail">
+                <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+                <div class="caption">
+                    <h5>' . $row['title'] . '</h5>
+                    <p>' . $row['spec_summary'] . '
+                    </p>
+        
+                    <h4 style="text-align:center">
+                        <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                    </h4>
+                </div>
+            </div>
+        </li>';
+            } elseif ($category == 0) {
+                $checker = $row['id'];
+                echo ' <li class="span3">
+           <div class="thumbnail">
+               <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+               <div class="caption">
+                   <h5>' . $row['title'] . '</h5>
+                   <p>' . $row['spec_summary'] . '
+                   </p>
+       
+                   <h4 style="text-align:center">
+                       <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                   </h4>
+               </div>
+           </div>
+       </li>';
+            }
+        }
+        if ($checker == null) {
+            echo '<li>Not found</li>';
+        }
+    } else {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    }
 }
 
 
