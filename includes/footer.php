@@ -23,8 +23,8 @@
 							alt="facebook" /></a>
 					<a href="#"><img width="60" height="60" src="themes/images/twitter.png" title="twitter"
 							alt="twitter" /></a>
-					<a href="#"><img width="60" height="60" src="themes/images/youtube.png" title="youtube"
-							alt="youtube" /></a>
+					<!-- <a href="#"><img width="60" height="60" src="themes/images/youtube.png" title="youtube"
+							alt="youtube" /></a> -->
 				</div>
 			</div>
 			<br>
