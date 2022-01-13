@@ -891,7 +891,7 @@ function loadPaystackCode()
             //pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7
             //pk_live_21bba98bf9a683dc3215452aa76419d4204ce121
 
-            key: 'pk_live_21bba98bf9a683dc3215452aa76419d4204ce121', // Replace with your public key
+            key: 'pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7', // Replace with your public key
 
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
@@ -977,102 +977,108 @@ function verifyPayment()
         echo "cURL Error #:" . $err;
     } else {
 
-        // $response = '{
-        //     "status": true,
-        //     "message": "Verification successful",
-        //     "data": {
-        //       "id": 690075520,
-        //       "domain": "test",
-        //       "status": "success",
-        //       "reference": "nms6uvr1pl",
-        //       "amount": 20000,
-        //       "message": null,
-        //       "gateway_response": "Successful",
-        //       "paid_at": "2020-05-19T12:30:56.000Z",
-        //       "created_at": "2020-05-19T12:26:44.000Z",
-        //       "channel": "card",
-        //       "currency": "NGN",
-        //       "ip_address": "154.118.28.239",
-        //       "metadata": "",
-        //       "log": {
-        //         "start_time": 1589891451,
-        //         "time_spent": 6,
-        //         "attempts": 1,
-        //         "errors": 0,
-        //         "success": true,
-        //         "mobile": false,
-        //         "input": [],
-        //         "history": [
-        //           {
-        //             "type": "action",
-        //             "message": "Attempted to pay with card",
-        //             "time": 5
-        //           },
-        //           {
-        //             "type": "success",
-        //             "message": "Successfully paid with card",
-        //             "time": 6
-        //           }
-        //         ]
-        //       },
-        //       "fees": 300,
-        //       "fees_split": {
-        //         "paystack": 300,
-        //         "integration": 40,
-        //         "subaccount": 19660,
-        //         "params": {
-        //           "bearer": "account",
-        //           "transaction_charge": "",
-        //           "percentage_charge": "0.2"
-        //         }
-        //       },
-        //       "authorization": {
-        //         "authorization_code": "AUTH_xxxxxxxxxx",
-        //         "bin": "408408",
-        //         "last4": "4081",
-        //         "exp_month": "12",
-        //         "exp_year": "2020",
-        //         "channel": "card",
-        //         "card_type": "visa DEBIT",
-        //         "bank": "Test Bank",
-        //         "country_code": "NG",
-        //         "brand": "visa",
-        //         "reusable": true,
-        //         "signature": "SIG_xxxxxxxxxxxxxxx",
-        //         "account_name": null
-        //       },
-        //       "customer": {
-        //         "id": 24259516,
-        //         "first_name": null,
-        //         "last_name": null,
-        //         "email": "customer@email.com",
-        //         "customer_code": "CUS_xxxxxxxxxxx",
-        //         "phone": null,
-        //         "metadata": null,
-        //         "risk_action": "default"
-        //       },
-        //       "plan": null,
-        //       "order_id": null,
-        //       "paidAt": "2020-05-19T12:30:56.000Z",
-        //       "createdAt": "2020-05-19T12:26:44.000Z",
-        //       "requested_amount": 20000,
-        //       "transaction_date": "2020-05-19T12:26:44.000Z",
-        //       "plan_object": {},
-        //       "subaccount": {
-        //         "id": 37614,
-        //         "subaccount_code": "ACCT_xxxxxxxxxx",
-        //         "business_name": "Cheese Sticks",
-        //         "description": "Cheese Sticks",
-        //         "primary_contact_name": null,
-        //         "primary_contact_email": null,
-        //         "primary_contact_phone": null,
-        //         "metadata": null,
-        //         "percentage_charge": 0.2,
-        //         "settlement_bank": "Guaranty Trust Bank",
-        //         "account_number": "0123456789"
-        //       }
-        //     }
-        //   }';
+        $number = rand(100, 100000);
+        $t = time();
+        $random = $number . '' . $t;
+
+
+
+        $response = '{
+            "status": true,
+            "message": "Verification successful",
+            "data": {
+              "id": ' . $random . '6,
+              "domain": "test",
+              "status": "success",
+              "reference": "nms6uvr1pl",
+              "amount": 15600,
+              "message": null,
+              "gateway_response": "Successful",
+              "paid_at": "2022-01-19T12:30:56.000Z",
+              "created_at": "2022-01-19T12:26:44.000Z",
+              "channel": "card",
+              "currency": "NGN",
+              "ip_address": "154.118.28.239",
+              "metadata": "",
+              "log": {
+                "start_time": 1589891451,
+                "time_spent": 6,
+                "attempts": 1,
+                "errors": 0,
+                "success": true,
+                "mobile": false,
+                "input": [],
+                "history": [
+                  {
+                    "type": "action",
+                    "message": "Attempted to pay with card",
+                    "time": 5
+                  },
+                  {
+                    "type": "success",
+                    "message": "Successfully paid with card",
+                    "time": 6
+                  }
+                ]
+              },
+              "fees": 300,
+              "fees_split": {
+                "paystack": 300,
+                "integration": 40,
+                "subaccount": 19660,
+                "params": {
+                  "bearer": "account",
+                  "transaction_charge": "",
+                  "percentage_charge": "0.2"
+                }
+              },
+              "authorization": {
+                "authorization_code": "AUTH_xxxxxxxxxx",
+                "bin": "408408",
+                "last4": "4081",
+                "exp_month": "12",
+                "exp_year": "2020",
+                "channel": "card",
+                "card_type": "visa DEBIT",
+                "bank": "Test Bank",
+                "country_code": "NG",
+                "brand": "visa",
+                "reusable": true,
+                "signature": "SIG_xxxxxxxxxxxxxxx",
+                "account_name": null
+              },
+              "customer": {
+                "id": 24259516,
+                "first_name": null,
+                "last_name": null,
+                "email": "customer@email.com",
+                "customer_code": "CUS_xxxxxxxxxxx",
+                "phone": null,
+                "metadata": null,
+                "risk_action": "default"
+              },
+              "plan": null,
+              "order_id": null,
+              "paidAt": "2020-05-19T12:30:56.000Z",
+              "createdAt": "2020-05-19T12:26:44.000Z",
+              "requested_amount": 20000,
+              "transaction_date": "2020-05-19T12:26:44.000Z",
+              "plan_object": {},
+              "subaccount": {
+                "id": 37614,
+                "subaccount_code": "ACCT_xxxxxxxxxx",
+                "business_name": "Cheese Sticks",
+                "description": "Cheese Sticks",
+                "primary_contact_name": null,
+                "primary_contact_email": null,
+                "primary_contact_phone": null,
+                "metadata": null,
+                "percentage_charge": 0.2,
+                "settlement_bank": "Guaranty Trust Bank",
+                "account_number": "0123456789"
+              }
+            }
+          }';
         //echo '<pre>';
         //echo $response;
         if (isset($_GET['cart'])) {
@@ -2008,6 +2014,60 @@ function loadPagination($pag = null)
             echo '<li><a href="#">2</a></li>';
         }
     }
+}
+
+function getTotalMonthlyIncome()
+{
+    global $db;
+    $allProducts = 0;
+    $query = "SELECT * FROM transactions";
+    $response = @mysqli_query($db, $query);
+    $total = 0;
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+
+            $currentmonth = date("Y-m");
+            $paidmonth = date("Y-m", strtotime($row['paid_at']));
+            // 
+            
+            if ($paidmonth == $currentmonth) {
+                $total += $row['amount'];
+            }
+        }
+    }
+    return $total;
+}
+
+function getTotalYearlyIncome()
+{
+    global $db;
+    $allProducts = 0;
+    $query = "SELECT * FROM transactions";
+    $response = @mysqli_query($db, $query);
+    $total = 0;
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+
+            $currentyear = date("Y");
+            $paidyear = date("Y", strtotime($row['paid_at']));
+            // 
+            
+            if ($paidyear == $currentyear) {
+                $total += $row['amount'];
+            }
+        }
+    }
+    return $total;
+}
+
+function generateTrulyRandomNumber()
+{
+    $number = rand(100, 100000);
+    $t = time();
+    $random = $number . '' . $t;
+    return $random;
 }
 
 

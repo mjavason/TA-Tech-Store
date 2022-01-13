@@ -57,7 +57,11 @@ if (!isset($_SESSION['log'])) {
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
+                    <!-- include earnings.php -->
+                    <?php require_once('includes/earnings.php'); ?>
 
+                    <!-- include charts.php -->
+                    <?php require_once('includes/charts.php'); ?>
 
 
 

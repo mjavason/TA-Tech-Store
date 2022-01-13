@@ -28,7 +28,7 @@ if (isset($_POST['name'])) {
         body {
             /* background-color: greenyellow; */
             text-align: center;
-            padding: 2rem;
+            padding: 1rem;
         }
 
         form {
@@ -42,9 +42,9 @@ if (isset($_POST['name'])) {
         }
 
         .redeem {
-            margin: 10px;
+            margin: 5px;
             background-color: greenyellow;
-            font-size: 50px;
+            font-size: 40px;
         }
 
         .warning {

@@ -96,7 +96,7 @@ require_once "admin/functions/functions.php";
 					<div class="pagination">
 						<!-- include pagination.php` -->
 						<?php
-						require_once('includes/pagination.php');
+						//require_once('includes/pagination.php');
 						?>
 					</div>
 					<br class="clr" />
