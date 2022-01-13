@@ -1,3 +1,9 @@
+<?php
+
+require_once "admin/config/connect.php";
+require_once "admin/functions/functions.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,9 +17,11 @@
 	<?php
 	require_once('includes/head.php');
 	?>
+
 </head>
 
 <body>
+
 	<div id="header">
 		<!-- include topbar.php -->
 		<?php
@@ -21,8 +29,10 @@
 		?>
 	</div>
 	<!-- Header End====================================================================== -->
+
 	<div id="mainBody">
 		<div class="container">
+
 			<div class="row">
 				<!-- Sidebar ================================================== -->
 				<div id="sidebar" class="span3">
@@ -30,10 +40,9 @@
 					<?php
 					require_once('includes/sidebar.php');
 					?>
-
 				</div>
 				<!-- Sidebar end=============================================== -->
-				<div class="span9">
+				<!-- <div class="span9">
 					<ul class="breadcrumb">
 						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
 						<li class="active">Terms and Conditions</li>
@@ -68,11 +77,14 @@
 					<p>
 						Aliquam interdum, ipsum a posuere dictum, tellus risus blandit dolor, at tristique sapien urna vel purus. Pellentesque in dictum urna. Sed feugiat libero sit amet arcu malesuada eu convallis dui convallis. Donec facilisis massa a ipsum aliquam lobortis. Praesent ac lectus sed leo aliquam egestas. Sed ante neque, volutpat ac tempor et, bibendum at ligula. Nunc porta vestibulum sodales.
 					</p>
+				</div> -->
+				
+					
+
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- MainBody End ============================= -->
 	<!-- Footer ================================================================== -->
 	<div id="footerSection">
 		<?php
@@ -86,11 +98,25 @@
 	require_once('includes/frontScripts.php');
 	?>
 
+
 	<!-- Themes switcher section ============================================================================================= -->
 	<div id="secectionBox">
 		<!-- include themes.php -->
+		<?php
+		//require_once('includes/themes.php')
+		?>
 	</div>
 	<span id="themesBtn"></span>
+
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
