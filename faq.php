@@ -43,6 +43,12 @@ require_once "admin/functions/functions.php";
 				</div>
 				<!-- Sidebar end=============================================== -->
 				<div class="span9">
+				<ul class="breadcrumb">
+						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
+						<li class="active">FAQ</li>
+					</ul>
+					<h3>Frequently Asked Questions</h3>
+					<hr class="soft" />
 					<!-- <div class="container">
 						<h1>FAQ</h1>
 						<hr class="soften" />
