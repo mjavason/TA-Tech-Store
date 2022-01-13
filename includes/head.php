@@ -12,10 +12,13 @@
 <link id="callCss" rel="stylesheet" href="themes/cerulean/bootstrap.min.css" media="screen" />
 <link href="themes/css/base.css?v=<?php echo time(); ?>" rel="stylesheet" media="screen" />
 <!-- Bootstrap style responsive -->
-<link href="themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
-<link href="themes/css/font-awesome.css" rel="stylesheet" type="text/css">
+<!-- <link href="themes/css/bootstrap.min.css?v=<?php echo time(); ?>" rel="stylesheet" /> -->
+
+<link href="themes/css/bootstrap-responsive.min.css?v=<?php echo time(); ?>" rel="stylesheet" />
+
+<link href="themes/css/font-awesome.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css">
 <!-- Google-code-prettify -->
-<link href="themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
+<link href="themes/js/google-code-prettify/prettify.css?v=<?php echo time(); ?>" rel="stylesheet" />
 <!-- fav and touch icons -->
 <link rel="shortcut icon" href="themes/images/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="themes/images/ico/apple-touch-icon-144-precomposed.png">

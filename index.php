@@ -76,7 +76,10 @@ require_once "admin/functions/functions.php";
 						require_once('includes/latest.php');
 						?>
 					</ul>
-
+					<!-- include pagination.php -->
+					<!-- <?php
+						require_once('includes/pagination.php');
+						?> -->
 				</div>
 			</div>
 		</div>

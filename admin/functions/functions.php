@@ -1644,11 +1644,10 @@ function returnProductCartInfo($id)
 
 function loadLatestProducts($id = null)
 {
-
     //this loads up all the latest products in the database
     global $db;
 
-    $query = "SELECT * FROM item";
+    $query = "SELECT * FROM item ORDER BY updated desc";
     $response = @mysqli_query($db, $query);
     // echo returnProductCartInfo(7);
     // die;
@@ -1675,10 +1674,14 @@ function loadLatestProducts($id = null)
                 }
             }
         } else {
-            while ($row = mysqli_fetch_array($response)) {
-                //echo $row['side_img3'];
+            $count = 0;
 
-                echo ' <li class="span3">
+            while ($row = mysqli_fetch_array($response)) {
+
+                if ($count != 10) {
+                    //echo $row['side_img3'];
+
+                    echo ' <li class="span3">
         <div class="thumbnail">
             <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
             <div class="caption">
@@ -1693,6 +1696,8 @@ function loadLatestProducts($id = null)
             </div>
         </div>
     </li>';
+                    $count++;
+                }
             }
         }
     } else {
@@ -1706,7 +1711,7 @@ function loadLatestProductsBlock($id = null)
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
-    $query = "SELECT * FROM item";
+    $query = "SELECT * FROM item ORDER BY updated desc";
     $response = @mysqli_query($db, $query);
     // echo returnProductCartInfo(7);
     // die;
@@ -1736,9 +1741,10 @@ function loadLatestProductsBlock($id = null)
                 }
             }
         } else {
+            $count = 0;
             while ($row = mysqli_fetch_array($response)) {
-
-                echo '
+                if ($count != 10) {
+                    echo '
     <hr class="soft" /><div class="row">
 	<div class="span2">
     <img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" />	</div>
@@ -1761,6 +1767,8 @@ function loadLatestProductsBlock($id = null)
 		</form>
 	</div>
     </div>';
+                    $count++;
+                }
 
                 // echo '<a class="btn btn-large btn-primary" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a> <a href="product_summary.php?id=' . $row['id'] . '" class="btn btn-large"> Go to <i class=" icon-shopping-cart"></i></a>';
             }
@@ -1864,8 +1872,6 @@ function validateProductCategory($category, $categoryjson)
 
 function getTotalNumberOfProducts()
 {
-
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
     $allProducts = 0;
     $query = "SELECT categories FROM item";
@@ -1990,6 +1996,19 @@ function loadProductSearchResults($formstream)
     }
 }
 
+// incomplete function
+function loadPagination($pag = null)
+{
+
+    if (isset($pag)) {
+        if ($pag == 'prev') {
+        }
+    } else {
+        for ($i = 0; $i < ceil(getTotalNumberOfProducts() / 10); $i++) {
+            echo '<li><a href="#">2</a></li>';
+        }
+    }
+}
 
 
 //https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]
