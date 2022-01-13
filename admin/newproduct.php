@@ -175,7 +175,8 @@ if (isset($_SESSION['editpost'])) {
                                     <label for="fullspecs">Product Specs <?php
                                                                             // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                             //     echo '(Leave blank if you dont want to change the old values.)';
-                                                                            // } ?></label>
+                                                                            // } 
+                                                                            ?></label>
 
                                     <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container"></div>
                                     <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container"></div>
@@ -199,7 +200,8 @@ if (isset($_SESSION['editpost'])) {
                                     <label for="colors">Product Colours <?php
                                                                         // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                         //     echo '(Leave blank if you dont want to change the old values.)';
-                                                                        // } ?></label>
+                                                                        // } 
+                                                                        ?></label>
                                     <input type="text" name="colors" id="colors" class="container">
                                     <button onclick="createProductData('colors','-','color');" type="button" class="btn-primary m-1" id="addcolor" onclick="">Add</button>
                                     <div class="items_preview" id="colorItems">
@@ -220,7 +222,8 @@ if (isset($_SESSION['editpost'])) {
                                     <label for="categories">Product Categories <?php
                                                                                 // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                                 //     echo '(Leave blank if you dont want to change the old values.)';
-                                                                                // } ?></label>
+                                                                                // } 
+                                                                                ?></label>
                                     <input type="text" name="categories" id="categories" class="container">
                                     <button type="button" class="btn-primary m-1" id="addcategory" onclick="createProductData('categories','-','category');">Add</button>
                                     <div class="items_preview" id="categoryItems">
@@ -286,7 +289,7 @@ if (isset($_SESSION['editpost'])) {
 
                                 <span>Do not edit these values. they are used by the system.</span>
                                 <div class="jsondiv">
-                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required >
+                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
                                     <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required>
                                     <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required>
                                 </div>
@@ -339,26 +342,18 @@ if (isset($_SESSION['editpost'])) {
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    Page level custom scripts
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script> -->
-
-    <!-- ck editor includes -->
-    <!-- <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                //toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-            })
-            .then(editor => {
-                window.editor = editor;
-            })
-            .catch(err => {
-                console.error(err.stack);
-            });
-    </script> -->
+    <script>
+	ClassicEditor
+		.create( document.querySelector( '#editor' ), {
+			toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'specialCharacters' ]
+		} )
+		.then( editor => {
+			window.editor = editor;
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+</script>
     <script src="functions/functions.js"></script>
 
 </body>
