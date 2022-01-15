@@ -315,6 +315,7 @@ function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $full
 
 //READ start
 
+//admin
 function loadProducts()
 {
     global $db;
@@ -324,6 +325,7 @@ function loadProducts()
     $response = @mysqli_query($db, $query);
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
+            adminProductView($row);
             $checker = $row['id'];
         }
         if (empty($checker)) {
