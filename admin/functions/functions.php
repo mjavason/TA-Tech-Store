@@ -344,8 +344,14 @@ function adminProductView($productsArray)
 
     //title============================
     echo  '<td>';
+    if($productsArray['stock'] == 0){
+     echo '<span class="text-danger">';   
+    }
     $string = substr($productsArray['title'], 0, 25);
     echo ucwords(strtolower($string));
+    if($productsArray['stock'] == 0){
+        echo '</span>';   
+       }
     echo '</td>';
 
     //specification summary
@@ -371,7 +377,13 @@ function adminProductView($productsArray)
 
     //stock
     echo '<td>';
+    if($productsArray['stock'] == 0){
+        echo '<span class="text-danger">';   
+       }
     echo $productsArray['stock'];
+    if($productsArray['stock'] == 0){
+        echo '</span>';   
+       }
     echo '</td>';
 
     //How many sold
