@@ -35,10 +35,10 @@
                 <a class="collapse-item" href="products.php">Products</a>
                 <a class="collapse-item" href="admins.php">Admins</a>
 
-                <h6 class="collapse-header">Login Screens:</h6>
+                <!-- <h6 class="collapse-header">Login Screens:</h6>
                 <a class="collapse-item" href="login.php">Login</a>
                 <a class="collapse-item" href="register.php">Register</a>
-                <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
+                <a class="collapse-item" href="forgot-password.php">Forgot Password</a> -->
 
 
             </div>
