@@ -325,8 +325,6 @@ function loadProducts()
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
             $checker = $row['id'];
-
-            adminProductView($row);
         }
         if (empty($checker)) {
             echo '<p class="text-center">No Products Added Yet</p>';
@@ -1121,10 +1119,16 @@ function processVerifyTransactionResult($response, $cart)
 //This function stores the paystack API response(including the redeem code(message)) into the database for future reference.
 function addTransactionDetail($status, $redeem_code, $cart_items, $amount, $channel, $ip, $paid_at, $created_at, $fees, $full_transaction_info_json)
 {
+    $cart_items_decoded = json_decode($cart_items, true);
+
+    for ($i = 0; $i < sizeof($cart_items_decoded); $i++) {
+        $id = $cart_items_decoded[$i]['id'];
+        $quantity = $cart_items_decoded[$i]['quantity'];
+        updateStockAndSold($id, $quantity);
+    }
+
     //This simply adds the filtered and cleansed data into the database 
     global $db;
-    //$_SESSION['admin_id'];
-
     $sql = "INSERT INTO transactions(status, redeem_code, cart_items, 	amount, 	channel, 	ip, 	paid_at, 	created_at, 	fees, full_transaction_info_json) VALUES ('$status', '$redeem_code', '$cart_items', '$amount', '$channel', '$ip', '$paid_at', '$created_at', '$fees', '$full_transaction_info_json')";
 
     if (mysqli_query($db, $sql)) {
@@ -1136,6 +1140,77 @@ function addTransactionDetail($status, $redeem_code, $cart_items, $amount, $chan
         // die;
     }
     mysqli_close($db);
+}
+
+function updateStockAndSold($id, $quantity)
+{
+    //this gets the previous stock of the item and subtracts the current quantity being bought
+    $oldStock = getCurrentStock($id);
+    $newStock = $oldStock - $quantity;
+    if ($newStock < 0) {
+        $newStock = 0;
+    }
+
+    //this gets the previous sold amount of the item and adds the current quantity being bought
+    $oldSold = getCurrentSold($id);
+    $newSold = $oldSold + $quantity;
+
+
+    //This simply adds the filtered and cleansed data that is edited into the database 
+    global $db;
+    $sql = "UPDATE `item` SET `stock` = '$newStock', `sold` = '$newSold' WHERE `item`.`id` = '$id' ";
+
+    if (mysqli_query($db, $sql)) {
+        return true;
+        //gotoPage('../product_summary.php?fin=true');
+    } else {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    }
+    mysqli_close($db);
+}
+
+function getCurrentStock($id)
+{
+    global $db;
+
+    //get current stock
+    $oldStock = 0;
+
+    $query = "SELECT stock FROM item WHERE id = $id";
+    $result = mysqli_query($db, $query);
+    if (!$result) {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    } else {
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                $oldStock = $row['stock'];
+            }
+        }
+        // $total_visitors = mysqli_num_rows($result);
+    }
+    return $oldStock;
+}
+
+function getCurrentSold($id)
+{
+    global $db;
+
+    //get current sold items
+    $oldSold = 0;
+
+    $query = "SELECT sold FROM item WHERE id = $id";
+    $result = mysqli_query($db, $query);
+    if (!$result) {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    } else {
+        if ($result) {
+            while ($row = mysqli_fetch_array($result)) {
+                $oldSold = $row['sold'];
+            }
+        }
+        // $total_visitors = mysqli_num_rows($result);
+    }
+    return $oldSold;
 }
 
 //This function adds some extra details to the transaction table. these details are name and phone number which are not compulsory
@@ -1648,6 +1723,7 @@ function returnProductCartInfo($id)
     }
 }
 
+//frontend
 function loadLatestProducts($id = null)
 {
     //this loads up all the latest products in the database
@@ -1661,9 +1737,10 @@ function loadLatestProducts($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['id'] == $id) {
-                } else {
-                    echo ' <li class="span3">
+                if ($row['stock'] != 0) {
+                    if ($row['id'] == $id) {
+                    } else {
+                        echo ' <li class="span3">
             <div class="thumbnail">
                 <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
                 <div class="caption">
@@ -1677,17 +1754,18 @@ function loadLatestProducts($id = null)
                 </div>
             </div>
         </li>';
-                }
+                    }
+                } //end of stock checker
             }
         } else {
             $count = 0;
 
             while ($row = mysqli_fetch_array($response)) {
+                if ($row['stock'] != 0) {
+                    if ($count != 10) {
+                        //echo $row['side_img3'];
 
-                if ($count != 10) {
-                    //echo $row['side_img3'];
-
-                    echo ' <li class="span3">
+                        echo ' <li class="span3">
         <div class="thumbnail">
             <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
             <div class="caption">
@@ -1702,8 +1780,9 @@ function loadLatestProducts($id = null)
             </div>
         </div>
     </li>';
-                    $count++;
-                }
+                        $count++;
+                    }
+                } //end of stock checker
             }
         }
     } else {
@@ -1712,6 +1791,7 @@ function loadLatestProducts($id = null)
     }
 }
 
+//frontend
 function loadLatestProductsBlock($id = null)
 {
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
@@ -1726,9 +1806,11 @@ function loadLatestProductsBlock($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['id'] == $id) {
-                } else {
-                    echo '
+                if ($row['stock'] != 0) {
+
+                    if ($row['id'] == $id) {
+                    } else {
+                        echo '
                     <hr class="soft" /><div class="row">
                     <div class="span2">
                     <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>	</div>
@@ -1744,13 +1826,15 @@ function loadLatestProductsBlock($id = null)
                             <h3>&#8358;' . $row['price'] . '</h3>
                     </div>
                     </div>';
-                }
+                    }
+                } //end of stock checker
             }
         } else {
             $count = 0;
             while ($row = mysqli_fetch_array($response)) {
-                if ($count != 10) {
-                    echo '
+                if ($row['stock'] != 0) {
+                    if ($count != 10) {
+                        echo '
     <hr class="soft" /><div class="row">
 	<div class="span2">
     <img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" />	</div>
@@ -1773,10 +1857,11 @@ function loadLatestProductsBlock($id = null)
 		</form>
 	</div>
     </div>';
-                    $count++;
-                }
+                        $count++;
+                    }
 
-                // echo '<a class="btn btn-large btn-primary" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a> <a href="product_summary.php?id=' . $row['id'] . '" class="btn btn-large"> Go to <i class=" icon-shopping-cart"></i></a>';
+                    // echo '<a class="btn btn-large btn-primary" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a> <a href="product_summary.php?id=' . $row['id'] . '" class="btn btn-large"> Go to <i class=" icon-shopping-cart"></i></a>';
+                } //end of stock checker
             }
         }
     } else {
@@ -1929,6 +2014,7 @@ function loadSearchBarCategories()
     }
 }
 
+//frontend
 function loadProductSearchResults($formstream)
 {
     global $db;
@@ -1959,40 +2045,41 @@ function loadProductSearchResults($formstream)
     $response = @mysqli_query($db, $sql);
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-
-            if (validateProductCategory($category, html_entity_decode($row['categories']))) {
-                $checker = $row['id'];
-                echo ' <li class="span3">
-            <div class="thumbnail">
-                <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
-                <div class="caption">
-                    <h5>' . $row['title'] . '</h5>
-                    <p>' . $row['spec_summary'] . '
-                    </p>
-        
-                    <h4 style="text-align:center">
-                        <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
-                    </h4>
+            if ($row['stock'] != 0) {
+                if (validateProductCategory($category, html_entity_decode($row['categories']))) {
+                    $checker = $row['id'];
+                    echo ' <li class="span3">
+                <div class="thumbnail">
+                    <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+                    <div class="caption">
+                        <h5>' . $row['title'] . '</h5>
+                        <p>' . $row['spec_summary'] . '
+                        </p>
+            
+                        <h4 style="text-align:center">
+                            <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                        </h4>
+                    </div>
                 </div>
-            </div>
-        </li>';
-            } elseif ($category == 0) {
-                $checker = $row['id'];
-                echo ' <li class="span3">
-           <div class="thumbnail">
-               <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
-               <div class="caption">
-                   <h5>' . $row['title'] . '</h5>
-                   <p>' . $row['spec_summary'] . '
-                   </p>
-       
-                   <h4 style="text-align:center">
-                       <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
-                   </h4>
+            </li>';
+                } elseif ($category == 0) {
+                    $checker = $row['id'];
+                    echo ' <li class="span3">
+               <div class="thumbnail">
+                   <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+                   <div class="caption">
+                       <h5>' . $row['title'] . '</h5>
+                       <p>' . $row['spec_summary'] . '
+                       </p>
+           
+                       <h4 style="text-align:center">
+                           <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                       </h4>
+                   </div>
                </div>
-           </div>
-       </li>';
-            }
+           </li>';
+                }
+            } //end of stock checker
         }
         if ($checker == null) {
             echo '<li>Not found</li>';
@@ -2030,7 +2117,7 @@ function getTotalMonthlyIncome()
             $currentmonth = date("Y-m");
             $paidmonth = date("Y-m", strtotime($row['paid_at']));
             // 
-            
+
             if ($paidmonth == $currentmonth) {
                 $total += $row['amount'];
             }
@@ -2053,7 +2140,7 @@ function getTotalYearlyIncome()
             $currentyear = date("Y");
             $paidyear = date("Y", strtotime($row['paid_at']));
             // 
-            
+
             if ($paidyear == $currentyear) {
                 $total += $row['amount'];
             }
