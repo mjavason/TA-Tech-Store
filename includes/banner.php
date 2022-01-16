@@ -1,11 +1,7 @@
 <div id="myCarousel" class="carousel slide">
 	<div class="carousel-inner">
+		
 		<div class="item active">
-			<div class="container">
-				<a href="index.php"><img style="width:100%" src="themes/images/carousel/1.png" alt="special offers" /></a>
-			</div>
-		</div>
-		<div class="item">
 			<div class="container">
 				<a href="index.php"><img style="width:100%" src="themes/images/carousel/2.png" alt="" /></a>
 				<div class="carousel-caption">

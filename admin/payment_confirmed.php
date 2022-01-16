@@ -39,12 +39,13 @@ if (isset($_POST['name'])) {
         form input {
             width: 100%;
             margin: 10px;
+            height: 18px;
         }
 
         .redeem {
             margin: 5px;
             background-color: greenyellow;
-            font-size: 40px;
+            font-size: 2rem;
         }
 
         .warning {
@@ -59,7 +60,7 @@ if (isset($_POST['name'])) {
 
 <body>
     <h1>Thanks for patronizing us. Below is your redeem code, present it at any of our branches to receive your goods. </h1>
-    <h1 class="redeem"><?php echo $_GET['redeem_code'] ?></h1>
+    <h3 class="redeem"><?php echo $_GET['redeem_code'] ?></h3>
     <h3 class="warning">Please do not loose this code, without it, it'll be really difficult to confirm if you own the goods.</h3>
     <h3>Click <a href="../product_summary.php?fin=true">Here</a> to continue shopping.</h3>
 
