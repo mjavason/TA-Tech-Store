@@ -344,14 +344,14 @@ function adminProductView($productsArray)
 
     //title============================
     echo  '<td>';
-    if($productsArray['stock'] == 0){
-     echo '<span class="text-danger">';   
+    if ($productsArray['stock'] == 0) {
+        echo '<span class="text-danger">';
     }
     $string = substr($productsArray['title'], 0, 25);
     echo ucwords(strtolower($string));
-    if($productsArray['stock'] == 0){
-        echo '</span>';   
-       }
+    if ($productsArray['stock'] == 0) {
+        echo '</span>';
+    }
     echo '</td>';
 
     //specification summary
@@ -377,13 +377,13 @@ function adminProductView($productsArray)
 
     //stock
     echo '<td>';
-    if($productsArray['stock'] == 0){
-        echo '<span class="text-danger">';   
-       }
+    if ($productsArray['stock'] == 0) {
+        echo '<span class="text-danger">';
+    }
     echo $productsArray['stock'];
-    if($productsArray['stock'] == 0){
-        echo '</span>';   
-       }
+    if ($productsArray['stock'] == 0) {
+        echo '</span>';
+    }
     echo '</td>';
 
     //How many sold
@@ -2049,6 +2049,18 @@ function loadProductSearchResults($formstream)
             }
         }
         //  }
+    }else{
+        $name="";
+        $wordsAry = explode(" ", $name);
+        $wordsCount = count($wordsAry);
+        for ($i = 0; $i < $wordsCount; $i++) {
+
+            $queryCondition = "WHERE title LIKE '%" . $wordsAry[$i] . "%' OR spec_summary LIKE '%" . $wordsAry[$i] . "%' ";
+
+            if ($i != $wordsCount - 1) {
+                $queryCondition .= " OR ";
+            }
+        }
     }
 
     $orderby = " ORDER BY id desc";
