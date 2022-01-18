@@ -1577,9 +1577,9 @@ function loadProductFeatures($id)
 
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            echo $row['features'];
+            //echo $row['features'];
 
-            //echo html_entity_decode($row['full_spec']);
+            echo html_entity_decode($row['features']);
         }
     } else {
         echo 'Error! Not found.';
@@ -1988,7 +1988,11 @@ function getTotalNumberOfProducts()
 
         //}
         //return $allProducts;
-        return count($row) + 1;
+        if (empty($row)) {
+            return 0;
+        } else {
+            return count($row) + 1;
+        }
     } else {
         echo 'Error! Not found.';
         die;
@@ -2049,8 +2053,8 @@ function loadProductSearchResults($formstream)
             }
         }
         //  }
-    }else{
-        $name="";
+    } else {
+        $name = "";
         $wordsAry = explode(" ", $name);
         $wordsCount = count($wordsAry);
         for ($i = 0; $i < $wordsCount; $i++) {

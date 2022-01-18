@@ -20,7 +20,7 @@ require_once "admin/functions/functions.php";
 	<?php
 	require_once('includes/head.php');
 	?>
-	
+
 </head>
 
 <body>
@@ -55,21 +55,21 @@ require_once "admin/functions/functions.php";
 
 
 
-					
-						<table id="product_table" class="table table-bordered">
-							<!-- include checkout.php -->
-							<?php
-							require_once('includes/checkout.php');
-							?>
-						</table>
-		
+
+					<table id="product_table" class="table table-bordered">
+						<!-- include checkout.php -->
+						<?php
+						require_once('includes/checkout.php');
+						?>
+					</table>
+
 
 
 
 					<!-- <table class="table table-bordered">
 						 include voucher.php
 						<?php
-						require_once('includes/voucher.php');
+						//require_once('includes/voucher.php');
 						?>
 
 					</table>
@@ -77,7 +77,7 @@ require_once "admin/functions/functions.php";
 					<table class="table table-bordered">
 						include shipping.php
 						<?php
-						require_once('includes/shipping.php');
+						//require_once('includes/shipping.php');
 						?>
 					</table> -->
 					<button class="btn-large btn-danger pull-left" id="clear_cart" onclick="deleteAllCartItems();">Clear Cart</button>
@@ -86,7 +86,7 @@ require_once "admin/functions/functions.php";
 						<form id="paymentForm">
 							<div class="form-submit">
 								<button type="submit" class="btn-large btn-success pull-right" id="checkout" onclick="payWithPaystack()">Checkout</button>
-								
+
 							</div>
 						</form>
 					</div>
@@ -117,19 +117,19 @@ require_once "admin/functions/functions.php";
 	require_once('includes/frontScripts.php');
 	?>
 
-	
-<?php
-if(isset($_GET['fin'])){
-	if ($_GET['fin'] == true) {
+
+	<?php
+	if (isset($_GET['fin'])) {
+		if ($_GET['fin'] == true) {
 	?>
-		<script>
-			clearLocalStorage();
-			clearProductTable();
-			deleteAllCartItems();
-			setFrontendItems();
-			
-		</script>
-	<?php } }?>
+			<script>
+				clearLocalStorage();
+				clearProductTable();
+				deleteAllCartItems();
+				setFrontendItems();
+			</script>
+	<?php }
+	} ?>
 
 	<?php echo loadPaystackCode();
 	?>
