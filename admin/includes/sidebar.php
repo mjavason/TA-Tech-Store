@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">TA Tech Store</div>
+        <div class="sidebar-brand-text mx-3">I-Plan Store</div>
     </a>
 
     <!-- Divider -->

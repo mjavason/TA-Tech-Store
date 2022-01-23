@@ -13,6 +13,13 @@ if (isset($_GET['edit'])) {
     $_SESSION['editImage2'] = $_GET['image2'];
     $_SESSION['editImage3'] = $_GET['image3'];
     $_SESSION['editImage4'] = $_GET['image4'];
+} else {
+    $_SESSION['editpost'] = null;
+    $_SESSION['editId'] = null;
+    $_SESSION['editImage1'] = null;
+    $_SESSION['editImage2'] = null;
+    $_SESSION['editImage3'] = null;
+    $_SESSION['editImage4'] = null;
 }
 
 if (isset($_SESSION['editpost'])) {
@@ -45,12 +52,12 @@ if (isset($_SESSION['editpost'])) {
     <script src="vendor/ckeditor/ckeditor.js"></script>
 
     <style>
-        .jsonformatted,
-        .jsondiv {
-            /* display: none; */
-            background-color: white;
+        /* .jsonformatted,
+        .jsondiv { */
+        /* display: none; */
+        /* background-color: white;
             color: white;
-        }
+        } */
     </style>
 
 </head>
@@ -173,13 +180,23 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- full specs -->
                                 <div class="mb-5">
                                     <label for="fullspecs">Product Specs <?php
-                                                                            // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                            //     echo '(Leave blank if you dont want to change the old values.)';
-                                                                            // } 
+                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                //echo '(fill up the boxes but dont click "Add" if you dont want to edit)';
+                                                                            }
                                                                             ?></label>
 
-                                    <div class="mb-1"><input placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container"></div>
-                                    <div class="mb-1"> <input type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container"></div>
+                                    <div class="mb-1"><input <?php
+                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                } else {
+                                                                    echo 'required';
+                                                                }
+                                                                ?> placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container"></div>
+                                    <div class="mb-1"> <input <?php
+                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                } else {
+                                                                    echo 'required';
+                                                                }
+                                                                ?> type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container"></div>
                                     <button type="button" onclick="createProductData('fullspecs','fullspecs2','spec');" class="btn-primary m-1" id="addSpec">Add</button>
                                     <div class="items_preview" id="specItems">
                                         <table class="table" id="spectable">
@@ -198,11 +215,16 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- colors -->
                                 <div class="mb-5">
                                     <label for="colors">Product Colours <?php
-                                                                        // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                        //     echo '(Leave blank if you dont want to change the old values.)';
-                                                                        // } 
+                                                                        if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                           // echo '(fill up the box but dont click "Add" if you dont want to edit)';
+                                                                        }
                                                                         ?></label>
-                                    <input type="text" name="colors" id="colors" class="container">
+                                    <input <?php
+                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                            } else {
+                                                echo 'required';
+                                            }
+                                            ?> type="text" name="colors" id="colors" class="container">
                                     <button onclick="createProductData('colors','-','color');" type="button" class="btn-primary m-1" id="addcolor" onclick="">Add</button>
                                     <div class="items_preview" id="colorItems">
                                         <table class="table" id="colortable">
@@ -220,11 +242,16 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- categories -->
                                 <div class="mb-5">
                                     <label for="categories">Product Categories <?php
-                                                                                // if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                //     echo '(Leave blank if you dont want to change the old values.)';
-                                                                                // } 
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                   // echo '(fill up the box but dont click "Add" if you dont want to edit)';
+                                                                                }
                                                                                 ?></label>
-                                    <input type="text" name="categories" id="categories" class="container">
+                                    <input <?php
+                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                            } else {
+                                                echo 'required';
+                                            }
+                                            ?> type="text" name="categories" id="categories" class="container">
                                     <button type="button" class="btn-primary m-1" id="addcategory" onclick="createProductData('categories','-','category');">Add</button>
                                     <div class="items_preview" id="categoryItems">
                                         <table class="table" id="categorytable">
@@ -245,7 +272,7 @@ if (isset($_SESSION['editpost'])) {
                                     <label for="features">Product Features</label>
                                     <!-- <div id="editor" class="edit"></div>
                                     <input type="text" name="rbp" id="editor" class="invisible"> -->
-                                    <p>To add code to the text or change classes, just click source after your done and submit. if you undo source before submitting, the changes you make will be removed</p>
+                                    <!-- <p>To add code to the text or change classes, just click source after your done and submit. if you undo source before submitting, the changes you make will be removed</p> -->
                                     <textarea name="features" id="editor"> <?php
                                                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                                 echo $_GET['features'];
@@ -287,11 +314,29 @@ if (isset($_SESSION['editpost'])) {
                                 </div>
 
 
-                                <span>Do not edit these values. they are used by the system.</span>
+                                <span>Do not edit these values. they are used by the system. If they are empty, add the missing color, full spec or categories field.</span>
                                 <div class="jsondiv">
-                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required>
-                                    <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required>
-                                    <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required>
+                                    <input class="jsonformatted" type="text" id="productspecjson" name="specsjson" required <?php
+                                                                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                                                                echo "value='";
+                                                                                                                                echo $_GET['fullspec'];
+                                                                                                                                echo "'";
+                                                                                                                            }
+                                                                                                                            ?>>
+                                    <input class="jsonformatted" type="text" id="productcolorjson" name="colorsjson" required <?php
+                                                                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                                                                    echo "value='";
+                                                                                                                                    echo $_GET['colors'];
+                                                                                                                                    echo "'";
+                                                                                                                                }
+                                                                                                                                ?>>
+                                    <input class="jsonformatted" type="text" id="productcategoryjson" name="categoriesjson" required <?php
+                                                                                                                                        if (isset($_GET['edit']) && $_GET['edit'] == 1) {
+                                                                                                                                            echo "value='";
+                                                                                                                                            echo $_GET['categories'];
+                                                                                                                                            echo "'";
+                                                                                                                                        }
+                                                                                                                                        ?>>
                                 </div>
 
 
@@ -343,17 +388,17 @@ if (isset($_SESSION['editpost'])) {
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
-	ClassicEditor
-		.create( document.querySelector( '#editor' ), {
-			toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'specialCharacters' ]
-		} )
-		.then( editor => {
-			window.editor = editor;
-		} )
-		.catch( err => {
-			console.error( err.stack );
-		} );
-</script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'specialCharacters']
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    </script>
     <script src="functions/functions.js"></script>
 
 </body>

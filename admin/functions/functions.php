@@ -434,6 +434,17 @@ function adminProductView($productsArray)
     echo '&image4=';
     echo ucwords(strtoupper($productsArray['side_img3']));
 
+    //json class
+    echo '&fullspec=';
+    echo ($productsArray['full_spec']);
+
+    echo '&colors=';
+    echo ($productsArray['colors']);
+
+    echo '&categories=';
+    echo ($productsArray['categories']);
+    //json class
+
 
     echo '&edit=1';
 
@@ -2187,5 +2198,56 @@ function generateTrulyRandomNumber()
     return $random;
 }
 
+function deleteDuplicateImages()
+{
+    global $db;
+    $validImages = [];
+
+    $query = "SELECT main_img, side_img1, side_img2, side_img3  FROM item";
+    $response = @mysqli_query($db, $query);
+    if ($response) {
+        //this loops through the whole product images and stores all their images in a single array. This array will then be used to validate the false images
+        while ($row = mysqli_fetch_array($response)) {
+            array_push($validImages, $row['main_img'], $row['side_img1'], $row['side_img2'], $row['side_img3']);
+        }
+
+        //the next three lines gets all the files in the product_images folder
+        $path = 'product_images/';
+        $files = scandir($path);
+        $files = array_diff(scandir($path), array('.', '..'));
+
+        //this takes a single image from all the ones in the folder, and checks if they are contained in the valid images array, if not they are deleted.
+        foreach ($files as $file) {
+            //echo "<a href='product_images/$file'>$file</a><br>";
+            if (!in_array($file, $validImages, true)) {
+                echo "$file deleted<br>";
+                unlink("product_images/" . $file);
+            }
+        }
+    }
+}
+
+
+// $path = './';
+// $files = scandir($path);
+// $files = array_diff(scandir($path), array('.', '..'));
+// foreach($files as $file){
+// echo "<a href='$file'>$file</a>";
+// }
+
+
+         
+// if (!is_dir("../product_images/".$row['main_img'])) {
+//     //mkdir("../product_images", 0755);
+//     unlink("../product_images/" . $_SESSION['editImage1']);
+//     unlink("../product_images/" . $_SESSION['editImage2']);
+//     unlink("../product_images/" . $_SESSION['editImage3']);
+//     unlink("../product_images/" . $_SESSION['editImage4']);
+// } else {
+   
+// }
+
+
+//     }
 
 //https://localhost/tats/admin/showcart.php?redeem_id=11&redeem_code=690075529&customer_name=Orji Michael&customer_phone=08148863871&cart=[{"image":"4.jpg","discount":700,"title":"Camera","price":15000,"quantity":1,"id":7,"tax":200},{"image":"7.jpg","discount":500,"title":"32 Gig USB","price":4500,"quantity":1,"id":8,"tax":100}]

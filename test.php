@@ -21,6 +21,7 @@ require_once "admin/functions/functions.php";
 //         "value": "8"
 //     }
 // ]');
-echo '<pre>';
-print_r($_POST);
+// echo '<pre>';
+// print_r($_POST);
+deleteDuplicateImages();
 ?>
