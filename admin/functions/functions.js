@@ -208,9 +208,17 @@ function setFrontendItems() {
     color = getProductsInLocalStorage('color');
     category = getProductsInLocalStorage('category');
 
-    jsonSpecs.value = JSON.stringify(spec, 't', 3);
-    jsonCategories.value = JSON.stringify(category, 't', 3);
-    jsonColors.value = JSON.stringify(color, 't', 3);
+    if (JSON.stringify(spec, 't', 3) != '[]') {
+        jsonSpecs.value = JSON.stringify(spec, 't', 3);
+    }
+
+    if (JSON.stringify(color, 't', 3) != '[]') {
+        jsonColors.value = JSON.stringify(color, 't', 3);
+    }
+
+    if (JSON.stringify(category, 't', 3) != '[]') {
+        jsonCategories.value = JSON.stringify(category, 't', 3);
+    }
 }
 
 

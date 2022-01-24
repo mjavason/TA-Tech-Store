@@ -344,7 +344,7 @@ function adminProductView($productsArray)
 
     //title============================
     echo  '<td>';
-    if ($productsArray['stock'] == 0) {
+    if ($productsArray['stock'] <= 0) {
         echo '<span class="text-danger">';
     }
     $string = substr($productsArray['title'], 0, 25);
@@ -377,7 +377,7 @@ function adminProductView($productsArray)
 
     //stock
     echo '<td>';
-    if ($productsArray['stock'] == 0) {
+    if ($productsArray['stock'] <= 0) {
         echo '<span class="text-danger">';
     }
     echo $productsArray['stock'];
@@ -1762,7 +1762,7 @@ function loadLatestProducts($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['stock'] != 0) {
+                if ($row['stock'] > 0) {
                     if ($row['id'] == $id) {
                     } else {
                         echo ' <li class="span3">
@@ -1786,7 +1786,7 @@ function loadLatestProducts($id = null)
             $count = 0;
 
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] != 0) {
+                if ($row['stock'] > 0) {
                     if ($count != 10) {
                         //echo $row['side_img3'];
 
@@ -1831,7 +1831,7 @@ function loadLatestProductsBlock($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['stock'] != 0) {
+                if ($row['stock'] > 0) {
 
                     if ($row['id'] == $id) {
                     } else {
@@ -1857,7 +1857,7 @@ function loadLatestProductsBlock($id = null)
         } else {
             $count = 0;
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] != 0) {
+                if ($row['stock'] > 0) {
                     if ($count != 10) {
                         echo '
     <hr class="soft" /><div class="row">
@@ -1990,20 +1990,14 @@ function getTotalNumberOfProducts()
 {
     global $db;
     $allProducts = 0;
-    $query = "SELECT categories FROM item";
+    $query = "SELECT * FROM item";
     $response = @mysqli_query($db, $query);
 
     if ($response) {
-        $row = mysqli_fetch_array($response);
-        //while ()) {
-
-        //}
-        //return $allProducts;
-        if (empty($row)) {
-            return 0;
-        } else {
-            return count($row) + 1;
+        while ($row = mysqli_fetch_array($response)) {
+           $allProducts++;
         }
+        return $allProducts;
     } else {
         echo 'Error! Not found.';
         die;

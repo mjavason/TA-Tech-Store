@@ -188,13 +188,13 @@ if (isset($_SESSION['editpost'])) {
                                     <div class="mb-1"><input <?php
                                                                 if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                 } else {
-                                                                    echo 'required';
+                                                                    //echo 'required';
                                                                 }
                                                                 ?> placeholder="E.g RAM" type="text" name="fullspecs" id="fullspecs" class="container"></div>
                                     <div class="mb-1"> <input <?php
                                                                 if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                 } else {
-                                                                    echo 'required';
+                                                                    //echo 'required';
                                                                 }
                                                                 ?> type="text" placeholder="E.g 4 Gigabytes" name="fullspecs" id="fullspecs2" class="container"></div>
                                     <button type="button" onclick="createProductData('fullspecs','fullspecs2','spec');" class="btn-primary m-1" id="addSpec">Add</button>
@@ -216,13 +216,13 @@ if (isset($_SESSION['editpost'])) {
                                 <div class="mb-5">
                                     <label for="colors">Product Colours <?php
                                                                         if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                           // echo '(fill up the box but dont click "Add" if you dont want to edit)';
+                                                                            // echo '(fill up the box but dont click "Add" if you dont want to edit)';
                                                                         }
                                                                         ?></label>
                                     <input <?php
                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                             } else {
-                                                echo 'required';
+                                                //echo 'required';
                                             }
                                             ?> type="text" name="colors" id="colors" class="container">
                                     <button onclick="createProductData('colors','-','color');" type="button" class="btn-primary m-1" id="addcolor" onclick="">Add</button>
@@ -243,13 +243,13 @@ if (isset($_SESSION['editpost'])) {
                                 <div class="mb-5">
                                     <label for="categories">Product Categories <?php
                                                                                 if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                   // echo '(fill up the box but dont click "Add" if you dont want to edit)';
+                                                                                    // echo '(fill up the box but dont click "Add" if you dont want to edit)';
                                                                                 }
                                                                                 ?></label>
                                     <input <?php
                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                             } else {
-                                                echo 'required';
+                                                //echo 'required';
                                             }
                                             ?> type="text" name="categories" id="categories" class="container">
                                     <button type="button" class="btn-primary m-1" id="addcategory" onclick="createProductData('categories','-','category');">Add</button>
