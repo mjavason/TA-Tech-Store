@@ -1600,8 +1600,6 @@ function loadProductFeatures($id)
 
 function loadProductsWithCategories($category)
 {
-
-
     //this loads up all the latest products in the database
     global $db;
 
@@ -1753,6 +1751,12 @@ function loadLatestProducts($id = null)
 {
     //this loads up all the latest products in the database
     global $db;
+    if ($_SERVER["PHP_SELF"] == '/tats/index.php') {
+        $itemLimit = 10;
+    } else {
+        $itemLimit = 10000;
+    }
+
 
     $query = "SELECT * FROM item ORDER BY updated desc";
     $response = @mysqli_query($db, $query);
@@ -1787,7 +1791,7 @@ function loadLatestProducts($id = null)
 
             while ($row = mysqli_fetch_array($response)) {
                 if ($row['stock'] > 0) {
-                    if ($count != 10) {
+                    if ($count != $itemLimit) {
                         //echo $row['side_img3'];
 
                         echo ' <li class="span3">
@@ -1819,8 +1823,15 @@ function loadLatestProducts($id = null)
 //frontend
 function loadLatestProductsBlock($id = null)
 {
+
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
+
+    if ($_SERVER["PHP_SELF"] == '/tats/index.php') {
+        $itemLimit = 10;
+    } else {
+        $itemLimit = 10000;
+    }
 
     $query = "SELECT * FROM item ORDER BY updated desc";
     $response = @mysqli_query($db, $query);
@@ -1858,7 +1869,7 @@ function loadLatestProductsBlock($id = null)
             $count = 0;
             while ($row = mysqli_fetch_array($response)) {
                 if ($row['stock'] > 0) {
-                    if ($count != 10) {
+                    if ($count != $itemLimit) {
                         echo '
     <hr class="soft" /><div class="row">
 	<div class="span2">
@@ -1895,6 +1906,96 @@ function loadLatestProductsBlock($id = null)
     }
 }
 
+function loadRelatedProducts($id)
+{
+    global $db;
+    $productsArray = getIdsOfProductsUnderCategories(getParticularProductCategories($id), $id);
+
+    $query = "SELECT * FROM item ORDER BY updated desc";
+    $response = @mysqli_query($db, $query);
+    // echo returnProductCartInfo(7);
+    // die;
+    if ($response) {
+        if (isset($id)) {
+            while ($row = mysqli_fetch_array($response)) {
+                if ($row['stock'] > 0) {
+                    if (in_array($row['id'], $productsArray)) {
+                        //echo $row['side_img3'];
+
+                        echo ' <li class="span3">
+        <div class="thumbnail">
+            <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+            <div class="caption">
+                <h5>' . $row['title'] . '</h5>
+                <p>' . $row['spec_summary'] . '
+                </p>
+    
+                <h4 style="text-align:center">
+                    <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
+                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                </h4>
+            </div>
+        </div>
+    </li>';
+                    }
+                } //end of stock checker
+            }
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function loadRelatedProductsBlock($id)
+{
+    global $db;
+    $productsArray = getIdsOfProductsUnderCategories(getParticularProductCategories($id), $id);
+
+    $query = "SELECT * FROM item ORDER BY updated desc";
+    $response = @mysqli_query($db, $query);
+    // echo returnProductCartInfo(7);
+    // die;
+    if ($response) {
+        if (isset($id)) {
+            while ($row = mysqli_fetch_array($response)) {
+                if ($row['stock'] > 0) {
+                    if (in_array($row['id'], $productsArray)) {
+                        //echo $row['side_img3'];
+
+                        echo '
+    <hr class="soft" /><div class="row">
+	<div class="span2">
+    <img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" />	</div>
+	<div class="span4">
+    <h3>' . $row['title'] . '</h3>
+		<hr class="soft" />
+		<p>' . $row['spec_summary'] . '
+                </p>
+		<a class="btn btn-small pull-right" href="product_details.php?id=' . $row['id'] . '">View Details</a>
+		<br class="clr" />
+	</div>
+	<div class="span3 alignR">
+		<form class="form-horizontal qtyFrm">
+			<h3>&#8358;' . $row['price'] . '</h3>
+			<br />
+			<div class="btn-group">
+                
+               
+			</div>
+		</form>
+	</div>
+    </div>';
+                    }
+                } //end of stock checker
+            }
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
 function getAllProductCategories()
 {
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
@@ -1922,6 +2023,53 @@ function getAllProductCategories()
     }
 }
 
+function getParticularProductCategories($id)
+{
+    global $db;
+    $allCategories = [];
+    $query = "SELECT categories FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            $categories = json_decode(html_entity_decode($row['categories']), true);
+        }
+        return $categories;
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function getIdsOfProductsUnderCategories($categories, $parentId)
+{
+
+    //this loads up all the latest products in the database
+    global $db;
+    $idsOfProductsUnderCategory = [];
+
+    $query = "SELECT * FROM item";
+    $response = @mysqli_query($db, $query);
+    // echo returnProductCartInfo(7);
+    // die;
+    for ($i = 0; $i < count($categories); $i++) {
+        if ($response) {
+            while ($row = mysqli_fetch_array($response)) {
+                //echo $row['side_img3'];
+                if (validateProductCategory($categories[$i]['title'], html_entity_decode($row['categories']))) {
+                    if (!in_array($row['id'], $idsOfProductsUnderCategory) && $row['id'] != $parentId) {
+                        array_push($idsOfProductsUnderCategory, $row['id']);
+                    }
+                }
+            }
+        } else {
+            echo 'Error! Not found.';
+            die;
+        }
+    }
+    return $idsOfProductsUnderCategory;
+}
+
 function formatAllProductCategories($allCategories)
 {
     $allCategoriesFormatted = [];
@@ -1935,6 +2083,8 @@ function formatAllProductCategories($allCategories)
     }
     // echo '<pre>';
     //print_r($allCategoriesFormatted);
+    sort($allCategoriesFormatted, SORT_DESC);
+
     return $allCategoriesFormatted;
 }
 
@@ -1950,7 +2100,7 @@ function loadCategories()
             $active = '';
         }
 
-        echo '<li><a class="' . $active . '" href="products.php?category=' . $allCategories[$i] . '"><i class="icon-chevron-right"></i>' . $allCategories[$i] . '</a></li>';
+        echo '<li><a class="' . $active . '" href="products.php?category=' . $allCategories[$i] . '"><i class="icon-chevron-right"></i>' . $allCategories[$i] . ' [' . numberOfProductsUnderCategory($allCategories[$i]) . ']</a></li>';
     }
 }
 
@@ -1995,7 +2145,7 @@ function getTotalNumberOfProducts()
 
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-           $allProducts++;
+            $allProducts++;
         }
         return $allProducts;
     } else {
@@ -2017,7 +2167,7 @@ function loadTopBarCategories()
             $active = '';
         }
 
-        echo '<li><a class="" href="products.php?category=' . $allCategories[$i] . '">' . $allCategories[$i] . '</a></li>';
+        echo '<li><a class="" href="products.php?category=' . $allCategories[$i] . '">' . $allCategories[$i] . ' [' . numberOfProductsUnderCategory($allCategories[$i]) . ']</a></li>';
     }
 }
 

@@ -25,6 +25,12 @@ if (isset($_POST['name'])) {
     <title>Document</title>
 
     <style>
+        /* *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        } */
+
         body {
             /* background-color: greenyellow; */
             text-align: center;
@@ -33,16 +39,16 @@ if (isset($_POST['name'])) {
 
         form {
             background-color: skyblue;
-            padding: 2rem;
+            padding: 5px;
         }
 
         form input {
-            width: 100%;
-            margin: 10px;
-            height: 18px;
+            width: 90%;
+            margin: 10px 1px 10px 1px;
+            height: 2rem;
         }
 
-        .redeem {
+        #redeem {
             margin: 5px;
             background-color: greenyellow;
             font-size: 2rem;
@@ -59,23 +65,35 @@ if (isset($_POST['name'])) {
 </head>
 
 <body>
-    <h1>Thanks for patronizing us. Below is your redeem code, present it at any of our branches to receive your goods. </h1>
-    <h3 class="redeem"><?php echo $_GET['redeem_code'] ?></h3>
-    <h3 class="warning">Please do not loose this code, without it, it'll be really difficult to confirm if you own the goods.</h3>
-    <h3>Click <a href="../product_summary.php?fin=true">Here</a> to continue shopping.</h3>
+   
+
+    <div class="redeem-div">
+        <h1>Thanks for patronizing us. Below is your redeem code, present it at any of our branches to receive your goods. </h1>
+        <h3 id="redeem"><?php echo $_GET['redeem_code'] ?></h3>
+        <!-- <a href="#" class="download-pdf">Download as PDF</a> -->
+        <h3 class="warning">Please do not loose this code, without it, it'll be really difficult to confirm if you own the goods.</h3>
+        <!-- <h3>Click <a href="../product_summary.php?fin=true">Here</a> to continue shopping.</h3> -->
+        <h3>Click <a target="_blank" href="https://wa.me/+2349059928764">Here</a> to request your items delivery for free, anywhere in Enugu Metropolis.</h3>
+        <a href="../product_summary.php?fin=true">Continue shopping</a>
+    </div>
+
 
 
     <form action="" method="post">
         <h1>Optional Info Form</h1>
-        <label for="name">Full Name</label>
-        <input name="name" type="text" placeholder="John Doe">
+        <!-- <label for="name">Full Name</label> -->
+        <div><input name="name" type="text" placeholder="Full Name"></div>
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" name="phone" placeholder="08122401507">
+        <!-- <label for="phone">Phone Number</label> -->
+        <div><input type="tel" name="phone" placeholder="Phone Number"></div>
 
-        <input type="submit" value="Submit">
+        <div><input type="submit" value="Submit"></div>
     </form>
-    <p>Though the above form is optional, filling these details will help us be able to contact you if need be.</p>
+    <h3>Though the above form is optional, filling these details will help us be able to contact you if need be.</h3>
+
+    <script>
+        
+    </script>
 </body>
 
 </html>
