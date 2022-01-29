@@ -73,7 +73,7 @@ if (isset($_POST['name'])) {
         <!-- <a href="#" class="download-pdf">Download as PDF</a> -->
         <h3 class="warning">Please do not loose this code, without it, it'll be really difficult to confirm if you own the goods.</h3>
         <!-- <h3>Click <a href="../product_summary.php?fin=true">Here</a> to continue shopping.</h3> -->
-        <h3>Click <a target="_blank" href="https://wa.me/+2349059928764">Here</a> to request your items delivery for free, anywhere in Enugu Metropolis.</h3>
+        <h3>Click <a target="_blank" href="https://wa.me/+2349059928764?text=I%20just%20made%20a%20purchase%20on%20your%20e-commerce%20store%20and%20would%20like%20them%20delivered.">Here</a> to request your items delivery for free, anywhere in Enugu Metropolis.</h3>
         <a href="../product_summary.php?fin=true">Continue shopping</a>
     </div>
 

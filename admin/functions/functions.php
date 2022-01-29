@@ -1758,7 +1758,7 @@ function loadLatestProducts($id = null)
     }
 
 
-    $query = "SELECT * FROM item ORDER BY updated desc";
+    $query = "SELECT * FROM item ORDER BY created desc";
     $response = @mysqli_query($db, $query);
     // echo returnProductCartInfo(7);
     // die;
@@ -1833,7 +1833,7 @@ function loadLatestProductsBlock($id = null)
         $itemLimit = 10000;
     }
 
-    $query = "SELECT * FROM item ORDER BY updated desc";
+    $query = "SELECT * FROM item ORDER BY created desc";
     $response = @mysqli_query($db, $query);
     // echo returnProductCartInfo(7);
     // die;
