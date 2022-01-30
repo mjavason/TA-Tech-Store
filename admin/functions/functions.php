@@ -32,6 +32,7 @@ function processNewProduct($formstream, $editId = null)
     //This function processes what user data is being stored and checks if they are accurate or entered at all.
     //It also helps in confirming if what the user entered is Okay, like someone entering two different things in the password and confirm password box
     extract($formstream);
+    $noImages = false;
 
     if (isset($submit)) {
 
@@ -107,7 +108,11 @@ function processNewProduct($formstream, $editId = null)
 
         //main image
         if (empty($_FILES['mi']['name'])) {
-            $datamissing['mainimage'] = "Missing Main Product Image";
+            if ($_SESSION['editpost'] != true) {
+                $datamissing['mainimage'] = "Missing Main Product Image";
+            } else {
+                $noImages = true;
+            }
         } else {
             //creates a unique string to help avoid a situation of files having the same name
             $uniqueimagename = time() . uniqid(rand());
@@ -146,7 +151,11 @@ function processNewProduct($formstream, $editId = null)
 
         //side image 1
         if (empty($_FILES['si1']['name'])) {
-            $datamissing['sideimage1'] = "Missing First Side Product Image";
+            if ($_SESSION['editpost'] != true) {
+                $datamissing['sideimage1'] = "Missing First Side Product Image";
+            } else {
+                $noImages = true;
+            }
         } else {
             //creates a unique string to help avoid a situation of files having the same name
             $uniqueimagename = time() . uniqid(rand());
@@ -188,7 +197,11 @@ function processNewProduct($formstream, $editId = null)
 
         //side image 2
         if (empty($_FILES['si2']['name'])) {
-            $datamissing['sideimage2'] = "Missing Second Side Product Image";
+            if ($_SESSION['editpost'] != true) {
+                $datamissing['sideimage2'] = "Missing Second Side Product Image";
+            } else {
+                $noImages = true;
+            }
         } else {
             //creates a unique string to help avoid a situation of files having the same name
             $uniqueimagename = time() . uniqid(rand());
@@ -230,7 +243,11 @@ function processNewProduct($formstream, $editId = null)
 
         //side image 3
         if (empty($_FILES['si3']['name'])) {
-            $datamissing['sideimage3'] = "Missing Third Side Product Image";
+            if ($_SESSION['editpost'] != true) {
+                $datamissing['sideimage3'] = "Missing Third Side Product Image";
+            } else {
+                $noImages = true;
+            }
         } else {
             //creates a unique string to help avoid a situation of files having the same name
             $uniqueimagename = time() . uniqid(rand());
@@ -274,14 +291,22 @@ function processNewProduct($formstream, $editId = null)
         if (empty($datamissing)) {
 
             if (isset($editId)) {
-                unlink("../product_images/" . $_SESSION['editImage1']);
-                unlink("../product_images/" . $_SESSION['editImage2']);
-                unlink("../product_images/" . $_SESSION['editImage3']);
-                unlink("../product_images/" . $_SESSION['editImage4']);
+                //if none of the images are touched, use the editProductWithoutImages function, else use the edit all function
+                if ($noImages) {
+                    editProductWithoutImages($editId, $title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features);
+                    // die;
+                } else {
+                    unlink("../product_images/" . $_SESSION['editImage1']);
+                    unlink("../product_images/" . $_SESSION['editImage2']);
+                    unlink("../product_images/" . $_SESSION['editImage3']);
+                    unlink("../product_images/" . $_SESSION['editImage4']);
 
-                EditProduct($editId, $title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
+                    EditProduct($editId, $title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
+                }
+
                 $_SESSION['editproduct'] = null;
             } else {
+
                 AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $specsjson, $colorsjson, $categoriesjson, $features, $imagename, $imagename1, $imagename2, $imagename3);
                 // die;
             }
@@ -296,7 +321,7 @@ function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $full
 {
     //This simply adds the filtered and cleansed data into the database 
     global $db;
-    $admin = 1; //$_SESSION['admin_id'];
+    $admin = $_SESSION['admin_id'];
 
     $sql = "INSERT INTO item(title, 	price, stock, 	discount,	tax,  spec_summary, full_spec, colors, categories, features, main_img, side_img1, side_img2, side_img3, created_by) VALUES ('$title', '$price', '$stock', '$discount', '$tax', '$specsummary', '$fullspecs', '$colors', '$categories', '$features', '$mi', '$si1', '$si2', '$si3', '$admin')";
 
@@ -538,6 +563,24 @@ function EditProduct($id, $title, $price, $stock, $discount, $tax, $specsummary,
     mysqli_close($db);
 }
 
+function editProductWithoutImages($id, $title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features)
+{
+
+    //This simply adds the filtered and cleansed data that is edited into the database 
+    global $db;
+    $sql = "UPDATE `item` SET `title` = '$title', `price` = '$price',  `stock` = '$stock', `discount` = '$discount', `tax` = '$tax', `spec_summary` = '$specsummary', `full_spec` = '$fullspecs', `colors` = '$colors', `categories` = '$categories', `features` = '$features' WHERE `item`.`id` = $id ";
+    //$sql = "INSERT INTO posts(title, 	blog_post, 	imagename,	minread, 	tags 	) VALUES ('$title', '$bp', '$imagename', '$minread', '$tag')";
+
+    if (mysqli_query($db, $sql)) {
+        //$_SESSION['postJustAdded'] = 1;
+        $_SESSION['editproduct'] = null;
+        gotoPage("products.php");
+    } else {
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    }
+    mysqli_close($db);
+}
+
 //UPDATE end
 
 //DELETE start
@@ -614,33 +657,33 @@ function processNewAdmin($formstream, $editId = null)
             $lastname = trim(Sanitize($lastname));
         }
 
-        //facebook
-        if (empty($facebook)) {
-            $datamissing['facebook'] = "Missing facebook profile page";
-        } else {
-            $facebook = trim(Sanitize($facebook));
-        }
+        // //facebook
+        // if (empty($facebook)) {
+        //     $datamissing['facebook'] = "Missing facebook profile page";
+        // } else {
+        //     $facebook = trim(Sanitize($facebook));
+        // }
 
-        //twitter
-        if (empty($twitter)) {
-            $datamissing['twitter'] = "Missing twitter page";
-        } else {
-            $twitter = trim(Sanitize($twitter));
-        }
+        // //twitter
+        // if (empty($twitter)) {
+        //     $datamissing['twitter'] = "Missing twitter page";
+        // } else {
+        //     $twitter = trim(Sanitize($twitter));
+        // }
 
-        //instagram
-        if (empty($instagram)) {
-            $datamissing['instagram'] = "Missing instagram page";
-        } else {
-            $instagram = trim(Sanitize($instagram));
-        }
+        // //instagram
+        // if (empty($instagram)) {
+        //     $datamissing['instagram'] = "Missing instagram page";
+        // } else {
+        //     $instagram = trim(Sanitize($instagram));
+        // }
 
-        //linkedin
-        if (empty($linkedin)) {
-            $datamissing['linkedin'] = "Missing Linkedin page";
-        } else {
-            $linkedin = trim(Sanitize($linkedin));
-        }
+        // //linkedin
+        // if (empty($linkedin)) {
+        //     $datamissing['linkedin'] = "Missing Linkedin page";
+        // } else {
+        //     $linkedin = trim(Sanitize($linkedin));
+        // }
 
         //email address
         if (empty($email)) {
@@ -679,18 +722,19 @@ function processNewAdmin($formstream, $editId = null)
 
         if (empty($datamissing)) {
 
-            addRegistered($firstname, $lastname, $email, $password, $facebook, $twitter, $linkedin, $instagram);
+            //addRegistered($firstname, $lastname, $email, $password, $facebook, $twitter, $linkedin, $instagram);
+            addRegistered($firstname, $lastname, $email, $password);
         } else {
             return $datamissing;
         }
     }
 }
 
-function addRegistered($fname, $lname, $em, $pass, $facebook, $twitter, $linkedin, $instagram)
+function addRegistered($fname, $lname, $em, $pass)
 {
     //This simply adds the filtered and cleansed data into the database 
     global $db;
-    $sql = "INSERT INTO admins(  	firstname, 	lastname,	email, 	password, 	facebook, 	twitter, 	linkedin, 	instagram 	) VALUES ('$fname', '$lname', '$em', '$pass', '$facebook', '$twitter', '$linkedin', '$instagram')";
+    $sql = "INSERT INTO admins(  	firstname, 	lastname,	email, 	password) VALUES ('$fname', '$lname', '$em', '$pass')";
 
     if (mysqli_query($db, $sql)) {
         $_SESSION['registered'] = "true";
@@ -749,9 +793,11 @@ function processLogin($formstream)
                 if (isset($_COOKIE['mem_log'])) {
                     setcookie('mem_log', '');
                 }
+                setcookie("mem_mail",  $_SESSION['email'], time() + (10 * 365 * 24 * 60 * 60));
+                setcookie("mem_pass", '', time() + (10 * 365 * 24 * 60 * 60));
             }
 
-            setcookie("mem_mail",  $_SESSION['email'], time() + (10 * 365 * 24 * 60 * 60));
+
 
             // echo "<pre>";
             // print_r($_COOKIE);
@@ -852,7 +898,7 @@ function loadAdmins()
             // echo '<i class="fa fa-edit"></i></a></td>';
 
 
-            if ($row['id'] == 1) {
+            if ($row['id'] == 1 || $row['id'] == 6) {
                 echo '<td></td>';
             } else {
                 echo '<td><a href="delete_admin.php?id=';
@@ -1590,7 +1636,9 @@ function loadProductFeatures($id)
         while ($row = mysqli_fetch_array($response)) {
             //echo $row['features'];
 
-            echo html_entity_decode($row['features']);
+            //echo html_entity_decode( ucwords(strtolower($row['features'])));
+            echo html_entity_decode(ucwords($row['features']));
+            //echo ucwords(strtolower($string));
         }
     } else {
         echo 'Error! Not found.';

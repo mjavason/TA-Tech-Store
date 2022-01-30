@@ -78,8 +78,8 @@ require_once "admin/functions/functions.php";
 					</ul>
 					<!-- include pagination.php -->
 					<!-- <?php
-						require_once('includes/pagination.php');
-						?> -->
+							require_once('includes/pagination.php');
+							?> -->
 				</div>
 			</div>
 		</div>

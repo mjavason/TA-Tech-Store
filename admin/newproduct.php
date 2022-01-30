@@ -180,10 +180,10 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- full specs -->
                                 <div class="mb-5">
                                     <label for="fullspecs">Product Specs <?php
-                                                                            if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                //echo '(fill up the boxes but dont click "Add" if you dont want to edit)';
-                                                                            }
-                                                                            ?></label>
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
+                                                                                }
+                                                                                ?></label>
 
                                     <div class="mb-1"><input <?php
                                                                 if (isset($_GET['edit']) && $_GET['edit'] == 1) {
@@ -215,10 +215,10 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- colors -->
                                 <div class="mb-5">
                                     <label for="colors">Product Colours <?php
-                                                                        if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                            // echo '(fill up the box but dont click "Add" if you dont want to edit)';
-                                                                        }
-                                                                        ?></label>
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
+                                                                                }
+                                                                                ?></label>
                                     <input <?php
                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                             } else {
@@ -242,8 +242,8 @@ if (isset($_SESSION['editpost'])) {
                                 <!-- categories -->
                                 <div class="mb-5">
                                     <label for="categories">Product Categories <?php
-                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {
-                                                                                    // echo '(fill up the box but dont click "Add" if you dont want to edit)';
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
                                                                                 }
                                                                                 ?></label>
                                     <input <?php
@@ -291,26 +291,62 @@ if (isset($_SESSION['editpost'])) {
 
                                 <!-- main image -->
                                 <div class="mb-5 mt-5">
-                                    <label for="mi">Main Product Image</label>
-                                    <input type="file" name="mi" id="image" class="container" required>
+                                    <label for="mi">Main Product Image <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
+                                                                                }
+                                                                                ?></label>
+                                    <input type="file" name="mi" id="image" class="container"  <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                }else{
+                                                                                    echo 'required';
+                                                                                }
+                                                                                ?>>
                                 </div>
 
                                 <!-- side image 1 -->
                                 <div class="mb-5 mt-5">
-                                    <label for="si1">Side Product Image 1</label>
-                                    <input type="file" name="si1" id="image" class="container" required>
+                                    <label for="si1">Side Product Image 1 <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
+                                                                                }
+                                                                                ?></label>
+                                    <input type="file" name="si1" id="image" class="container" <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                }else{
+                                                                                    echo 'required';
+                                                                                }
+                                                                                ?>>
                                 </div>
 
                                 <!-- side image 2 -->
                                 <div class="mb-5 mt-5">
-                                    <label for="si2">Side Product Image 2</label>
-                                    <input type="file" name="si2" id="image" class="container" required>
+                                    <label for="si2">Side Product Image 2 <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
+                                                                                }
+                                                                                ?></label>
+                                    <input type="file" name="si2" id="image" class="container" <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                }else{
+                                                                                    echo 'required';
+                                                                                }
+                                                                                ?>>
                                 </div>
 
                                 <!-- side image 3 -->
                                 <div class="mb-5 mt-5">
-                                    <label for="si3">Side Product Image 3</label>
-                                    <input type="file" name="si3" id="image" class="container" required>
+                                    <label for="si3">Side Product Image 3 <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                echo "(Leave blank if you don't want to edit)";
+                                                                                }
+                                                                                ?></label>
+                                    <input type="file" name="si3" id="image" class="container" <?php
+                                                                                if (isset($_GET['edit']) && $_GET['edit'] == 1) {    
+                                                                                }else{
+                                                                                    echo 'required';
+                                                                                }
+                                                                                ?>>
                                 </div>
 
 

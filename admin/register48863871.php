@@ -80,14 +80,14 @@ if (isset($_SESSION['editpost'])) {
                                 </div>
 
                                 <!-- facebook -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="facebook" name="facebook" placeholder="Facebook Link" required>
-                                </div>
+                                </div> -->
 
                                 <!-- twitter -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="twitter" placeholder="Twitter Link" name="twitter" required>
-                                </div>
+                                </div> -->
                                 <!-- 
                                 whatsapp 
                                 <div class="form-group">
@@ -95,14 +95,14 @@ if (isset($_SESSION['editpost'])) {
                                 </div> -->
 
                                 <!-- instagram -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="instagram" placeholder="Instagram Link" required name="instagram">
-                                </div>
+                                </div> -->
 
                                 <!-- linkedin -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="linkedin" placeholder="LinkedIn Link" required name="linkedin">
-                                </div>
+                                </div> -->
 
                                 <!-- profile picture -->
                                 <!-- <div class="form-group">
@@ -128,9 +128,9 @@ if (isset($_SESSION['editpost'])) {
                                 </a> -->
                             </form>
                             <hr>
-                            <div class="text-center">
+                            <!-- <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
+                            </div> -->
                             <div class="text-center">
                                 <a class="small" href="login.php">Already have an account? Login!</a>
                             </div>

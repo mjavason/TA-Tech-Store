@@ -65,7 +65,7 @@ if (isset($_POST['name'])) {
 </head>
 
 <body>
-   
+
 
     <div class="redeem-div">
         <h1>Thanks for patronizing us. Below is your redeem code, present it at any of our branches to receive your goods. </h1>
@@ -73,7 +73,7 @@ if (isset($_POST['name'])) {
         <!-- <a href="#" class="download-pdf">Download as PDF</a> -->
         <h3 class="warning">Please do not loose this code, without it, it'll be really difficult to confirm if you own the goods.</h3>
         <!-- <h3>Click <a href="../product_summary.php?fin=true">Here</a> to continue shopping.</h3> -->
-        <h3>Click <a target="_blank" href="https://wa.me/+2349059928764?text=I%20just%20made%20a%20purchase%20on%20your%20e-commerce%20store%20and%20would%20like%20them%20delivered.">Here</a> to request your items delivery for free, anywhere in Enugu Metropolis.</h3>
+        <h3>Click <a target="_blank" href="https://wa.me/+2349059928764?text=I%20just%20made%20a%20purchase%20on%20your%20e-commerce%20store%20and%20would%20like%20them%20delivered.%20This%20is%20my%20redeem%20code:%20<?php echo $_GET['redeem_code'] ?>">Here</a> to request your items delivery for free, anywhere in Enugu Metropolis.</h3>
         <a href="../product_summary.php?fin=true">Continue shopping</a>
     </div>
 
@@ -92,7 +92,7 @@ if (isset($_POST['name'])) {
     <h3>Though the above form is optional, filling these details will help us be able to contact you if need be.</h3>
 
     <script>
-        
+
     </script>
 </body>
 

@@ -25,18 +25,19 @@
 		</a>
 		<div class="navbar-inner">
 			<a class="brand" href="index.php"><img src="themes/images/logo.png" alt="Bootsshop" /></a>
-			<form class="form-inline navbar-search" method="post" action="index.php" >
+			<form class="form-inline navbar-search" method="post" action="index.php">
 				<input id="srchFld" name="name" class="srchTxt" type="text" />
 				<select class="srchTxt" name="category">
 					<option value='0'>All</option>
 					<?php loadSearchBarCategories() ?>
 				</select>
-				<button type="submit" id="submitButton" name="submit" class="btn btn-primary">Go</button>
+				<button type="submit" id="submitButton" name="submit" class="btn btn-primary">Search</button>
 			</form>
 			<ul id="topMenu" class="nav pull-right collapse" style="height: 0px;">
-				
-					<?php loadTopBarCategories() ?>
-				<!-- <li class=""><a href="products.php?category=SPECIAL">SPECIAL OFFERS</a></li> -->
+				<li class=""><a href="products.php">ALL [<?php echo getTotalNumberOfProducts() ?>]</a></li>
+				<li class=""><a href="products.php?category=SPECIAL">SPECIAL OFFERS [<?php echo numberOfProductsUnderCategory('SPECIAL') ?>]</a></li>
+				<?php loadTopBarCategories() ?>
+
 				<!-- <li class=""><a href="normal.php">Delivery</a></li> -->
 				<!-- <li class=""><a href="contact.php">CONTACT</a></li> -->
 
