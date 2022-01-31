@@ -28,7 +28,7 @@
 			<form class="form-inline navbar-search" method="post" action="index.php">
 				<input id="srchFld" name="name" class="srchTxt" type="text" />
 				<select class="srchTxt" name="category">
-					<option value='0'>All</option>
+					<option value='0'>ALL</option>
 					<?php loadSearchBarCategories() ?>
 				</select>
 				<button type="submit" id="submitButton" name="submit" class="btn btn-primary">Search</button>

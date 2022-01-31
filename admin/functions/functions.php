@@ -2270,6 +2270,8 @@ function loadProductSearchResults($formstream)
         }
     }
 
+
+
     $orderby = " ORDER BY id desc";
     //echo $queryCondition;
     $sql = "SELECT * FROM item " . $queryCondition . $orderby;

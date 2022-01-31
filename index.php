@@ -100,7 +100,7 @@ require_once "admin/functions/functions.php";
 	<div id="secectionBox">
 		<!-- include themes.php -->
 		<?php
-		require_once('includes/themes.php')
+		//require_once('includes/themes.php')
 		?>
 	</div>
 	<span id="themesBtn"></span>
