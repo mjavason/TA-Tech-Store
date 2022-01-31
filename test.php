@@ -23,7 +23,7 @@ require_once "admin/functions/functions.php";
 // ]');
 // echo '<pre>';
 // print_r($_POST);
-deleteDuplicateImages();
+
 // echo $_SERVER["PHP_SELF"];
 
 //  loadPageMetaData('/tats/index.php');
@@ -36,3 +36,22 @@ deleteDuplicateImages();
 //  loadPageMetaImage($pageUrl, $uniqueId = null);
 //  loadPageMetaKeywords($pageUrl, $uniqueId = null);
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- include head.php -->
+    <?php
+    loadPageMetaData('test');
+    require_once('includes/head.php');
+    ?>
+
+</head>
+
+<body>
+    <?php deleteDuplicateImages(); ?>
+</body>
+
+</html>

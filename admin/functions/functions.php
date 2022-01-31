@@ -2426,38 +2426,208 @@ function loadPageMetaData($page, $uniqueId = null)
     echo loadPageMetaUrl($page, $uniqueId = null);
     echo loadPageMetaImage($page, $uniqueId = null);
     echo loadPageMetaKeywords($page, $uniqueId = null);
+    echo loadPageMetaType($page, $uniqueId = null);
 }
 
 function loadPageMetaTitle($page, $uniqueId = null)
 {
+    switch ($page) {
+
+        case 'home':
+            //code here
+            return '<title>I-Plan Store Home Page</title>';
+            break;
+
+        case 'contact':
+            //code here
+            return '<title>I-Plan Store Contact Page</title>';
+            break;
+
+        case 'faq':
+            //code here
+            break;
+
+        case 'legal':
+            //code here
+            break;
+
+        case 'product_details':
+            //code here
+            break;
+
+        case 'cart':
+            //code here
+            break;
+
+        case 'products':
+            //code here
+            break;
+
+        case 'tac':
+            //code here
+            break;
+
+        case 'test':
+            //code here
+            break;
+
+        default:
+            //incase all else fails. don't forget to end code with semicolon
+    }
+}
+
+function loadPageMetaType($page, $uniqueId = null)
+{
     if ($page == 'home') {
-        return '<title>I-Plan Store Home Page</title>';
+        return '<meta property="og:type" content="website">';
     }
 }
 
 function loadPageMetaDescription($page, $uniqueId = null)
 {
-    if ($page == 'home') {
-        return '<meta name="description" content= "An online store for electronics and computer gadjets" >';
-    }
+    switch ($page) {
+
+        case 'home':
+            //code here
+            return '<meta property="og:description" content="An online store for electronics and computer gadgets, based in Enugu, Nigeria." >';
+            break;
+
+        case 'contact':
+            //code here
+            break;
+
+        case 'faq':
+            //code here
+            break;
+
+        case 'legal':
+            //code here
+            break;
+
+        case 'product_details':
+            //code here
+            break;
+
+        case 'cart':
+            //code here
+            break;
+
+        case 'products':
+            //code here
+            break;
+
+        case 'tac':
+            //code here
+            break;
+
+        case 'test':
+            //code here
+            break;
+
+        default:
+            //incase all else fails. don't forget to end code with semicolon
+    } //end of switch statement
 }
 
 function loadPageMetaUrl($page, $uniqueId = null)
 {
-    if ($page == 'home' || $page == 'faq' || $page == 'contact' || $page == 'legal' || $page == 'products' || $page == 'product_details'  || $page == 'tac' || $page == 'cart') {
-        return '<meta property="og:url" content="http://store.techac.net">';
-    }
+    return '<meta property="og:url" content="http://store.techac.net">';
 }
 
 function loadPageMetaImage($page, $uniqueId = null)
 {
-    if ($page == 'home' || $page == 'faq' || $page == 'contact' || $page == 'legal' || $page == 'products' || $page == 'product_details'  || $page == 'tac' || $page == 'cart') {
-        return '<meta property="og:image" itemprop="image" content="themes/images/iplan.jpg">';
+    switch ($page) {
+
+        case 'home':
+            //code here
+
+            break;
+
+        case 'contact':
+            //code here
+            break;
+
+        case 'faq':
+            //code here
+            break;
+
+        case 'legal':
+            //code here
+            break;
+
+        case 'product_details':
+            //code here
+            break;
+
+        case 'cart':
+            //code here
+            break;
+
+        case 'products':
+            //code here
+            break;
+
+        case 'tac':
+            //code here
+            break;
+
+        case 'test':
+            //code here
+            break;
+
+        default:
+            //incase all else fails. don't forget to end code with semicolon
+    } //end of switch statement
+
+    if ($page == 'home' || $page == 'faq' || $page == 'contact' || $page == 'legal' || $page == 'products' || $page == 'tac' || $page == 'cart') {
+        return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
     }
 }
 
 function loadPageMetaKeywords($page, $uniqueId = null)
 {
+    switch ($page) {
+
+        case 'home':
+            //code here
+
+            break;
+
+        case 'contact':
+            //code here
+            break;
+
+        case 'faq':
+            //code here
+            break;
+
+        case 'legal':
+            //code here
+            break;
+
+        case 'product_details':
+            //code here
+            break;
+
+        case 'cart':
+            //code here
+            break;
+
+        case 'products':
+            //code here
+            break;
+
+        case 'tac':
+            //code here
+            break;
+
+        case 'test':
+            //code here
+            break;
+
+        default:
+            //incase all else fails. don't forget to end code with semicolon
+    } //end of switch statement
     return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
 }
 

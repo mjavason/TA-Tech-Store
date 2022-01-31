@@ -9,12 +9,10 @@ require_once "admin/functions/functions.php";
 
 <head>
 	<meta charset="utf-8">
-	<title>Bootshop online Shopping cart</title>
-	<meta name="description" content="">
-	<meta name="author" content="">
-
+	
 	<!-- include head.php -->
 	<?php
+	loadPageMetaData('product_details');
 	require_once('includes/head.php');
 	?>
 </head>

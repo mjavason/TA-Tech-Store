@@ -9,20 +9,10 @@ require_once "admin/functions/functions.php";
 
 <head>
 	<meta charset="utf-8">
-	<?php //loadPageMetaDescription($_SERVER["PHP_SELF"]);
-	//echo $_SERVER["PHP_SELF"];
-	?>
-
 
 	<!-- include head.php -->
 	<?php
 	loadPageMetaData('home');
-	// echo '<title>I-Plan Store Home Page</title>';
-	// echo '<meta name="description" content= "An online store for electronics and computer gadjets" >';
-	// echo '<meta property="og:url" content="https://techac.net/tats">';
-	// echo '<meta property="og:image" itemprop="image" content="themes/images/iplan.jpg">';
-	// echo  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
-
 	require_once('includes/head.php');
 	?>
 
