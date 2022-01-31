@@ -2419,6 +2419,59 @@ function deleteDuplicateImages()
     }
 }
 
+function loadPageMetaData($page, $uniqueId = null)
+{
+    echo loadPageMetaTitle($page, $uniqueId = null);
+    echo loadPageMetaDescription($page, $uniqueId = null);
+    echo loadPageMetaUrl($page, $uniqueId = null);
+    echo loadPageMetaImage($page, $uniqueId = null);
+    echo loadPageMetaKeywords($page, $uniqueId = null);
+}
+
+function loadPageMetaTitle($page, $uniqueId = null)
+{
+    if ($page == 'home') {
+        return '<title>I-Plan Store Home Page</title>';
+    }
+}
+
+function loadPageMetaDescription($page, $uniqueId = null)
+{
+    if ($page == 'home') {
+        return '<meta name="description" content= "An online store for electronics and computer gadjets" >';
+    }
+}
+
+function loadPageMetaUrl($page, $uniqueId = null)
+{
+    if ($page == 'home' || $page == 'faq' || $page == 'contact' || $page == 'legal' || $page == 'products' || $page == 'product_details'  || $page == 'tac' || $page == 'cart') {
+        return '<meta property="og:url" content="http://store.techac.net">';
+    }
+}
+
+function loadPageMetaImage($page, $uniqueId = null)
+{
+    if ($page == 'home' || $page == 'faq' || $page == 'contact' || $page == 'legal' || $page == 'products' || $page == 'product_details'  || $page == 'tac' || $page == 'cart') {
+        return '<meta property="og:image" itemprop="image" content="themes/images/iplan.jpg">';
+    }
+}
+
+function loadPageMetaKeywords($page, $uniqueId = null)
+{
+    return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+}
+
+
+// <title>TA TECH BLOG ADMIN HOME PAGE</title>
+//     <meta name="description" content= 'Tech Acoustic Tech Blog ADMIN HOME' ">
+//     <!-- <meta property='og:title' content="TATB HOME"> -->
+//     <meta property='og:url' content="https://techac.net/tatb">
+//     <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
+//     <meta property='keywords' content="Admin, home, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
+//     <!-- <meta property='og:locale' content="">
+// 	<meta property='og:type' content=""> -->
+
+
 
 // $path = './';
 // $files = scandir($path);
