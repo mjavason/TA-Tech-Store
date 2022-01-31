@@ -38,7 +38,7 @@ if (isset($_POST['name'])) {
         }
 
         form {
-            background-color: skyblue;
+            /* background-color: skyblue; */
             padding: 5px;
         }
 
@@ -46,20 +46,32 @@ if (isset($_POST['name'])) {
             width: 90%;
             margin: 10px 1px 10px 1px;
             height: 2rem;
+            padding-left: 10px;
+        }
+
+        form input[type=submit]{
+            background-color: skyblue;
+            border-radius: 10px;
         }
 
         #redeem {
-            margin: 5px;
+            margin: 1px;
+            padding: 5px;
             background-color: greenyellow;
             font-size: 2rem;
+            width: 100%;
         }
 
         .warning {
             color: red;
         }
 
+        .redeem_div{
+            margin-bottom: 50px;
+        }
+
         form {
-            margin-top: 100px;
+            margin-top: 50px;
         }
     </style>
 </head>
@@ -67,8 +79,8 @@ if (isset($_POST['name'])) {
 <body>
 
 
-    <div class="redeem-div">
-        <h1>Thanks for patronizing us. Below is your redeem code, present it at any of our branches to receive your goods. </h1>
+    <div class="redeem_div">
+        <h2>Thanks for patronizing us. Below is your redeem code, present it at any of our branches to receive your goods. </h2>
         <h3 id="redeem"><?php echo $_GET['redeem_code'] ?></h3>
         <!-- <a href="#" class="download-pdf">Download as PDF</a> -->
         <h3 class="warning">Please do not loose this code, without it, it'll be really difficult to confirm if you own the goods.</h3>
@@ -76,8 +88,10 @@ if (isset($_POST['name'])) {
         <h3>Click <a target="_blank" href="https://wa.me/+2349059928764?text=I%20just%20made%20a%20purchase%20on%20your%20e-commerce%20store%20and%20would%20like%20them%20delivered.%20This%20is%20my%20redeem%20code:%20<?php echo $_GET['redeem_code'] ?>">Here</a> to request your items delivery for free, anywhere in Enugu Metropolis.</h3>
         <a href="../product_summary.php?fin=true">Continue shopping</a>
     </div>
-
-
+    <br>
+    <br>
+<br>
+<hr>
 
     <form action="" method="post">
         <h1>Optional Info Form</h1>
