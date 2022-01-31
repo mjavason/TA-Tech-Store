@@ -49,7 +49,7 @@ if (isset($_POST['name'])) {
             padding-left: 10px;
         }
 
-        form input[type=submit]{
+        form input[type=submit] {
             background-color: skyblue;
             border-radius: 10px;
         }
@@ -66,7 +66,7 @@ if (isset($_POST['name'])) {
             color: red;
         }
 
-        .redeem_div{
+        .redeem_div {
             margin-bottom: 50px;
         }
 
@@ -90,8 +90,8 @@ if (isset($_POST['name'])) {
     </div>
     <br>
     <br>
-<br>
-<hr>
+    <br>
+    <hr>
 
     <form action="" method="post">
         <h1>Optional Info Form</h1>
