@@ -12,7 +12,16 @@ require_once "admin/functions/functions.php";
 
 	<!-- include head.php -->
 	<?php
-	loadPageMetaData('home');
+	//loadPageMetaData('home');
+	//if (isset($_GET['id'])) {
+		//echo loadPageMetaData('product_details', $_GET['id']);
+		echo loadPageMetaTitle('home');
+		echo loadPageMetaDescription('home');
+		echo loadPageMetaUrl('home');
+		echo loadPageMetaImage('home');
+		echo loadPageMetaKeywords('home');
+		echo loadPageMetaType('home');
+	//}
 	require_once('includes/head.php');
 	?>
 

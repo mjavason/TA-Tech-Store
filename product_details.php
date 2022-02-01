@@ -1,5 +1,4 @@
 <?php
-
 require_once "admin/config/connect.php";
 require_once "admin/functions/functions.php";
 ?>
@@ -9,11 +8,21 @@ require_once "admin/functions/functions.php";
 
 <head>
 	<meta charset="utf-8">
-	
+
 	<!-- include head.php -->
 	<?php
-	loadPageMetaData('product_details');
-	require_once('includes/head.php');
+	if (isset($_GET['id'])) {
+		//echo loadPageMetaData('product_details', $_GET['id']);
+		echo loadPageMetaTitle('product_details', $_GET['id']);
+		echo loadPageMetaDescription('product_details', $_GET['id']);
+		echo loadPageMetaUrl('product_details', $_GET['id']);
+		echo loadPageMetaImage('product_details', $_GET['id']);
+		echo loadPageMetaKeywords('product_details', $_GET['id']);
+		echo loadPageMetaType('product_details', $_GET['id']);
+	}
+		require_once('includes/head.php');
+	//echo loadPageMetaTitle('product_details', $_GET['id']);
+
 	?>
 </head>
 
@@ -54,7 +63,7 @@ require_once "admin/functions/functions.php";
 							<?php
 							require_once('includes/product_info1.php');
 							?>
-							
+
 						</div>
 
 						<div class="span9">

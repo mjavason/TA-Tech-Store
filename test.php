@@ -44,7 +44,13 @@ require_once "admin/functions/functions.php";
 
     <!-- include head.php -->
     <?php
-    loadPageMetaData('test');
+   // loadPageMetaData('test');
+   echo loadPageMetaTitle('test');
+		echo loadPageMetaDescription('test');
+		echo loadPageMetaUrl('test');
+		echo loadPageMetaImage('test');
+		echo loadPageMetaKeywords('test');
+		echo loadPageMetaType('test');
     require_once('includes/head.php');
     ?>
 

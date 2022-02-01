@@ -1478,6 +1478,81 @@ function loadProductTitle($id)
     }
 }
 
+function getProductTitle($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT title FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            return $row['title'];
+        }
+    } else {
+        echo $id;
+        echo 'Error! Meta title Not found.';
+        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+
+        //die;
+    }
+}
+
+function getProductPrice($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT price FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            return $row['price'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function getProductSpec_summary($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT spec_summary FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            return $row['spec_summary'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
+function getProductMainImage($id)
+{
+    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
+    global $db;
+
+    $query = "SELECT main_img FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            return $row['main_img'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
 function loadSpecSummary($id)
 {
     //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
@@ -2423,6 +2498,7 @@ function deleteDuplicateImages()
 
 function loadPageMetaData($page, $uniqueId = null)
 {
+
     echo loadPageMetaTitle($page, $uniqueId = null);
     echo loadPageMetaDescription($page, $uniqueId = null);
     echo loadPageMetaUrl($page, $uniqueId = null);
@@ -2437,7 +2513,7 @@ function loadPageMetaTitle($page, $uniqueId = null)
 
         case 'home':
             //code here
-            return '<title>I-Plan Store Home Page</title>';
+            return '<title>I-Plan Store</title>';
             break;
 
         case 'contact':
@@ -2447,51 +2523,58 @@ function loadPageMetaTitle($page, $uniqueId = null)
 
         case 'faq':
             //code here
+            return '<title>I-Plan Store Frequently Asked Questions</title>';
             break;
 
         case 'legal':
             //code here
+            return '<title>I-Plan Store Legal Notice Page</title>';
             break;
 
         case 'product_details':
+            if (isset($uniqueId)) {
+                return '<title>Buy ' . ucwords(strtolower(getProductTitle($uniqueId)))  . ' on I-Plan Store at ' . getProductPrice($uniqueId) . ' Naira</title>';
+            }
             //code here
             break;
 
         case 'cart':
             //code here
+            return '<title>I-Plan Store Shopping Cart</title>';
             break;
 
         case 'products':
             //code here
+            if (isset($uniqueId)) {
+                return '<title>[' . numberOfProductsUnderCategory($uniqueId) . '] Products Under ' . $uniqueId . ' at I-Plan Store</title>';
+            } else {
+                return '<title>All [' . getTotalNumberOfProducts() . '] products at I-Plan Store</title>';
+            }
             break;
 
         case 'tac':
+            return '<title>I-Plan Store Terms and Conditions</title>';
             //code here
             break;
 
         case 'test':
+            return '<title>This is where the developers test stuff, if you are not the developer get the fuck outta here.</title>';
             //code here
             break;
 
         default:
             //incase all else fails. don't forget to end code with semicolon
+            return '<title>I-Plan Store</title>';
     }
 }
 
 function loadPageMetaType($page, $uniqueId = null)
 {
-    if ($page == 'home') {
-        return '<meta property="og:type" content="website">';
-    }
-}
-
-function loadPageMetaDescription($page, $uniqueId = null)
-{
     switch ($page) {
 
         case 'home':
             //code here
-            return '<meta property="og:description" content="An online store for electronics and computer gadgets, based in Enugu, Nigeria." >';
+
             break;
 
         case 'contact':
@@ -2524,6 +2607,65 @@ function loadPageMetaDescription($page, $uniqueId = null)
 
         case 'test':
             //code here
+            break;
+
+        default:
+            //incase all else fails. don't forget to end code with semicolon
+
+    } //end of switch statement
+    return '<meta property="og:type" content="website">';
+}
+
+function loadPageMetaDescription($page, $uniqueId = null)
+{
+    switch ($page) {
+
+        case 'home':
+            //code here
+            return '<meta property="og:description" content="Welcome! This is an online store for electronics, computer gadgets and computers. We are located opposite Nnamdi Azikiwe Stadium Enugu, Nigeria." >';
+            break;
+
+        case 'contact':
+            //code here
+            return '<meta property="og:description" content="
+            For complaints relating to unprocessed transactions or errors, feedback on how to better serve you, including suggestions and ideas on where you think we should improve, design and functionality feedback, strictly for people with coding experience or technical know how..." >';
+            break;
+
+        case 'faq':
+            //code here
+            return '<meta property="og:description" content="Home for questions frequently asked by our customers" >';
+            break;
+
+        case 'legal':
+            //code here
+            return '<meta property="og:description" content="For any legal doubts, please do well to read it" >';
+            break;
+
+        case 'product_details':
+            //code here
+            if (isset($uniqueId)) {
+                return '<meta property="og:description" content="' . ucwords(strtolower(getProductSpec_summary($uniqueId))) . '" >';
+            }
+            break;
+
+        case 'cart':
+            //code here
+            return '<meta property="og:description" content="Exactly as it sounds, its your shopping cart" >';
+            break;
+
+        case 'products':
+            //code here
+            return '<meta property="og:description" content="Electronics" >';
+            break;
+
+        case 'tac':
+            //code here
+            return '<meta property="og:description" content="We have little to no terms and conditions, but you can check out the few we do have" >';
+            break;
+
+        case 'test':
+            //code here
+            return '<meta property="og:description" content="product testing is a really important part of software development" >';
             break;
 
         default:
@@ -2533,6 +2675,49 @@ function loadPageMetaDescription($page, $uniqueId = null)
 
 function loadPageMetaUrl($page, $uniqueId = null)
 {
+    switch ($page) {
+
+        case 'home':
+            //code here
+
+            break;
+
+        case 'contact':
+            //code here
+            break;
+
+        case 'faq':
+            //code here
+            break;
+
+        case 'legal':
+            //code here
+            break;
+
+        case 'product_details':
+            //code here
+            break;
+
+        case 'cart':
+            //code here
+            break;
+
+        case 'products':
+            //code here
+            break;
+
+        case 'tac':
+            //code here
+            break;
+
+        case 'test':
+            //code here
+            break;
+
+        default:
+            //incase all else fails. don't forget to end code with semicolon
+
+    } //end of switch statement
     return '<meta property="og:url" content="http://store.techac.net">';
 }
 
@@ -2542,48 +2727,56 @@ function loadPageMetaImage($page, $uniqueId = null)
 
         case 'home':
             //code here
-
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'contact':
             //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'faq':
             //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'legal':
             //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'product_details':
             //code here
+            if (isset($uniqueId)) {
+                return '<meta property="og:image" content="https://techac.net/tats/product_images/' . getProductMainImage($uniqueId) . '">';
+            }
             break;
 
         case 'cart':
             //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'products':
             //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'tac':
             //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
         case 'test':
             //code here
+
             break;
 
         default:
             //incase all else fails. don't forget to end code with semicolon
-    } //end of switch statement
 
-    if ($page == 'home' || $page == 'faq' || $page == 'contact' || $page == 'legal' || $page == 'products' || $page == 'tac' || $page == 'cart') {
-        return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
-    }
+    } //end of switch statement
+    // return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
 }
 
 function loadPageMetaKeywords($page, $uniqueId = null)
@@ -2592,35 +2785,42 @@ function loadPageMetaKeywords($page, $uniqueId = null)
 
         case 'home':
             //code here
-
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'contact':
-            //code here
+            //code 
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'faq':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'legal':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'product_details':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, '. ucwords(strtolower(getProductTitle($uniqueId))) .'">';
             break;
 
         case 'cart':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'products':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'tac':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
         case 'test':
@@ -2630,8 +2830,52 @@ function loadPageMetaKeywords($page, $uniqueId = null)
         default:
             //incase all else fails. don't forget to end code with semicolon
     } //end of switch statement
-    return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+   
 }
+
+
+// switch ($page) {
+
+//     case 'home':
+//         //code here
+
+//         break;
+
+//     case 'contact':
+//         //code here
+//         break;
+
+//     case 'faq':
+//         //code here
+//         break;
+
+//     case 'legal':
+//         //code here
+//         break;
+
+//     case 'product_details':
+//         //code here
+//         break;
+
+//     case 'cart':
+//         //code here
+//         break;
+
+//     case 'products':
+//         //code here
+//         break;
+
+//     case 'tac':
+//         //code here
+//         break;
+
+//     case 'test':
+//         //code here
+//         break;
+
+//     default:
+//         //incase all else fails. don't forget to end code with semicolon
+// } //end of switch statement
 
 
 // <title>TA TECH BLOG ADMIN HOME PAGE</title>

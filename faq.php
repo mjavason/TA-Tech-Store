@@ -12,7 +12,13 @@ require_once "admin/functions/functions.php";
 
 	<!-- include head.php -->
 	<?php
-	loadPageMetaData('faq');
+	//loadPageMetaData('faq');
+	echo loadPageMetaTitle('faq');
+		echo loadPageMetaDescription('faq');
+		echo loadPageMetaUrl('faq');
+		echo loadPageMetaImage('faq');
+		echo loadPageMetaKeywords('faq');
+		echo loadPageMetaType('faq');
 	require_once('includes/head.php');
 	?>
 

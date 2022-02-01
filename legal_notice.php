@@ -12,7 +12,13 @@ require_once "admin/functions/functions.php";
 
 	<!-- include head.php -->
 	<?php
-	loadPageMetaData('legal');
+	//loadPageMetaData('legal');
+	echo loadPageMetaTitle('legal');
+		echo loadPageMetaDescription('legal');
+		echo loadPageMetaUrl('legal');
+		echo loadPageMetaImage('legal');
+		echo loadPageMetaKeywords('legal');
+		echo loadPageMetaType('legal');
 	require_once('includes/head.php');
 	?>
 

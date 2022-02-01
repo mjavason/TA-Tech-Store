@@ -16,7 +16,13 @@ require_once "admin/functions/functions.php";
 	
 	<!-- include head.php -->
 	<?php
-	loadPageMetaData('cart');
+	//loadPageMetaData('cart');
+	echo loadPageMetaTitle('cart');
+		echo loadPageMetaDescription('cart');
+		echo loadPageMetaUrl('cart');
+		echo loadPageMetaImage('cart');
+		echo loadPageMetaKeywords('cart');
+		echo loadPageMetaType('cart');
 	require_once('includes/head.php');
 	?>
 
