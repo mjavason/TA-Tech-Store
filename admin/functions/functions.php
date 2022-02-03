@@ -2557,6 +2557,11 @@ function loadPageMetaTitle($page, $uniqueId = null)
             //code here
             break;
 
+            case 'register':
+                return '<title>Register as an I-Plan Store Admin</title>';
+                //code here
+                break;
+
         case 'test':
             return '<title>This is where the developers test stuff, if you are not the developer get the fuck outta here.</title>';
             //code here
@@ -2662,6 +2667,11 @@ function loadPageMetaDescription($page, $uniqueId = null)
             //code here
             return '<meta property="og:description" content="We have little to no terms and conditions, but you can check out the few we do have" >';
             break;
+
+            case 'register':
+                //code here
+                return '<meta property="og:description" content="As an admin, you will be able to create new products, edit or delete old ones. You will also be able to redeem customer products." >';
+                break;
 
         case 'test':
             //code here

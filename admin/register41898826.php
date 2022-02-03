@@ -25,17 +25,19 @@ if (isset($_SESSION['editpost'])) {
 
 <head>
 
-    <title>REGISTER ADMIN</title>
-    <meta name="description" content="<?= 'Admin Registration' ?>">
-    <!-- <meta property='og:title' content="TATB HOME"> -->
-    <meta property='og:url' content="https://techac.net/tatb">
-    <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
-    <meta property='keywords' content="Admin, Register, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
-    <!-- <meta property='og:locale' content="">
-	<meta property='og:type' content=""> -->
-
-    <!-- Meta -->
-    <meta name="author" content="Orji Michael Chukwuebuka at Tech Acoustic">
+<?php
+	//loadPageMetaData('home');
+	//if (isset($_GET['id'])) {
+		//echo loadPageMetaData('product_details', $_GET['id']);
+		echo loadPageMetaTitle('register');
+		echo loadPageMetaDescription('register');
+		echo loadPageMetaUrl('home');
+		echo loadPageMetaImage('home');
+		echo loadPageMetaKeywords('register');
+		echo loadPageMetaType('home');
+	//}
+	require_once('includes/head.php');
+	?>
 
 
     <!-- Custom fonts for this template-->
