@@ -11,6 +11,12 @@ if (!isset($_SESSION['log'])) {
 
 <head>
     <?php
+    echo loadPageMetaTitle('showcart');
+    echo loadPageMetaDescription('showcart');
+    echo loadPageMetaUrl('home');
+    echo loadPageMetaImage('home');
+    echo loadPageMetaKeywords('home');
+    echo loadPageMetaType('home');
     require_once('includes/head.php');
     ?>
 

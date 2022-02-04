@@ -2557,15 +2557,68 @@ function loadPageMetaTitle($page, $uniqueId = null)
             //code here
             break;
 
-            case 'register':
-                return '<title>Register as an I-Plan Store Admin</title>';
-                //code here
-                break;
-
-        case 'test':
-            return '<title>This is where the developers test stuff, if you are not the developer get the fuck outta here.</title>';
+        case 'register':
+            return '<title>Register as an I-Plan Store Admin</title>';
             //code here
             break;
+
+        case 'test':
+            return '<title>Developer Test Page</title>';
+            //code here
+            break;
+
+
+            //////////////////////////////////////////////// ADMIN SECTION /////////////////////////////////////////////
+        case 'admins':
+            return '<title>I-Plan Store Admins Page</title>';
+            //code here
+            break;
+
+        case 'dashboard':
+            //code here
+            return '<title>I-Plan Store Dashboard</title>';
+            break;
+
+        case 'login':
+            //code here
+            return '<title>I-Plan Store Login Page</title>';
+            break;
+
+        case 'new_product':
+            //code here
+            return '<title>Create New Product on I-Plan Store</title>';
+            break;
+
+        case 'payment_confirmed':
+            //code here
+            return '<title>Payment Confirmed on I-Plan Store</title>';
+            break;
+
+        case 'payment_error':
+            //code here
+            return '<title>Payment Error on I-Plan Store</title>';
+            break;
+
+        case 'admin_products':
+            //code here
+            return '<title>All Products on I-Plan Store</title>';
+            break;
+
+        case 'redeem':
+            //code here
+            return '<title>I-Plan Store Redeem Page</title>';
+            break;
+
+        case 'newpass':
+            //code here
+            return '<title>Set New I-Plan Store Password</title>';
+            break;
+
+        case 'showcart':
+            //code here
+            return '<title>Customer Items Redeem and Final Validations Page</title>';
+            break;
+
 
         default:
             //incase all else fails. don't forget to end code with semicolon
@@ -2614,6 +2667,47 @@ function loadPageMetaType($page, $uniqueId = null)
             //code here
             break;
 
+            ////////////////////////////////////// ADMIN SECTION //////////////////////////////////////////////////////////
+        case 'admins':
+            //code here
+            break;
+
+        case 'dashboard':
+            //code here
+            break;
+
+        case 'login':
+            //code here
+            break;
+
+        case 'new_product':
+            //code here
+            break;
+
+        case 'payment_confirmed':
+            //code here
+            break;
+
+        case 'payment_error':
+            //code here
+            break;
+
+        case 'admin_products':
+            //code here
+            break;
+
+        case 'redeem':
+            //code here
+            break;
+
+        case 'newpass':
+            //code here
+            break;
+
+        case 'showcart':
+            //code here
+            break;
+
         default:
             //incase all else fails. don't forget to end code with semicolon
 
@@ -2638,12 +2732,12 @@ function loadPageMetaDescription($page, $uniqueId = null)
 
         case 'faq':
             //code here
-            return '<meta property="og:description" content="Home for questions frequently asked by our customers" >';
+            return '<meta property="og:description" content="Home for questions frequently asked by our customers." >';
             break;
 
         case 'legal':
             //code here
-            return '<meta property="og:description" content="For any legal doubts, please do well to read it" >';
+            return '<meta property="og:description" content="For any legal doubts, please do well to read it." >';
             break;
 
         case 'product_details':
@@ -2655,30 +2749,84 @@ function loadPageMetaDescription($page, $uniqueId = null)
 
         case 'cart':
             //code here
-            return '<meta property="og:description" content="Exactly as it sounds, its your shopping cart" >';
+            return '<meta property="og:description" content="Exactly as it sounds, its your shopping cart." >';
             break;
 
         case 'products':
             //code here
-            return '<meta property="og:description" content="Electronics" >';
+            return '<meta property="og:description" content="This page contains all the products I-Plan Store has to offer." >';
             break;
 
         case 'tac':
             //code here
-            return '<meta property="og:description" content="We have little to no terms and conditions, but you can check out the few we do have" >';
+            return '<meta property="og:description" content="We have little to no terms and conditions, but you can check out the few we do have." >';
             break;
 
-            case 'register':
-                //code here
-                return '<meta property="og:description" content="As an admin, you will be able to create new products, edit or delete old ones. You will also be able to redeem customer products." >';
-                break;
+        case 'register':
+            //code here
+            return '<meta property="og:description" content="As an admin, you will be able to create new products, edit or delete old ones. You will also be able to redeem customer products." >';
+            break;
 
         case 'test':
             //code here
-            return '<meta property="og:description" content="product testing is a really important part of software development" >';
+            return '<meta property="og:description" content="product testing is a really important part of software development." >';
+            break;
+
+
+            ///////////////////////////////////////////////////////// ADMIN SECTION ////////////////////////////////////////////////
+        case 'admins':
+            //code here
+            return '<meta property="og:description" content="This page contains a list of all the admins who control how the site works." >';
+            break;
+
+        case 'dashboard':
+            //code here
+            return '<meta property="og:description" content="This page contains all the info you need on sales and the general overview of the site." >';
+            break;
+
+        case 'login':
+            //code here
+            return '<meta property="og:description" content="Input your email and password to access admin privileges" >';
+            break;
+
+        case 'new_product':
+            //code here
+            return '<meta property="og:description" content="Create a new product and add details like name, price, stock, discount etc." >';
+            break;
+
+        case 'payment_confirmed':
+            //code here
+            return '<meta property="og:description" content="Congratulations!!! Your payment has been confirmed and you can redeem your product at any of our stores or ask for a delivery. Thanks for your patronage." >';
+            break;
+
+        case 'payment_error':
+            //code here
+            return '<meta property="og:description" content="Oops!!! Seems your payment didnt go through... If you were debited, your funds will be refunded shortly" >';
+            break;
+
+        case 'admin_products':
+            //code here
+            return '<meta property="og:description" content="This is where all products can be created, updated or destroyed." >';
+            break;
+
+        case 'redeem':
+            //code here
+            return '<meta property="og:description" content="Enter the customers redeem code to view and validate their goods before delivery." >';
+            break;
+
+        case 'newpass':
+            //code here
+            return '<meta property="og:description" content="Enter your new password." >';
+            break;
+
+        case 'showcart':
+            //code here
+            return '<meta property="og:description" content="Full summary of everything purchased by client" >';
             break;
 
         default:
+            return '<meta property="og:description" content="I-Plan store page" >';
+
             //incase all else fails. don't forget to end code with semicolon
     } //end of switch statement
 }
@@ -2721,6 +2869,46 @@ function loadPageMetaUrl($page, $uniqueId = null)
             break;
 
         case 'test':
+            //code here
+            break;
+
+        case 'admins':
+            //code here
+            break;
+
+        case 'dashboard':
+            //code here
+            break;
+
+        case 'login':
+            //code here
+            break;
+
+        case 'new_product':
+            //code here
+            break;
+
+        case 'payment_confirmed':
+            //code here
+            break;
+
+        case 'payment_error':
+            //code here
+            break;
+
+        case 'admin_products':
+            //code here
+            break;
+
+        case 'redeem':
+            //code here
+            break;
+
+        case 'newpass':
+            //code here
+            break;
+
+        case 'showcart':
             //code here
             break;
 
@@ -2782,6 +2970,60 @@ function loadPageMetaImage($page, $uniqueId = null)
 
             break;
 
+
+
+            ////////////////////////////////////////////////////////////ADMIN SECTION/////////////////////////////////////////////////////
+
+        case 'admins':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'dashboard':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'login':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'new_product':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'payment_confirmed':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'payment_error':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'admin_products':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'redeem':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'newpass':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
+        case 'showcart':
+            //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+            break;
+
         default:
             //incase all else fails. don't forget to end code with semicolon
 
@@ -2800,47 +3042,104 @@ function loadPageMetaKeywords($page, $uniqueId = null)
 
         case 'contact':
             //code 
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, contact us,  contact, phone number, address">';
             break;
 
         case 'faq':
             //code here
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, faq, frequently asked questions">';
             break;
 
         case 'legal':
             //code here
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, legal notice">';
             break;
 
         case 'product_details':
             //code here
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, '. ucwords(strtolower(getProductTitle($uniqueId))) .'">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, ' . ucwords(strtolower(getProductTitle($uniqueId))) . '">';
             break;
 
         case 'cart':
             //code here
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, cart, shopping cart">';
             break;
 
         case 'products':
             //code here
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, products">';
             break;
 
         case 'tac':
             //code here
-            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, terms and conditions">';
             break;
 
         case 'test':
             //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            break;
+
+        case 'admins':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, admins">';
+            break;
+
+        case 'dashboard':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            break;
+
+        case 'login':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, login">';
+            break;
+
+        case 'new_product':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, products, create products">';
+            break;
+
+        case 'payment_confirmed':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, payment confirmed, confirmed, payed">';
+            break;
+
+        case 'payment_error':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, error">';
+            break;
+
+        case 'admin_products':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, admin products, cms, admin">';
+            break;
+
+        case 'redeem':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, redeem">';
+            break;
+
+        case 'newpass':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+            break;
+
+        case 'showcart':
+            //code here
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, set new password, new, password, new password">';
             break;
 
         default:
+            return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
+
             //incase all else fails. don't forget to end code with semicolon
     } //end of switch statement
-   
+
+}
+
+function validateResetCode($code)
+{
 }
 
 

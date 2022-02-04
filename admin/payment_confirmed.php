@@ -19,6 +19,15 @@ if (isset($_POST['name'])) {
 <html lang="en">
 
 <head>
+
+<?php
+echo loadPageMetaTitle('payment_confirmed');
+echo loadPageMetaDescription('payment_confirmed');
+echo loadPageMetaUrl('home');
+echo loadPageMetaImage('home');
+echo loadPageMetaKeywords('payment_confirmed');
+echo loadPageMetaType('home');
+?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

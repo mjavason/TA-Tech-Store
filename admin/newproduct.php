@@ -35,16 +35,14 @@ if (isset($_SESSION['editpost'])) {
 <html lang="en">
 
 <head>
-    <title>CREATE NEW POST TATB</title>
-    <meta name="description" content="<?= 'Create new post on TATB' ?>">
-    <!-- <meta property='og:title' content="TATB HOME"> -->
-    <meta property='og:url' content="https://techac.net/tatb">
-    <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
-    <meta property='keywords' content="Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
-    <!-- <meta property='og:locale' content="">
-	<meta property='og:type' content=""> -->
-
     <?php
+echo loadPageMetaTitle('new_product');
+echo loadPageMetaDescription('new_product');
+echo loadPageMetaUrl('home');
+echo loadPageMetaImage('home');
+echo loadPageMetaKeywords('register');
+echo loadPageMetaType('home');
+
     require_once('includes/head.php');
     ?>
     <script src="vendor/jquery/jquery.min.js"></script>

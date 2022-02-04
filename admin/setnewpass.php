@@ -12,14 +12,14 @@ if (!isset($_SESSION['log'])) {
 <html lang="en">
 
 <head>
-    <title>TA TECH BLOG SET NEW PASSWORD</title>
-    <meta name="description" content="<?= 'Tech Acoustic Tech Blog' ?>">
-    <!-- <meta property='og:title' content="TATB HOME"> -->
-    <meta property='og:url' content="https://techac.net/tatb">
-    <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
-    <meta property='keywords' content="New Password, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
-    <!-- <meta property='og:locale' content="">
-	<meta property='og:type' content=""> -->
+    <?php
+    echo loadPageMetaTitle('newpass');
+    echo loadPageMetaDescription('newpass');
+    echo loadPageMetaUrl('home');
+    echo loadPageMetaImage('home');
+    echo loadPageMetaKeywords('register');
+    echo loadPageMetaType('home');
+    ?>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

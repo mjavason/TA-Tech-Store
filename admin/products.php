@@ -13,16 +13,15 @@ if (!isset($_SESSION['log'])) {
 
 <head>
     <?php
+echo loadPageMetaTitle('admin_products');
+echo loadPageMetaDescription('admin_products');
+echo loadPageMetaUrl('home');
+echo loadPageMetaImage('home');
+echo loadPageMetaKeywords('register');
+echo loadPageMetaType('home');
+
     require_once('includes/head.php');
     ?>
-    <title>TA TECH BLOG ADMIN POSTS</title>
-    <meta name="description" content="<?= 'Tech Acoustic Tech Blog Admin Posts' ?>">
-    <!-- <meta property='og:title' content="TATB HOME"> -->
-    <meta property='og:url' content="https://techac.net/tatb">
-    <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
-    <meta property='keywords' content="Posts, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
-    <!-- <meta property='og:locale' content="">
-	<meta property='og:type' content=""> -->
 
     <!-- Meta -->
     <meta name="author" content="Orji Michael Chukwuebuka at Tech Acoustic">
