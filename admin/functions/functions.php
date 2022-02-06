@@ -333,7 +333,7 @@ function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $full
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
         die;
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 //CREATE end
@@ -560,7 +560,7 @@ function EditProduct($id, $title, $price, $stock, $discount, $tax, $specsummary,
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function editProductWithoutImages($id, $title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features)
@@ -578,7 +578,7 @@ function editProductWithoutImages($id, $title, $price, $stock, $discount, $tax, 
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 //UPDATE end
@@ -606,7 +606,7 @@ function deleteProduct($id, $imagename, $imagename1, $imagename2, $imagename3)
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 
@@ -743,7 +743,7 @@ function addRegistered($fname, $lname, $em, $pass)
     } else {
         //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function processLogin($formstream)
@@ -821,6 +821,119 @@ function processLogin($formstream)
         }
     }
 }
+
+function validateResetCode($code)
+{
+    global $db;
+    $sql = "SELECT * FROM `resetpassword` WHERE `code`='$code'";
+    $result = $db->query($sql);
+    if ($result->num_rows > 0) {
+        $result = $result->fetch_assoc();
+        if ($code == isset($result['code'])) {
+            //echo 'code exists';
+            $_SESSION['resetMail'] = $result['email'];
+            return true;
+        } else {
+            //echo 'code doesnt exist';
+            return false;
+        }
+    } else {
+        //echo 'code definitely doesnt exist';
+        return false;
+    }
+}
+
+function addNewResetData($code, $email)
+{
+
+    //This simply adds the filtered and cleansed data that is edited into the database 
+    global $db;
+    $sql = "INSERT INTO resetpassword(  	email, 	code 	) VALUES ('$email', '$code')";
+    $_SESSION['resetMail'] = strtoupper($email);
+    //$sql = "INSERT INTO posts(title, 	blog_post, 	imagename,	minread, 	tags 	) VALUES ('$title', '$bp', '$imagename', '$minread', '$tag')";
+
+    if (mysqli_query($db, $sql)) {
+        //gotoPage("login.php");
+    } else {
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+    }
+    //mysqli_close($db);
+}
+
+function ResetPassword($formstream)
+{
+    extract($formstream);
+
+    if (isset($submit)) {
+
+        $datamissing = [];
+
+        if (empty($pass1)) {
+            $datamissing['password'] = "Missing Password";
+        } else {
+            $password = trim(Sanitize($pass1));
+        }
+
+        if (empty($pass2)) {
+            $datamissing['password2'] = "Missing Confirm Password";
+        } else {
+            $password1 = trim(Sanitize($pass2));
+            if ($password != $password1) {
+                $datamissing['confpass'] = "Password Mismatch";
+            } else {
+                // $password1 = trim(Sanitize($password1));
+                $password = sha1($password);
+            }
+        }
+
+        if (empty($datamissing)) {
+            if (isset($_SESSION['resetMail'])) {
+                setNewPassword($_SESSION['resetMail'], $password);
+                deleteResetPassword($_SESSION['resetMail']);
+            } else {
+                $datamissing['Reset Email'] = "Email not found";
+                return $datamissing;
+            }
+            //addRegistered($firstname, $lastname, $email, $password, $facebook, $twitter, $linkedin, $instagram);
+        } else {
+            return $datamissing;
+        }
+    }
+}
+
+function setNewPassword($email, $password)
+{
+    $email = strtoupper($email);
+    //This simply adds the filtered and cleansed data that is edited into the database 
+    global $db;
+    $sql = "UPDATE `admins` SET `password` = '$password' WHERE `admins`.`email` = '$email'";
+
+    if (mysqli_query($db, $sql)) {
+        echo 'password updated';
+        //gotoPage("login.php");
+    } else {
+        echo 'admins password not updated';
+        echo  "<br>" . "Error: " . mysqli_error($db);
+    }
+    //mysqli_close($db);
+}
+
+function deleteResetPassword($email)
+{
+    global $db;
+    $email = strtoupper($email);
+    $sql2 = "DELETE FROM `resetpassword` WHERE `resetpassword`.`email` = '$email'";
+
+    if (mysqli_query($db, $sql2)) {
+        gotoPage("login.php");
+    } else {
+        echo '<br>';
+        echo 'reset password not deleted';
+        echo  "<br>" . "Error: " . mysqli_error($db);
+    }
+    //mysqli_close($db);
+}
+
 
 function getAdminName()
 {
@@ -930,7 +1043,7 @@ function deleteAdmin($id)
             header("location:courses.php");
         }
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function findActivePage($pages)
@@ -1210,7 +1323,7 @@ function addTransactionDetail($status, $redeem_code, $cart_items, $amount, $chan
         // echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
         // die;
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function updateStockAndSold($id, $quantity)
@@ -1237,7 +1350,7 @@ function updateStockAndSold($id, $quantity)
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function getCurrentStock($id)
@@ -1299,7 +1412,7 @@ function UpdateTransactionDetail($redeem_code, $name, $phone)
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function processRedeemCode($formstream)
@@ -1457,7 +1570,7 @@ function finish_redeem($redeem_id)
     } else {
         echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
-    mysqli_close($db);
+    //mysqli_close($db);
 }
 
 function loadProductTitle($id)
@@ -2546,7 +2659,7 @@ function loadPageMetaTitle($page, $uniqueId = null)
         case 'products':
             //code here
             if (isset($uniqueId)) {
-                return '<title>[' . numberOfProductsUnderCategory($uniqueId) . '] Products Under ' . $uniqueId . ' at I-Plan Store</title>';
+                return '<title>[' . numberOfProductsUnderCategory($uniqueId) . '] Products Under ' . ucwords(strtolower($uniqueId))  . ' at I-Plan Store</title>';
             } else {
                 return '<title>All [' . getTotalNumberOfProducts() . '] products at I-Plan Store</title>';
             }
@@ -2612,6 +2725,11 @@ function loadPageMetaTitle($page, $uniqueId = null)
         case 'newpass':
             //code here
             return '<title>Set New I-Plan Store Password</title>';
+            break;
+
+        case 'forgotpass':
+            //code here
+            return '<title>Forgot I-Plan Store Password</title>';
             break;
 
         case 'showcart':
@@ -2701,6 +2819,10 @@ function loadPageMetaType($page, $uniqueId = null)
             break;
 
         case 'newpass':
+            //code here
+            break;
+
+        case 'forgotpass':
             //code here
             break;
 
@@ -2816,8 +2938,13 @@ function loadPageMetaDescription($page, $uniqueId = null)
 
         case 'newpass':
             //code here
-            return '<meta property="og:description" content="Enter your new password." >';
+            return '<meta property="og:description" content="Input your new password. Do make sure not to forget it this time..." >';
             break;
+
+            case 'forgotpass':
+                //code here
+            return '<meta property="og:description" content="Things happen, we get it, Just input your email and request for a new password." >';
+                break;
 
         case 'showcart':
             //code here
@@ -2907,6 +3034,10 @@ function loadPageMetaUrl($page, $uniqueId = null)
         case 'newpass':
             //code here
             break;
+
+            case 'forgotpass':
+                //code here
+                break;
 
         case 'showcart':
             //code here
@@ -3019,6 +3150,11 @@ function loadPageMetaImage($page, $uniqueId = null)
             return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
+            case 'forgotpass':
+                //code here
+            return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
+                break;
+
         case 'showcart':
             //code here
             return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
@@ -3125,6 +3261,10 @@ function loadPageMetaKeywords($page, $uniqueId = null)
             return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
+            case 'forgotpass':
+                //code here
+                break;
+
         case 'showcart':
             //code here
             return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops, set new password, new, password, new password">';
@@ -3136,10 +3276,6 @@ function loadPageMetaKeywords($page, $uniqueId = null)
             //incase all else fails. don't forget to end code with semicolon
     } //end of switch statement
 
-}
-
-function validateResetCode($code)
-{
 }
 
 
@@ -3189,10 +3325,10 @@ function validateResetCode($code)
 
 // <title>TA TECH BLOG ADMIN HOME PAGE</title>
 //     <meta name="description" content= 'Tech Acoustic Tech Blog ADMIN HOME' ">
-//     <!-- <meta property='og:title' content="TATB HOME"> -->
-//     <meta property='og:url' content="https://techac.net/tatb">
-//     <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg"> -->
-//     <meta property='keywords' content="Admin, home, Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
+//     <!-- <meta property='og:title' content="tats HOME"> -->
+//     <meta property='og:url' content="https://techac.net/tats">
+//     <!-- <meta property='og:image' itemprop="image" content="https://techac.net/tats/assets/images/mike.jpg"> -->
+//     <meta property='keywords' content="Admin, home, Tech Acoustic, TA, tats, Tech Blog, Tech, Science, Computers">
 //     <!-- <meta property='og:locale' content="">
 // 	<meta property='og:type' content=""> -->
 

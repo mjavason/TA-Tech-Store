@@ -9,11 +9,11 @@ require_once "admin/functions/functions.php";
 
 <head>
 	<meta charset="utf-8">
-	
+
 	<!-- include head.php -->
 	<?php
 	//loadPageMetaData('products');
-	if (isset($_GET['id'])) {
+	if (isset($_GET['category'])) {
 		//echo loadPageMetaData('product_details', $_GET['id']);
 		echo loadPageMetaTitle('products', $_GET['category']);
 		echo loadPageMetaDescription('products', $_GET['category']);
@@ -21,8 +21,8 @@ require_once "admin/functions/functions.php";
 		echo loadPageMetaImage('products', $_GET['category']);
 		echo loadPageMetaKeywords('products', $_GET['category']);
 		echo loadPageMetaType('products', $_GET['category']);
-	}else{
-		
+	} else {
+
 		echo loadPageMetaTitle('products');
 		echo loadPageMetaDescription('products');
 		echo loadPageMetaUrl('products');

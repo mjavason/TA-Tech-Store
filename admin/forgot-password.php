@@ -32,34 +32,22 @@ if (isset($_POST['submit'])) {
         //Create an instance; passing `true` enables exceptions 
         $mail = new PHPMailer(true);
         try {
-            //Server settings 
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-
-            //Enable verbose debug output 
             $mail->isSMTP();
+            $mail->Host = 'www.techac.net';
+            $mail->SMTPAuth = TRUE;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Username = 'michaelson@techac.net';
+            $mail->Password = 'Emerald22401507';
+            $mail->Port = 465;
 
-            //Send using SMTP 
-            $mail->Host = 'smtp.gmail.com';
+            /* Enable SMTP debug output. */
+            $mail->SMTPDebug = 4;
 
-            //Set the SMTP server to send through 
-            $mail->SMTPAuth = true;
-
-            //Enable SMTP authentication
-            $mail->Username = 'orjimichael4886@gmail.com';
-
-            //SMTP username 
-            $mail->Password = '22401507';
-
-            //SMTP password 
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-
-            //Enable implicit TLS encryption 
-            $mail->Port = 587;
 
             //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             //Recipients 
-            $mail->setFrom('orjimichael4886@gmail.com', 'Tech Acoustic');
-            $mail->addAddress('orjimichael4886@gmail.com', 'Tech Acoustic');
+            $mail->setFrom('michaelson@techac.net', 'Orji Michael Chukwuebuka');
+            $mail->addAddress($_POST['email'], 'Tech Acoustic');
 
             //Add a recipient 
             //$mail->addAddress('ellen@example.com');
@@ -80,18 +68,18 @@ if (isset($_POST['submit'])) {
 
             //Set email format to HTML 
             $code = uniqid(true);
-            addNewResetData($code, $_POST['email']);
+            //addNewResetData($code, $_POST['email']);
 
-            $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"] . "/setnewpass.php?code=" . $code);
-            $mail->Subject = 'Here is the subject';
+            $url = "https://techac.net/tats/admin/setnewpass.php?code=" . $code;
+            $mail->Subject = 'Password Reset Request';
             $mail->Body = '
     <h1>You requested a password reset link</h1>
     Click <a href="' . $url . '">this link to do so</a>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->AltBody = 'copy this link into your browser to reset your password: ' . $url;
             $mail->send();
 
             addNewResetData($code, $_POST['email']);
-            $message = '<p class="text-success">Reset link has been sent to your email address.</p>';
+            $message = '<p class="text-success">Reset link has been sent to your email address. go check it out</p>';
         } catch (Exception $e) {
             $message = '<p class="text-danger">Reset link could not be sent, an error has occured</p>';
 
@@ -111,15 +99,14 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-    <title>TA TECH BLOG FORGOT PASSWORD</title>
-    <meta name="description" content="<?= 'Tech Acoustic Tech Blog' ?>">
-    <!-- <meta property='og:title' content="TATB HOME"> -->
-    <meta property='og:url' content="https://techac.net/tatb">
-    <meta property='og:image' itemprop="image" content="https://techac.net/tatb/assets/images/mike.jpg">
-    <meta property='keywords' content="Tech Acoustic, TA, TATB, Tech Blog, Tech, Science, Computers">
-    <!-- <meta property='og:locale' content="">
-	<meta property='og:type' content=""> -->
-
+    <?php
+    echo loadPageMetaTitle('forgotpass');
+    echo loadPageMetaDescription('forgotpass');
+    echo loadPageMetaUrl('home');
+    echo loadPageMetaImage('home');
+    echo loadPageMetaKeywords('forgotpass');
+    echo loadPageMetaType('home');
+    ?>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -164,7 +151,7 @@ if (isset($_POST['submit'])) {
                                         <a class="small" href="register.html">Create an Account!</a>
                                     </div> -->
                                     <div class="text-center">
-                                        <a class="small" href="login.html">Already have an account? Login!</a>
+                                        <a class="small" href="login.php">Already have an account? Login!</a>
                                     </div>
                                 </div>
                             </div>
