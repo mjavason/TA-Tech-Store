@@ -13,16 +13,16 @@ require_once "admin/functions/functions.php";
 
 <head>
 	<meta charset="utf-8">
-	
+
 	<!-- include head.php -->
 	<?php
 	//loadPageMetaData('cart');
 	echo loadPageMetaTitle('cart');
-		echo loadPageMetaDescription('cart');
-		echo loadPageMetaUrl('cart');
-		echo loadPageMetaImage('cart');
-		echo loadPageMetaKeywords('cart');
-		echo loadPageMetaType('cart');
+	echo loadPageMetaDescription('cart');
+	echo loadPageMetaUrl('cart');
+	echo loadPageMetaImage('cart');
+	echo loadPageMetaKeywords('cart');
+	echo loadPageMetaType('cart');
 	require_once('includes/head.php');
 	?>
 
@@ -60,13 +60,15 @@ require_once "admin/functions/functions.php";
 
 
 
+					<div style="overflow-x: auto;">
+						<table id="product_table" class="table table-bordered">
+							<!-- include checkout.php -->
+							<?php
+							require_once('includes/checkout.php');
+							?>
+						</table>
+					</div>
 
-					<table id="product_table" class="table table-bordered">
-						<!-- include checkout.php -->
-						<?php
-						require_once('includes/checkout.php');
-						?>
-					</table>
 
 
 
@@ -85,9 +87,10 @@ require_once "admin/functions/functions.php";
 						//require_once('includes/shipping.php');
 						?>
 					</table> -->
-					<button class="btn-large btn-danger pull-left" id="clear_cart" onclick="deleteAllCartItems();">Clear Cart</button>
 
 					<div>
+						<button class="btn-large btn-danger pull-left" id="clear_cart" onclick="deleteAllCartItems();">Clear Cart</button>
+
 						<form id="paymentForm">
 							<div class="form-submit">
 								<button type="submit" class="btn-large btn-success pull-right" id="checkout" onclick="payWithPaystack()">Checkout</button>

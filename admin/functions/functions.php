@@ -2941,10 +2941,10 @@ function loadPageMetaDescription($page, $uniqueId = null)
             return '<meta property="og:description" content="Input your new password. Do make sure not to forget it this time..." >';
             break;
 
-            case 'forgotpass':
-                //code here
+        case 'forgotpass':
+            //code here
             return '<meta property="og:description" content="Things happen, we get it, Just input your email and request for a new password." >';
-                break;
+            break;
 
         case 'showcart':
             //code here
@@ -3035,9 +3035,9 @@ function loadPageMetaUrl($page, $uniqueId = null)
             //code here
             break;
 
-            case 'forgotpass':
-                //code here
-                break;
+        case 'forgotpass':
+            //code here
+            break;
 
         case 'showcart':
             //code here
@@ -3150,10 +3150,10 @@ function loadPageMetaImage($page, $uniqueId = null)
             return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
             break;
 
-            case 'forgotpass':
-                //code here
+        case 'forgotpass':
+            //code here
             return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
-                break;
+            break;
 
         case 'showcart':
             //code here
@@ -3261,9 +3261,9 @@ function loadPageMetaKeywords($page, $uniqueId = null)
             return  '<meta property="keywords" content="computers, iplan, i-plan technologies, electronics, computers, repairs, laptops">';
             break;
 
-            case 'forgotpass':
-                //code here
-                break;
+        case 'forgotpass':
+            //code here
+            break;
 
         case 'showcart':
             //code here
