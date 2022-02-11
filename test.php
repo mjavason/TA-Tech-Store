@@ -57,7 +57,9 @@ require_once "admin/functions/functions.php";
 </head>
 
 <body>
-    <?php deleteDuplicateImages(); ?>
+    <?php deleteDuplicateImages();
+   //echo getAllTwelveMonthsIncome();
+    ?>
 </body>
 
 </html>

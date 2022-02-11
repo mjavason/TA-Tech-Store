@@ -2552,7 +2552,7 @@ function getTotalMonthlyIncome()
 function getTotalYearlyIncome()
 {
     global $db;
-    $allProducts = 0;
+
     $query = "SELECT * FROM transactions";
     $response = @mysqli_query($db, $query);
     $total = 0;
@@ -2570,6 +2570,61 @@ function getTotalYearlyIncome()
         }
     }
     return $total;
+}
+
+function getAllTwelveMonthsIncome()
+{
+
+    global $db;
+    $query = "SELECT * FROM transactions";
+    $response = @mysqli_query($db, $query);
+    $amountArray = [];
+    $dateArray = [];
+    $allMonthsReport = '';
+
+    //echo '------outside-loop<br>';
+    if ($response) {
+
+        while ($row = mysqli_fetch_array($response)) {
+            array_push($amountArray, $row['amount']);
+            array_push($dateArray, $row['created']);
+        }
+
+        //loop through january to february and get their total amounts
+        for ($j = 1; $j <= 12; $j++) {
+            $totalMonthly = 0;
+            //echo '------looping through month' . $j . '<br>';
+            //echo '<pre>';
+            //print_r($amountArray);
+
+            //loop through all transactions and get total amount for a single month
+            for ($i = 0; $i < sizeof($amountArray); $i++) {
+                //echo '------inside main loop, count ' . $i . '<br>';
+                //$currentmonth = date("Y-m");
+
+                if ($j < 10) {
+                    $currentmonth = '2022-0' . $j;
+                } else {
+                    $currentmonth = '2022-' . $j;
+                }
+
+
+                //echo '------the year is ' . $currentmonth . '<br>';
+                $paidmonth = date("Y-m", strtotime($dateArray[$i]));
+
+                if ($paidmonth == $currentmonth) {
+                    $totalMonthly += $amountArray[$i];
+                }
+            }
+
+            //check if total monthly amount is valid, if yes add it to all report
+                $allMonthsReport .= $totalMonthly . ', ';
+            //echo $totalMonthly;
+            //echo $allMonthsReport;
+           // echo '<br><br><br>';
+        } //end of for loop
+    }
+    return $allMonthsReport;
 }
 
 function generateTrulyRandomNumber()

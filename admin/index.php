@@ -106,8 +106,8 @@ if (!isset($_SESSION['log'])) {
     <script src="vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <?php include_once('includes/chart-area-demo.php') ?>
+    <?php include_once('includes/chart-pie-demo.php') ?>
 
 </body>
 
