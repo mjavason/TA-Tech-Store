@@ -2538,7 +2538,7 @@ function getTotalMonthlyIncome()
         while ($row = mysqli_fetch_array($response)) {
 
             $currentmonth = date("Y-m");
-            $paidmonth = date("Y-m", strtotime($row['paid_at']));
+            $paidmonth = date("Y-m", strtotime($row['created']));
             // 
 
             if ($paidmonth == $currentmonth) {
