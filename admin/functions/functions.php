@@ -2428,6 +2428,7 @@ function loadProductSearchResults($formstream)
 {
     global $db;
     extract($formstream);
+    $category = '0';
 
     if (!empty($name)) {
 
@@ -2468,27 +2469,27 @@ function loadProductSearchResults($formstream)
     $response = @mysqli_query($db, $sql);
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            if ($row['stock'] != 0) {
-                if (validateProductCategory($category, html_entity_decode($row['categories']))) {
-                    $checker = $row['id'];
-                    echo ' <li class="span3">
-                <div class="thumbnail">
-                    <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
-                    <div class="caption">
-                        <h5>' . $row['title'] . '</h5>
-                        <p>' . $row['spec_summary'] . '
-                        </p>
-            
-                        <h4 style="text-align:center">
+            if ($row['stock'] > 0) {
+                //     if (validateProductCategory($category, html_entity_decode($row['categories'])) && 2 < 1) {
+                //         $checker = $row['id'];
+                //         echo ' <li class="span3">
+                //     <div class="thumbnail">
+                //         <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
+                //         <div class="caption">
+                //             <h5>' . $row['title'] . '</h5>
+                //             <p>' . $row['spec_summary'] . '
+                //             </p>
 
-                            <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
-                        </h4>
-                    </div>
-                </div>
-            </li>';
-                } elseif ($category == 0) {
-                    $checker = $row['id'];
-                    echo ' <li class="span3">
+                //             <h4 style="text-align:center">
+
+                //                 <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                //             </h4>
+                //         </div>
+                //     </div>
+                // </li>';
+                //  } elseif ($category == '0') {
+                $checker = $row['id'];
+                echo ' <li class="span3">
                <div class="thumbnail">
                    <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
                    <div class="caption">
@@ -2504,7 +2505,7 @@ function loadProductSearchResults($formstream)
                    </div>
                </div>
            </li>';
-                }
+                // }
             } //end of stock checker
         }
         if ($checker == null) {
@@ -2621,10 +2622,10 @@ function getAllTwelveMonthsIncome()
             }
 
             //check if total monthly amount is valid, if yes add it to all report
-                $allMonthsReport .= $totalMonthly . ', ';
+            $allMonthsReport .= $totalMonthly . ', ';
             //echo $totalMonthly;
             //echo $allMonthsReport;
-           // echo '<br><br><br>';
+            // echo '<br><br><br>';
         } //end of for loop
     }
     return $allMonthsReport;
@@ -2738,10 +2739,10 @@ function loadPageMetaTitle($page, $uniqueId = null)
             //code here
             break;
 
-            case 'search':
-                return '<title>Search Results</title>';
-                //code here
-                break;
+        case 'search':
+            return '<title>Search Results</title>';
+            //code here
+            break;
 
 
             //////////////////////////////////////////////// ADMIN SECTION /////////////////////////////////////////////
