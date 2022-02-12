@@ -55,7 +55,12 @@ require_once "admin/functions/functions.php";
 				</div>
 				<!-- Sidebar end=============================================== -->
 				<div class="span9">
-
+				<ul class="breadcrumb">
+						<li><a href="index.php">Home</a> <span class="divider">/</span></li>
+						<li class="active">Search Results</li>
+					</ul>
+					<h3>Search Results</h3>
+					<hr class="soft" />
 					<!-- <div class="well well-small">
 						 include featured.php
 						<?php
@@ -63,11 +68,11 @@ require_once "admin/functions/functions.php";
 						//require_once('includes/latest.php');
 						?>
 					</div> -->
-					
+
 					<?php if (isset($_POST['submit'])) {
 						//if the user has clicked submit, then show the search results
 					?>
-						<h3>Search Results </h3>
+						
 						<ul class="thumbnails">
 							<!-- include latest.php -->
 							<?php
