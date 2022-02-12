@@ -1,7 +1,7 @@
 <?php
 require_once "config/connect.php";
 require_once "functions/functions.php";
-include 'includes/cache_top.php';
+//include 'includes/cache_top.php';
 
 
 if (!isset($_SESSION['log'])) {
@@ -115,5 +115,5 @@ if (!isset($_SESSION['log'])) {
 
 </html>
 
-<?php include 'includes/cache_bottom.php';
+<?php //include 'includes/cache_bottom.php';
  ?>
