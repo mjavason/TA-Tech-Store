@@ -2,6 +2,7 @@
 
 require_once "admin/config/connect.php";
 require_once "admin/functions/functions.php";
+include 'includes/cache_top.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,13 +15,13 @@ require_once "admin/functions/functions.php";
 	<?php
 	//loadPageMetaData('home');
 	//if (isset($_GET['id'])) {
-		//echo loadPageMetaData('product_details', $_GET['id']);
-		echo loadPageMetaTitle('home');
-		echo loadPageMetaDescription('home');
-		echo loadPageMetaUrl('home');
-		echo loadPageMetaImage('home');
-		echo loadPageMetaKeywords('home');
-		echo loadPageMetaType('home');
+	//echo loadPageMetaData('product_details', $_GET['id']);
+	echo loadPageMetaTitle('home');
+	echo loadPageMetaDescription('home');
+	echo loadPageMetaUrl('home');
+	echo loadPageMetaImage('home');
+	echo loadPageMetaKeywords('home');
+	echo loadPageMetaType('home');
 	//}
 	require_once('includes/head.php');
 	?>
@@ -117,3 +118,5 @@ require_once "admin/functions/functions.php";
 </body>
 
 </html>
+<?php include 'includes/cache_bottom.php'
+?>

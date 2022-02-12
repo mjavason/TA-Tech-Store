@@ -3,6 +3,8 @@
 require_once "admin/config/connect.php";
 require_once "admin/functions/functions.php";
 ?>
+<?php include 'includes/cache_top.php'
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,3 +145,6 @@ require_once "admin/functions/functions.php";
 </body>
 
 </html>
+
+<?php include 'includes/cache_bottom.php'
+?>

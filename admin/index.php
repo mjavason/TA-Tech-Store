@@ -1,9 +1,11 @@
 <?php
 require_once "config/connect.php";
 require_once "functions/functions.php";
+include 'includes/cache_top.php';
+
 
 if (!isset($_SESSION['log'])) {
-    gotoPage("login.php");
+    gotoPage("login.php"); 
 }
 ?>
 <!DOCTYPE html>
@@ -112,3 +114,6 @@ if (!isset($_SESSION['log'])) {
 </body>
 
 </html>
+
+<?php include 'includes/cache_bottom.php';
+ ?>
