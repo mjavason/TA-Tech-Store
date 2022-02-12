@@ -25,8 +25,8 @@
 		</a>
 		<div class="navbar-inner">
 			<a class="brand" href="index.php"><img src="themes/images/logo.png" alt="Bootsshop" /></a>
-			<form class="form-inline navbar-search" method="post" action="index.php">
-				<input id="srchFld" name="name" class="srchTxt" type="text" />
+			<form class="form-inline navbar-search" method="post" action="search.php">
+				<input id="srchFld" name="name" class="srchTxt" required type="text" />
 				<select class="srchTxt" name="category">
 					<option value='0'>ALL</option>
 					<?php loadSearchBarCategories() ?>

@@ -2,7 +2,7 @@
 
 require_once "admin/config/connect.php";
 require_once "admin/functions/functions.php";
-include 'includes/cache_top.php';
+//include 'includes/cache_top.php';
 ?>
 
 <!DOCTYPE html>
@@ -64,17 +64,20 @@ include 'includes/cache_top.php';
 						?>
 					</div> -->
 					
-					<h3>Latest Products </h3>
-					<ul class="thumbnails">
-						<!-- include latest.php -->
-						<?php
-						require_once('includes/latest.php');
-						?>
-					</ul>
-					<!-- include pagination.php -->
-					<!-- <?php
-							require_once('includes/pagination.php');
-							?> -->
+					<?php if (isset($_POST['submit'])) {
+						//if the user has clicked submit, then show the search results
+					?>
+						<h3>Search Results </h3>
+						<ul class="thumbnails">
+							<!-- include latest.php -->
+							<?php
+							loadProductSearchResults($_POST);
+							//advancedPostSearch($_POST);
+							//getSearchResults($_POST);
+							?>
+						</ul>
+					<?php } ?>
+					<br>
 				</div>
 			</div>
 		</div>
@@ -105,5 +108,5 @@ include 'includes/cache_top.php';
 </body>
 
 </html>
-<?php include 'includes/cache_bottom.php'
+<?php //include 'includes/cache_bottom.php'
 ?>

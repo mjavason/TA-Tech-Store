@@ -7,7 +7,10 @@ $file = $break[count($break) - 1];
 //if the page has a unique id, make the filename unique as well
 if(isset($_GET['id'])){
 $cachefile = 'cached-' . substr_replace($file, "", -4) .'-'.$_GET['id'].'.html';
-}else{
+}elseif(isset($_GET['category'])){
+    $cachefile = 'cached-' . substr_replace($file, "", -4) .'-'.$_GET['category'].'.html';
+}
+else{
     $cachefile = 'cached-' . substr_replace($file, "", -4) .'.html';
 }
 
