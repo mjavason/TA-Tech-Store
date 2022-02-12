@@ -25,12 +25,12 @@
 		</a>
 		<div class="navbar-inner">
 			<a class="brand" href="index.php"><img src="themes/images/logo.png" alt="Bootsshop" /></a>
-			<form class="form-inline navbar-search" method="post" action="search.php">
+			<form class="form-inline navbar-search pull-right" method="post" action="search.php">
 				<input id="srchFld" name="name" class="srchTxt" required type="text" />
-				<select class="srchTxt" name="category">
+				<!-- <select class="srchTxt" name="category">
 					<option value='0'>ALL</option>
 					<?php loadSearchBarCategories() ?>
-				</select>
+				</select> -->
 				<button type="submit" id="submitButton" name="submit" class="btn btn-primary">Search</button>
 			</form>
 			<ul id="topMenu" class="nav pull-right collapse" style="height: 0px;">
