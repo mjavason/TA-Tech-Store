@@ -2480,6 +2480,7 @@ function loadProductSearchResults($formstream)
                         </p>
             
                         <h4 style="text-align:center">
+
                             <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
                         </h4>
                     </div>
@@ -2496,6 +2497,8 @@ function loadProductSearchResults($formstream)
                        </p>
            
                        <h4 style="text-align:center">
+                       
+                       <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
                            <a class="btn " href="product_summary.php">&#8358;' . $row['price'] . '</a>
                        </h4>
                    </div>
@@ -2734,6 +2737,11 @@ function loadPageMetaTitle($page, $uniqueId = null)
             return '<title>Developer Test Page</title>';
             //code here
             break;
+
+            case 'search':
+                return '<title>Search Results</title>';
+                //code here
+                break;
 
 
             //////////////////////////////////////////////// ADMIN SECTION /////////////////////////////////////////////

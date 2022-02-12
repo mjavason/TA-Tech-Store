@@ -16,7 +16,7 @@ require_once "admin/functions/functions.php";
 	//loadPageMetaData('home');
 	//if (isset($_GET['id'])) {
 	//echo loadPageMetaData('product_details', $_GET['id']);
-	echo loadPageMetaTitle('home');
+	echo loadPageMetaTitle('search');
 	echo loadPageMetaDescription('home');
 	echo loadPageMetaUrl('home');
 	echo loadPageMetaImage('home');
