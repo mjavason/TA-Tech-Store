@@ -1070,10 +1070,7 @@ function loadPaystackCode()
 
         let handler = PaystackPop.setup({
 
-            //pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7
-            //pk_live_21bba98bf9a683dc3215452aa76419d4204ce121
-
-            key: 'pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7', // Replace with your public key
+           
 
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',

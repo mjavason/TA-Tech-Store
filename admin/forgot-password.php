@@ -36,8 +36,7 @@ if (isset($_POST['submit'])) {
             $mail->Host = 'www.techac.net';
             $mail->SMTPAuth = TRUE;
             $mail->SMTPSecure = 'ssl';
-            $mail->Username = 'michaelson@techac.net';
-            $mail->Password = 'Emerald22401507';
+           
             $mail->Port = 465;
 
             /* Enable SMTP debug output. */
