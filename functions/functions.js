@@ -7,9 +7,9 @@ var sideCartInfoTotal = document.getElementById('side_product_summary_total');
 var productTable = document.querySelector('#product_table tbody');
 
 topCartInfoCount.innerHTML = getProductCount();
-topCartInfoTotal.innerHTML = getTotalPrice();
+topCartInfoTotal.innerHTML = nairaFormatR(getTotalPrice());
 sideCartInfoCount.innerHTML = getProductCount();
-sideCartInfoTotal.innerHTML = getTotalPrice();
+sideCartInfoTotal.innerHTML = nairaFormatR(getTotalPrice());
 var cartToggleButton;
 
 
@@ -134,7 +134,7 @@ function setFrontendItems() {
     }
 
     if (topCartInfoTotal != null) {
-        topCartInfoTotal.innerHTML = getTotalPrice();
+        topCartInfoTotal.innerHTML = nairaFormatR(getTotalPrice());
     }
 
     if (midCartInfoCount != null) {
@@ -144,6 +144,11 @@ function setFrontendItems() {
     if (sideCartInfoCount != null) {
         sideCartInfoCount.innerHTML = getProductCount();
     }
+
+    if (sideCartInfoTotal != null) {
+        sideCartInfoTotal.innerHTML = nairaFormatR(getTotalPrice());
+    }
+    
     showItemsAlreadyInCart(getProductsInLocalStorage());
 }
 
@@ -179,10 +184,10 @@ function loadCartSummary() {
       </div>
   </td>
 
-      <td>${productLS[i].price}</td>
-      <td>${discount}</td>
-      <td>${tax}</td>
-      <td>${itemTotal}</td>
+      <td>${nairaFormat(productLS[i].price)}</td>
+      <td>${nairaFormat(discount)}</td>
+      <td>${nairaFormat(tax)}</td>
+      <td>${nairaFormat(itemTotal)}</td>
       `;
         if (productTable != null) {
             productTable.appendChild(row);
@@ -200,10 +205,10 @@ function loadCartSummary() {
     var totalTaxRow = document.createElement('tr');
     var grossTotalRow = document.createElement('tr');
 
-    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ${totalVal}</td> `;
-    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ${totalDiscountVal}</td>`;
-    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${totalTaxVal}</td>`;
-    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${totalVal} - ${totalDiscountVal} + ${totalTaxVal}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${grossTotalVal} </strong></td>`;
+    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ${nairaFormat(totalVal)}</td> `;
+    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ${nairaFormat(totalDiscountVal)}</td>`;
+    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${nairaFormat(totalTaxVal)}</td>`;
+    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${nairaFormat(totalVal)} - ${nairaFormat(totalDiscountVal)} + ${nairaFormat(totalTaxVal)}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${nairaFormat(grossTotalVal)} </strong></td>`;
 
     if (productTable != null) {
         productTable.appendChild(totalRow);
@@ -322,7 +327,7 @@ function showItemsAlreadyInCart(productLS) {
         if (cartToggleButton != null) {
             console.log('button found.');
             cartToggleButton.style.display = 'none';
-           
+
         }
 
         //console.log('cartToggleButton' + productInCart);
@@ -341,4 +346,20 @@ function getJsonFromObject(productsObject) {
     return JSON.stringify(productsObject);
 }
 
+// const formater = new Intl.NumberFormat('en-NG',
+//     {
+//         style: 'currency',
+//         currency: 'NGN',
+//         maximumFractionDigits: 0,
+//     })
 
+// function nairaFormat(number) {
+//     console.log('inside nairaFormat function')
+//     document.write(formater.format(number));
+//     //return 
+// }
+
+
+var number = 1000000;
+console.log('about to use formatter');
+console.log(formater.format(number));

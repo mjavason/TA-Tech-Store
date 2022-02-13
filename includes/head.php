@@ -26,3 +26,22 @@
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="themes/images/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed" href="themes/images/ico/apple-touch-icon-57-precomposed.png">
 <style type="text/css" id="enject"></style>
+<script>
+	const formater = new Intl.NumberFormat('en-NG', {
+		style: 'currency',
+		currency: 'NGN',
+		maximumFractionDigits: 0,
+	})
+
+	function nairaFormat(number) {
+		console.log('inside nairaFormat function')
+		document.write(formater.format(number));
+		return formater.format(number);
+	}
+
+	function nairaFormatR(number) {
+		console.log('inside nairaFormat function')
+		//document.write(formater.format(number));
+		return formater.format(number);
+	}
+</script>

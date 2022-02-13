@@ -2,12 +2,15 @@
 <small><?php loadSpecSummary($_GET['id']); ?></small>
 <hr class="soft" />
 
-	<div class="control-group">
-	
-		<div class="controls">
-			<button id="cartToggleButton<?php echo $_GET['id'];?>" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
-		</div>
+<div class="control-group">
+
+	<div class="controls">
+		<a class="btn btn-large" href="product_summary.php">
+			<script><?php echo 'nairaFormat('.getProductPrice($_GET['id']).')' ?></script>
+		</a>
+		<button id="cartToggleButton<?php echo $_GET['id']; ?>" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
 	</div>
+</div>
 
 <hr class="soft clr" />
 <!-- <p>

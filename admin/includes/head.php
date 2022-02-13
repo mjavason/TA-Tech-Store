@@ -13,3 +13,23 @@
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+<script>
+    const formater = new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        maximumFractionDigits: 0,
+    })
+
+    function nairaFormat(number) {
+        console.log('inside nairaFormat function')
+        document.write(formater.format(number));
+        return formater.format(number);
+    }
+
+    function nairaFormatR(number) {
+        console.log('inside nairaFormat function')
+        //document.write(formater.format(number));
+        return formater.format(number);
+    }
+</script>

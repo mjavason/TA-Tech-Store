@@ -1070,7 +1070,8 @@ function loadPaystackCode()
 
         let handler = PaystackPop.setup({
 
-           
+
+
 
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
@@ -1855,7 +1856,7 @@ function loadProductsWithCategories($category)
     
                 <h4 style="text-align:center">
                     <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
-                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                    <a class="btn btn-primary" href="product_summary.php"><script>nairaFormat(' . $row['price'] . ')</script></a>
                 </h4>
             </div>
         </div>
@@ -1900,7 +1901,7 @@ function loadProductsWithCategoriesBlock($category)
 	</div>
 	<div class="span3 alignR">
 		<form class="form-horizontal qtyFrm">
-			<h3>&#8358;' . $row['price'] . '</h3>
+			<h3><script>nairaFormat(' . $row['price'] . ')</script></h3>
 			<br />
 			
 		</form>
@@ -2011,7 +2012,7 @@ function loadLatestProducts($id = null)
                     </p>
 
                     <h4 style="text-align:center">
-                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                    <a class="btn btn-primary" href="product_summary.php"><script>nairaFormat(' . $row['price'] . ')</script></a>
                 </h4>
                 </div>
             </div>
@@ -2037,7 +2038,7 @@ function loadLatestProducts($id = null)
     
                 <h4 style="text-align:center">
                     <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
-                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                    <a class="btn btn-primary" href="product_summary.php"><script>nairaFormat(' . $row['price'] . ')</script></a>
                 </h4>
             </div>
         </div>
@@ -2092,7 +2093,7 @@ function loadLatestProductsBlock($id = null)
                         <br class="clr" />
                     </div>
                     <div class="span3 alignR">
-                            <h3>&#8358;' . $row['price'] . '</h3>
+                            <h3><script>nairaFormat(' . $row['price'] . ')</script></h3>
                     </div>
                     </div>';
                     }
@@ -2117,7 +2118,7 @@ function loadLatestProductsBlock($id = null)
 	</div>
 	<div class="span3 alignR">
 		<form class="form-horizontal qtyFrm">
-			<h3>&#8358;' . $row['price'] . '</h3>
+			<h3><script>nairaFormat(' . $row['price'] . ')</script></h3>
 			<br />
 			<div class="btn-group">
                 
@@ -2165,7 +2166,7 @@ function loadRelatedProducts($id)
     
                 <h4 style="text-align:center">
                     <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
-                    <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                    <a class="btn btn-primary" href="product_summary.php"><script>nairaFormat(' . $row['price'] . ')</script></a>
                 </h4>
             </div>
         </div>
@@ -2210,7 +2211,7 @@ function loadRelatedProductsBlock($id)
 	</div>
 	<div class="span3 alignR">
 		<form class="form-horizontal qtyFrm">
-			<h3>&#8358;' . $row['price'] . '</h3>
+			<h3><script>nairaFormat(' . $row['price'] . ')</script></h3>
 			<br />
 			<div class="btn-group">
                 
@@ -2497,7 +2498,7 @@ function loadProductSearchResults($formstream)
                        <h4 style="text-align:center">
                        
                        <a class="btn" id="cartToggleButton' . $row['id'] . '" onclick="' . returnProductCartInfo($row['id']) . '>Add to <i class="icon-shopping-cart"></i></a>
-                           <a class="btn btn-primary" href="product_summary.php">&#8358;' . $row['price'] . '</a>
+                           <a class="btn btn-primary" href="product_summary.php"><script>nairaFormat(' . $row['price'] . ')</script></a>
                        </h4>
                    </div>
                </div>
