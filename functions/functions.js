@@ -184,10 +184,10 @@ function loadCartSummary() {
       </div>
   </td>
 
-      <td>${nairaFormat(productLS[i].price)}</td>
-      <td>${nairaFormat(discount)}</td>
-      <td>${nairaFormat(tax)}</td>
-      <td>${nairaFormat(itemTotal)}</td>
+      <td>${nairaFormatR(productLS[i].price)}</td>
+      <td>${nairaFormatR(discount)}</td>
+      <td>${nairaFormatR(tax)}</td>
+      <td>${nairaFormatR(itemTotal)}</td>
       `;
         if (productTable != null) {
             productTable.appendChild(row);
@@ -205,10 +205,10 @@ function loadCartSummary() {
     var totalTaxRow = document.createElement('tr');
     var grossTotalRow = document.createElement('tr');
 
-    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ${nairaFormat(totalVal)}</td> `;
-    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ${nairaFormat(totalDiscountVal)}</td>`;
-    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${nairaFormat(totalTaxVal)}</td>`;
-    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${nairaFormat(totalVal)} - ${nairaFormat(totalDiscountVal)} + ${nairaFormat(totalTaxVal)}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${nairaFormat(grossTotalVal)} </strong></td>`;
+    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ${nairaFormatR(totalVal)}</td> `;
+    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ${nairaFormatR(totalDiscountVal)}</td>`;
+    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${nairaFormatR(totalTaxVal)}</td>`;
+    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${nairaFormatR(totalVal)} - ${nairaFormatR(totalDiscountVal)} + ${nairaFormatR(totalTaxVal)}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${nairaFormatR(grossTotalVal)} </strong></td>`;
 
     if (productTable != null) {
         productTable.appendChild(totalRow);

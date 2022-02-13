@@ -60,6 +60,20 @@ require_once "admin/functions/functions.php";
     <?php deleteDuplicateImages();
    //echo getAllTwelveMonthsIncome();
     ?>
+
+<script>
+	
+
+    var number = 1000000;
+if(formater.format(number) != null){
+    document.write('about to use currency formatter<br>')
+    document.write(formater.format(number))
+}else{
+    console.log('currency formatter not working');
+    document.write(number)
+}
+
+</script>
 </body>
 
 </html>

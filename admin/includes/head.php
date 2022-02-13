@@ -21,15 +21,26 @@
         maximumFractionDigits: 0,
     })
 
-    function nairaFormat(number) {
-        console.log('inside nairaFormat function')
-        document.write(formater.format(number));
-        return formater.format(number);
-    }
 
-    function nairaFormatR(number) {
-        console.log('inside nairaFormat function')
-        //document.write(formater.format(number));
-        return formater.format(number);
-    }
+    function nairaFormat(number) {
+		//console.log('inside nairaFormat function')
+		//document.write('₦'.number)
+		if (formater.format(number) != null) {
+			document.write(formater.format(number));
+		} else {
+			document.write(number);
+		}
+		//return '₦'.formater.format(number);
+	}
+
+	function nairaFormatR(number) {
+		//console.log('inside nairaFormat function')
+		//document.write(formater.format(number));
+		//return '₦'.number;
+		if (formater.format(number) != null) {
+			return formater.format(number);
+		} else {
+			return '₦'.number;
+		}
+	}
 </script>
