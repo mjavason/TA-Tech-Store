@@ -10,7 +10,7 @@
 						<span class="btn btn-mini">E155.00</span> -->
 				<!-- <a href="product_summary.php"><span class="">$</span></a>
 				<span class="btn btn-mini">$155.00</span> -->
-				<!-- <a href="product_summary.php"><span>&#8358;</span></a> -->
+				<a href="product_summary.php"><span>₦</span></a>
 				<span class="btn btn-mini " id="top_product_summary_total"></span>
 				<a href="product_summary.php"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i>[ <span id="top_product_summary_count"></span> ] Items in your cart </span> </a>
 			</div>

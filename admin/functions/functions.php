@@ -1,31 +1,19 @@
 <?php
-echo "<script>const formater = new Intl.NumberFormat('en-NG', {
-    style: 'currency',
-    currency: 'NGN',
-    maximumFractionDigits: 0,
-})
-
+echo "<script>
 function nairaFormat(number) {
-    console.log('inside nairaFormat function')
-    //document.write('₦'.number)
-    if (formater.format(number) != null) {
-        document.write(formater.format(number));
-    } else {
-        document.write(number);
-    }
-    //return '₦'.formater.format(number);
+    console.log('inside nairaFormat function');
+    document.write('₦')
+    document.write(number.toLocaleString(undefined , {maximumFractionDigits: 0 }));
+    //return ''.formater.format(number);
 }
 
 function nairaFormatR(number) {
-    console.log('inside nairaFormatR function')
-    //document.write(formater.format(number));
-    //return '₦'.number;
-    if (formater.format(number) != null) {
-        return formater.format(number);
-    } else {
-        return '₦'.number;
-    }
+    console.log('inside nairaFormatR function');
+    //window.alert('this should be working');
+    amount = number.toLocaleString(undefined, {maximumFractionDigits: 0 });
+    return(amount);
 }
+//window.alert('This naira format function is working');
 </script>";
 
 //This starts a session for the entire project
@@ -1098,8 +1086,7 @@ function loadPaystackCode()
         e.preventDefault();
 
         let handler = PaystackPop.setup({
-
-              //email: document.getElementById('email-address').value,
+            //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
 
             //amount: document.getElementById('amount').value * 100,
@@ -1160,7 +1147,7 @@ function verifyPayment()
 
         CURLOPT_HTTPHEADER => array(
 
-            "Authorization: Bearer sk_live_eb443ca5a5686ca06797b9bbccd044f9d9e97e70",
+            
 
             "Cache-Control: no-cache",
 

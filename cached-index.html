@@ -18,15 +18,15 @@
 
 <!-- Bootstrap style -->
 <link id="callCss" rel="stylesheet" href="themes/cerulean/bootstrap.min.css" media="screen" />
-<link href="themes/css/base.css?v=1644757989" rel="stylesheet" media="screen" />
+<link href="themes/css/base.css?v=1644780370" rel="stylesheet" media="screen" />
 <!-- Bootstrap style responsive -->
-<!-- <link href="themes/css/bootstrap.min.css?v=1644757989" rel="stylesheet" /> -->
+<!-- <link href="themes/css/bootstrap.min.css?v=1644780370" rel="stylesheet" /> -->
 
-<link href="themes/css/bootstrap-responsive.min.css?v=1644757989" rel="stylesheet" />
+<link href="themes/css/bootstrap-responsive.min.css?v=1644780370" rel="stylesheet" />
 
-<link href="themes/css/font-awesome.css?v=1644757989" rel="stylesheet" type="text/css">
+<link href="themes/css/font-awesome.css?v=1644780370" rel="stylesheet" type="text/css">
 <!-- Google-code-prettify -->
-<link href="themes/js/google-code-prettify/prettify.css?v=1644757989" rel="stylesheet" />
+<link href="themes/js/google-code-prettify/prettify.css?v=1644780370" rel="stylesheet" />
 <!-- fav and touch icons -->
 <link rel="shortcut icon" href="themes/images/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="themes/images/ico/apple-touch-icon-144-precomposed.png">
@@ -35,35 +35,33 @@
 <link rel="apple-touch-icon-precomposed" href="themes/images/ico/apple-touch-icon-57-precomposed.png">
 <style type="text/css" id="enject"></style>
 <script>
-	const formater = new Intl.NumberFormat('en-NG', {
-		style: 'currency',
-		currency: 'NGN',
-		maximumFractionDigits: 0,
-	})
+	// const formater = new Intl.NumberFormat('en-NG', {
+	// 	style: 'currency',
+	// 	currency: 'NGN',
+	// 	maximumFractionDigits: 0,
+	// })
 
-	function nairaFormat(number) {
-		//console.log('inside nairaFormat function')
-		//document.write('₦'.number)
-		if (formater.format(number) != null) {
-			document.write(formater.format(number));
-		} else {
-			document.write(number);
-		}
-		//return '₦'.formater.format(number);
-	}
+	// function nairaFormat(number) {
+	// 	//console.log('inside nairaFormat function')
+	// 	//document.write('₦'.number)
+	// 	if (formater.format(number) != null) {
+	// 		document.write(formater.format(number));
+	// 	} else {
+	// 		document.write(number);
+	// 	}
+	// 	//return '₦'.formater.format(number);
+	// }
 
-	function nairaFormatR(number) {
-		//console.log('inside nairaFormat function')
-		//document.write(formater.format(number));
-		//return '₦'.number;
-		if (formater.format(number) != null) {
-			return formater.format(number);
-		} else {
-			return '₦'.number;
-		}
-
-
-	}
+	// function nairaFormatR(number) {
+	// 	//console.log('inside nairaFormat function')
+	// 	//document.write(formater.format(number));
+	// 	//return '₦'.number;
+	// 	if (formater.format(number) != null) {
+	// 		return formater.format(number);
+	// 	} else {
+	// 		return '₦'.number;
+	// 	}
+	// }
 </script>
 </head>
 
@@ -83,7 +81,7 @@
 						<span class="btn btn-mini">E155.00</span> -->
 				<!-- <a href="product_summary.php"><span class="">$</span></a>
 				<span class="btn btn-mini">$155.00</span> -->
-				<!-- <a href="product_summary.php"><span>&#8358;</span></a> -->
+				<a href="product_summary.php"><span>₦</span></a>
 				<span class="btn btn-mini " id="top_product_summary_total"></span>
 				<a href="product_summary.php"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i>[ <span id="top_product_summary_count"></span> ] Items in your cart </span> </a>
 			</div>
@@ -164,14 +162,14 @@
 				<!-- Sidebar ================================================== -->
 				<div id="sidebar" class="span3">
 					<!-- include sidebar.php -->
-					<div class="well well-small"><a id="myCart" href="product_summary.php"><img src="themes/images/ico-cart.png" alt="cart"><span class="cart_num "id = "side_product_summary_count"></span> Items in your cart <span class="badge badge-warning pull-right"><span class="cart_total " id = "side_product_summary_total"></span></span></a></div>
+					<div class="well well-small"><a id="myCart" href="product_summary.php"><img src="themes/images/ico-cart.png" alt="cart"><span class="cart_num " id="side_product_summary_count"></span> Items in your cart <span class="badge badge-warning pull-right">₦<span class="cart_total " id="side_product_summary_total"></span></span></a></div>
 <ul id="sideManu" class="nav nav-tabs nav-stacked">
 	<li class="subMenu"><a> ELECTRONICS [33]</a>
-	<!-- <li class="subMenu open"><a> ELECTRONICS [230]</a> -->
+		<!-- <li class="subMenu open"><a> ELECTRONICS [230]</a> -->
 
 		<ul style="display:none">
-		<li><a href="products.php"><i class="icon-chevron-right"></i>ALL [45]</a>
-		<li><a class="active" href="products.php?category=ADAPTERS"><i class="icon-chevron-right"></i>ADAPTERS [4]</a></li><li><a class="" href="products.php?category=ANTIVIRUS"><i class="icon-chevron-right"></i>ANTIVIRUS [2]</a></li><li><a class="" href="products.php?category=APPLE"><i class="icon-chevron-right"></i>APPLE [1]</a></li><li><a class="" href="products.php?category=ASUS"><i class="icon-chevron-right"></i>ASUS [1]</a></li><li><a class="" href="products.php?category=AUDIO AND VIDEO ACCESSORIES"><i class="icon-chevron-right"></i>AUDIO AND VIDEO ACCESSORIES [5]</a></li><li><a class="" href="products.php?category=BLUETOOTH"><i class="icon-chevron-right"></i>BLUETOOTH [6]</a></li><li><a class="" href="products.php?category=CABLES"><i class="icon-chevron-right"></i>CABLES [3]</a></li><li><a class="" href="products.php?category=COMPUTER ACCESSORIES"><i class="icon-chevron-right"></i>COMPUTER ACCESSORIES [12]</a></li><li><a class="" href="products.php?category=COMPUTERS"><i class="icon-chevron-right"></i>COMPUTERS [6]</a></li><li><a class="" href="products.php?category=CONTROLLERS"><i class="icon-chevron-right"></i>CONTROLLERS [3]</a></li><li><a class="" href="products.php?category=DATA STORAGE"><i class="icon-chevron-right"></i>DATA STORAGE [3]</a></li><li><a class="" href="products.php?category=DELL"><i class="icon-chevron-right"></i>DELL [4]</a></li><li><a class="" href="products.php?category=DESKTOPS"><i class="icon-chevron-right"></i>DESKTOPS [1]</a></li><li><a class="" href="products.php?category=EARPHONES"><i class="icon-chevron-right"></i>EARPHONES [3]</a></li><li><a class="" href="products.php?category=EXTERNAL HARD DRIVES"><i class="icon-chevron-right"></i>EXTERNAL HARD DRIVES [1]</a></li><li><a class="" href="products.php?category=EXTERNAL OPTICAL DRIVES"><i class="icon-chevron-right"></i>EXTERNAL OPTICAL DRIVES [1]</a></li><li><a class="" href="products.php?category=HP"><i class="icon-chevron-right"></i>HP [3]</a></li><li><a class="" href="products.php?category=KEYBOARDS"><i class="icon-chevron-right"></i>KEYBOARDS [1]</a></li><li><a class="" href="products.php?category=LAPTOPS"><i class="icon-chevron-right"></i>LAPTOPS [6]</a></li><li><a class="" href="products.php?category=MACBOOK"><i class="icon-chevron-right"></i>MACBOOK [1]</a></li><li><a class="" href="products.php?category=MICE"><i class="icon-chevron-right"></i>MICE [5]</a></li><li><a class="" href="products.php?category=MOBILE PHONE ACCESSORIES"><i class="icon-chevron-right"></i>MOBILE PHONE ACCESSORIES [5]</a></li><li><a class="" href="products.php?category=MONITORS"><i class="icon-chevron-right"></i>MONITORS [2]</a></li><li><a class="" href="products.php?category=NETWORK PRODUCTS"><i class="icon-chevron-right"></i>NETWORK PRODUCTS [1]</a></li><li><a class="" href="products.php?category=NETWORKING PRODUCTS"><i class="icon-chevron-right"></i>NETWORKING PRODUCTS [4]</a></li><li><a class="" href="products.php?category=PREMIUM"><i class="icon-chevron-right"></i>PREMIUM [2]</a></li><li><a class="" href="products.php?category=REMOTES"><i class="icon-chevron-right"></i>REMOTES [1]</a></li><li><a class="" href="products.php?category=SPEAKERS"><i class="icon-chevron-right"></i>SPEAKERS [1]</a></li><li><a class="" href="products.php?category=SPLITTERS"><i class="icon-chevron-right"></i>SPLITTERS [1]</a></li><li><a class="" href="products.php?category=UPS"><i class="icon-chevron-right"></i>UPS [1]</a></li><li><a class="" href="products.php?category=USB"><i class="icon-chevron-right"></i>USB [6]</a></li><li><a class="" href="products.php?category=WIRELESS DEVICES"><i class="icon-chevron-right"></i>WIRELESS DEVICES [6]</a></li>		</ul>
+			<li><a href="products.php"><i class="icon-chevron-right"></i>ALL [45]</a>
+				<li><a class="active" href="products.php?category=ADAPTERS"><i class="icon-chevron-right"></i>ADAPTERS [4]</a></li><li><a class="" href="products.php?category=ANTIVIRUS"><i class="icon-chevron-right"></i>ANTIVIRUS [2]</a></li><li><a class="" href="products.php?category=APPLE"><i class="icon-chevron-right"></i>APPLE [1]</a></li><li><a class="" href="products.php?category=ASUS"><i class="icon-chevron-right"></i>ASUS [1]</a></li><li><a class="" href="products.php?category=AUDIO AND VIDEO ACCESSORIES"><i class="icon-chevron-right"></i>AUDIO AND VIDEO ACCESSORIES [5]</a></li><li><a class="" href="products.php?category=BLUETOOTH"><i class="icon-chevron-right"></i>BLUETOOTH [6]</a></li><li><a class="" href="products.php?category=CABLES"><i class="icon-chevron-right"></i>CABLES [3]</a></li><li><a class="" href="products.php?category=COMPUTER ACCESSORIES"><i class="icon-chevron-right"></i>COMPUTER ACCESSORIES [12]</a></li><li><a class="" href="products.php?category=COMPUTERS"><i class="icon-chevron-right"></i>COMPUTERS [6]</a></li><li><a class="" href="products.php?category=CONTROLLERS"><i class="icon-chevron-right"></i>CONTROLLERS [3]</a></li><li><a class="" href="products.php?category=DATA STORAGE"><i class="icon-chevron-right"></i>DATA STORAGE [3]</a></li><li><a class="" href="products.php?category=DELL"><i class="icon-chevron-right"></i>DELL [4]</a></li><li><a class="" href="products.php?category=DESKTOPS"><i class="icon-chevron-right"></i>DESKTOPS [1]</a></li><li><a class="" href="products.php?category=EARPHONES"><i class="icon-chevron-right"></i>EARPHONES [3]</a></li><li><a class="" href="products.php?category=EXTERNAL HARD DRIVES"><i class="icon-chevron-right"></i>EXTERNAL HARD DRIVES [1]</a></li><li><a class="" href="products.php?category=EXTERNAL OPTICAL DRIVES"><i class="icon-chevron-right"></i>EXTERNAL OPTICAL DRIVES [1]</a></li><li><a class="" href="products.php?category=HP"><i class="icon-chevron-right"></i>HP [3]</a></li><li><a class="" href="products.php?category=KEYBOARDS"><i class="icon-chevron-right"></i>KEYBOARDS [1]</a></li><li><a class="" href="products.php?category=LAPTOPS"><i class="icon-chevron-right"></i>LAPTOPS [6]</a></li><li><a class="" href="products.php?category=MACBOOK"><i class="icon-chevron-right"></i>MACBOOK [1]</a></li><li><a class="" href="products.php?category=MICE"><i class="icon-chevron-right"></i>MICE [5]</a></li><li><a class="" href="products.php?category=MOBILE PHONE ACCESSORIES"><i class="icon-chevron-right"></i>MOBILE PHONE ACCESSORIES [5]</a></li><li><a class="" href="products.php?category=MONITORS"><i class="icon-chevron-right"></i>MONITORS [2]</a></li><li><a class="" href="products.php?category=NETWORK PRODUCTS"><i class="icon-chevron-right"></i>NETWORK PRODUCTS [1]</a></li><li><a class="" href="products.php?category=NETWORKING PRODUCTS"><i class="icon-chevron-right"></i>NETWORKING PRODUCTS [4]</a></li><li><a class="" href="products.php?category=PREMIUM"><i class="icon-chevron-right"></i>PREMIUM [2]</a></li><li><a class="" href="products.php?category=REMOTES"><i class="icon-chevron-right"></i>REMOTES [1]</a></li><li><a class="" href="products.php?category=SPEAKERS"><i class="icon-chevron-right"></i>SPEAKERS [1]</a></li><li><a class="" href="products.php?category=SPLITTERS"><i class="icon-chevron-right"></i>SPLITTERS [1]</a></li><li><a class="" href="products.php?category=UPS"><i class="icon-chevron-right"></i>UPS [1]</a></li><li><a class="" href="products.php?category=USB"><i class="icon-chevron-right"></i>USB [6]</a></li><li><a class="" href="products.php?category=WIRELESS DEVICES"><i class="icon-chevron-right"></i>WIRELESS DEVICES [6]</a></li>		</ul>
 	</li>
 </ul>
 <br />				</div>

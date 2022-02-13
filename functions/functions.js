@@ -205,17 +205,17 @@ function loadCartSummary() {
       <td>${productLS[i].title}</td>
 
       <td>
-      <div class="input-append"><input class="span1" style="max-width:34px" disabled placeholder="${productLS[i].quantity}" id="appendedInputButtons" size="16" type="text">
-      <button class="btn" type="button" onclick="reduceQuantity(${productLS[i].id});"><i class="icon-minus"></i></button>
-      <button class="btn" type="button" onclick="increaseQuantity(${productLS[i].id});"><i class="icon-plus"></i></button>
-      <button class="btn btn-danger" type="button" onclick="deleteCartItem(${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
+      <div class="input-append"><input class="span1" style="max-width:34px" disabled placeholder="₦${productLS[i].quantity}" id="appendedInputButtons" size="16" type="text">
+      <button class="btn" type="button" onclick="reduceQuantity(₦${productLS[i].id});"><i class="icon-minus"></i></button>
+      <button class="btn" type="button" onclick="increaseQuantity(₦${productLS[i].id});"><i class="icon-plus"></i></button>
+      <button class="btn btn-danger" type="button" onclick="deleteCartItem(₦${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
       </div>
   </td>
 
-      <td>${nairaFormatR(productLS[i].price)}</td>
-      <td>${nairaFormatR(discount)}</td>
-      <td>${nairaFormatR(tax)}</td>
-      <td>${nairaFormatR(itemTotal)}</td>
+      <td>₦${nairaFormatR(productLS[i].price)}</td>
+      <td>₦${nairaFormatR(discount)}</td>
+      <td>₦${nairaFormatR(tax)}</td>
+      <td>₦${nairaFormatR(itemTotal)}</td>
       `;
         if (productTable != null) {
             productTable.appendChild(row);
@@ -233,10 +233,10 @@ function loadCartSummary() {
     var totalTaxRow = document.createElement('tr');
     var grossTotalRow = document.createElement('tr');
 
-    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ${nairaFormatR(totalVal)}</td> `;
-    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ${nairaFormatR(totalDiscountVal)}</td>`;
-    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ${nairaFormatR(totalTaxVal)}</td>`;
-    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (${nairaFormatR(totalVal)} - ${nairaFormatR(totalDiscountVal)} + ${nairaFormatR(totalTaxVal)}) =</strong></td><td class="label label-important" style="display:block"> <strong> ${nairaFormatR(grossTotalVal)} </strong></td>`;
+    totalRow.innerHTML = `<td colspan = "6" style = "text-align:right"> Total Price: </td><td> ₦${nairaFormatR(totalVal)}</td> `;
+    totalDiscountRow.innerHTML = `<td colspan="6" style="text-align:right">Total Discount: </td><td> ₦${nairaFormatR(totalDiscountVal)}</td>`;
+    totalTaxRow.innerHTML = `<td colspan="6" style="text-align:right">Total Tax: </td><td> ₦${nairaFormatR(totalTaxVal)}</td>`;
+    grossTotalRow.innerHTML = `<td colspan="6" style="text-align:right"><strong>TOTAL (₦${nairaFormatR(totalVal)} - ₦${nairaFormatR(totalDiscountVal)} + ₦${nairaFormatR(totalTaxVal)}) =</strong></td><td class="label label-important" style="display:block"> <strong> ₦${nairaFormatR(grossTotalVal)} </strong></td>`;
 
     if (productTable != null) {
         productTable.appendChild(totalRow);
@@ -382,10 +382,14 @@ function getJsonFromObject(productsObject) {
 //     })
 
 // function nairaFormat(number) {
+
+//     number.toLocaleString('de-DE', { style: 'currency', currency: 'NGN' })
+
 //     console.log('inside nairaFormat function')
 //     document.write(formater.format(number));
 //     //return 
 // }
+
 
 
 var number = 1000000;
