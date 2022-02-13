@@ -1086,6 +1086,7 @@ function loadPaystackCode()
         e.preventDefault();
 
         let handler = PaystackPop.setup({
+
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
 
@@ -1147,7 +1148,7 @@ function verifyPayment()
 
         CURLOPT_HTTPHEADER => array(
 
-            
+            "Authorization: Bearer sk_live_eb443ca5a5686ca06797b9bbccd044f9d9e97e70",
 
             "Cache-Control: no-cache",
 

@@ -205,10 +205,10 @@ function loadCartSummary() {
       <td>${productLS[i].title}</td>
 
       <td>
-      <div class="input-append"><input class="span1" style="max-width:34px" disabled placeholder="₦${productLS[i].quantity}" id="appendedInputButtons" size="16" type="text">
-      <button class="btn" type="button" onclick="reduceQuantity(₦${productLS[i].id});"><i class="icon-minus"></i></button>
-      <button class="btn" type="button" onclick="increaseQuantity(₦${productLS[i].id});"><i class="icon-plus"></i></button>
-      <button class="btn btn-danger" type="button" onclick="deleteCartItem(₦${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
+      <div class="input-append"><input class="span1" style="max-width:34px" disabled placeholder="${productLS[i].quantity}" id="appendedInputButtons" size="16" type="text">
+      <button class="btn" type="button" onclick="reduceQuantity(${productLS[i].id});"><i class="icon-minus"></i></button>
+      <button class="btn" type="button" onclick="increaseQuantity(${productLS[i].id});"><i class="icon-plus"></i></button>
+      <button class="btn btn-danger" type="button" onclick="deleteCartItem(${productLS[i].id});"><i class="icon-remove icon-white"></i></button> 
       </div>
   </td>
 
