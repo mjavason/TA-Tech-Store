@@ -27,31 +27,31 @@
 <link rel="apple-touch-icon-precomposed" href="themes/images/ico/apple-touch-icon-57-precomposed.png">
 <style type="text/css" id="enject"></style>
 <script>
-	const formater = new Intl.NumberFormat('en-NG', {
-		style: 'currency',
-		currency: 'NGN',
-		maximumFractionDigits: 0,
-	})
+	// const formater = new Intl.NumberFormat('en-NG', {
+	// 	style: 'currency',
+	// 	currency: 'NGN',
+	// 	maximumFractionDigits: 0,
+	// })
 
-	function nairaFormat(number) {
-		//console.log('inside nairaFormat function')
-		//document.write('₦'.number)
-		if (formater.format(number) != null) {
-			document.write(formater.format(number));
-		} else {
-			document.write(number);
-		}
-		//return '₦'.formater.format(number);
-	}
+	// function nairaFormat(number) {
+	// 	//console.log('inside nairaFormat function')
+	// 	//document.write('₦'.number)
+	// 	if (formater.format(number) != null) {
+	// 		document.write(formater.format(number));
+	// 	} else {
+	// 		document.write(number);
+	// 	}
+	// 	//return '₦'.formater.format(number);
+	// }
 
-	function nairaFormatR(number) {
-		//console.log('inside nairaFormat function')
-		//document.write(formater.format(number));
-		//return '₦'.number;
-		if (formater.format(number) != null) {
-			return formater.format(number);
-		} else {
-			return '₦'.number;
-		}
-	}
+	// function nairaFormatR(number) {
+	// 	//console.log('inside nairaFormat function')
+	// 	//document.write(formater.format(number));
+	// 	//return '₦'.number;
+	// 	if (formater.format(number) != null) {
+	// 		return formater.format(number);
+	// 	} else {
+	// 		return '₦'.number;
+	// 	}
+	// }
 </script>

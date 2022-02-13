@@ -14,7 +14,7 @@
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-<script>
+<!-- <script>
     const formater = new Intl.NumberFormat('en-NG', {
         style: 'currency',
         currency: 'NGN',
@@ -43,4 +43,4 @@
 			return '₦'.number;
 		}
 	}
-</script>
+</script> -->
