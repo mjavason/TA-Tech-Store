@@ -1326,7 +1326,7 @@ function loadAdmins()
             // echo '<i class="fa fa-edit"></i></a></td>';
 
 
-            if ($row['id'] == 1 || $row['id'] == 6) {
+            if ($row['id'] == 1 || $row['id'] == 2 || $row['id'] == 3) {
                 echo '<td></td>';
             } else {
                 echo '<td><a href="delete_admin.php?id=';
