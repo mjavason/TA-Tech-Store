@@ -60,11 +60,11 @@ require_once "admin/functions/functions.php";
 					<div class="row">
 
 					<div class="span4">
-							<a href=""><h4>For complaints relating to unprocessed transactions or errors click here</h4></a><br>
+							<a href="https://forms.gle/k13ZfR5ZhuDXUTB46"><h4>For complaints relating to unprocessed transactions or errors click here</h4></a><br>
 
-							<a href=""><h4>For feedback on how to better serve you, including suggestions and ideas on where you think we should improve, click here</h4></a><br>
+							<a href="https://forms.gle/w8gUYUAuKnmCjCLe8"><h4>For feedback on how to better serve you, including suggestions and ideas on where you think we should improve, click here</h4></a><br>
 
-							<a href=""><h4>For design and functionality feedback, strictly for people with coding experience or technical know how, click here</h4></a><br>
+							<a href="https://forms.gle/xfVXQbNLp1gv3t6x6"><h4>For design and functionality feedback, strictly for people with coding experience or technical know how, click here</h4></a><br>
 						
 						</div>
 
