@@ -454,10 +454,12 @@ function loadProducts()
             //this function simply rendered the data in a way that we desire, using the product data fed to it.
             adminProductView($row);
             $checker = $row['id'];
-            return true;
+           
         }
         if (empty($checker)) {
             echo '<p class="text-center">No Products Added Yet</p>';
+        }else{
+             return true;
         }
     }
 }
