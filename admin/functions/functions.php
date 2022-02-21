@@ -1,4 +1,6 @@
 <?php
+//below is some javascript code to format the amounts into real currency. example: 10000 into ₦10,000
+//the code is referenced here because this functions.php file appears in nearly all the pages.
 echo "<script>
 function nairaFormat(number) {
     console.log('inside nairaFormat function');
@@ -15,21 +17,42 @@ function nairaFormatR(number) {
 }
 //window.alert('This naira format function is working');
 </script>";
-
 //This starts a session for the entire project
 session_start();
 
-//This takes me to any page i want
+
+
+/**
+ * Goes to a specific page
+ * 
+ * Sends the user to the specified page
+ * 
+ * @param string $location The path to which the user is directed to, if the path is invalid or not a page, the result will display a 404 error.
+ * @return void
+ * 
+ */
 function gotoPage($location)
 {
     header('location:' . $location);
     exit();
 }
 
-//This cleans any data i'm accepting. Removing security vulnerabilities and bugs
+/**
+ * Removes unwanted and harmful characters
+ * 
+ * Takes in a string cleanses and formats it, then returns a clean copy.
+ * 
+ * @param string $data
+ * Any data or variable that may contain characters that needs cleansing.
+ * @param string $case
+ * [optional]
+ * 
+ * If set to 'lower' it automatically formats the results to lowercase, if set to 'none' it is left as it is.
+ * @return string
+ * Returns cleansed string.
+ */
 function Sanitize($data, $case = null)
 {
-    //This function cleanses and arranges the data about to be stored. like freeing it from any impurities like sql injection
     $result = htmlentities($data, ENT_QUOTES);
     if ($case == 'lower') {
         $result = strtoupper($result);
@@ -41,12 +64,27 @@ function Sanitize($data, $case = null)
     return $result;
 }
 
-//CREATE start
-
-//this collects and prepares all the data entered for a new post for storage
+/**
+ * Validates new product
+ * 
+ * This checks if all data entered for a new product is correct and valid, if valid it moves to the next, if not it returns an error array.
+ * 
+ * @param array $formstream
+ * This is the post array containing all the items filled in the form in the create new product page.
+ * @param int $editId
+ * [optional]
+ * 
+ * If this item is entered, it means a product with that particular id needs to be updated.
+ * 
+ * @return array 
+ * returns an array $datamissing containing missing or invalid items if there are any.
+ * @return void
+ * returns nothing if there are no errors, and moves on to the next function.
+ */
 function processNewProduct($formstream, $editId = null)
 {
-    //This function processes what user data is being stored and checks if they are accurate or entered at all.
+    //this collects and prepares all the data entered for a new product for storage. It also makes sure all the required fields are filled and accurate to avoid errors in the database
+
     //It also helps in confirming if what the user entered is Okay, like someone entering two different things in the password and confirm password box
     extract($formstream);
     $noImages = false;
@@ -146,14 +184,19 @@ function processNewProduct($formstream, $editId = null)
             $filename = "";
             $tmpfilename = "";
 
-
+            //this gets the uncleaned file name, including the local path to it
             $filename =  $_FILES['mi']['tmp_name'];
 
+            //this gets the real filename. The function basename simply cleanses the filename of any unnecessary slashes and returns just the filename without the file extension
             $tmpfilename = basename($_FILES['mi']['name']);
+
+            //this gets the file format. eg: jpg, png, avi etc.
             $filetype = pathinfo($tmpfilename, PATHINFO_EXTENSION);
+
+            //if the filetype is inside the list of allowed filenames, carry on to move it to the database.
             if (in_array($filetype, $allowtypes)) {
 
-                //upload file to server
+                //upload image to server and rename said file to unique image name variable above. the file name is contained in the target variable.
                 if (move_uploaded_file($filename, $target . "." . $filetype)) {
                     $imagename = $uniqueimagename . "." . $filetype;
                 } else {
@@ -333,9 +376,49 @@ function processNewProduct($formstream, $editId = null)
     }
 }
 
-//adds the prepared data into the database
+/**
+ * Creates a new product
+ * 
+ * This creates a new product row in the items table after being cleansed.
+ * 
+ * @param string $title
+ * The name of the product.
+ * @param int $price
+ * The price of the item.
+ * @param int $stock
+ * The number of items available for said product.
+ * @param int $discount
+ * The amount to be reduced in case of a promo or event.
+ * @param int $tax
+ * The amount charged for tax returns.
+ * @param string $specsummary
+ * A small summary for the specs of a product, like ram, processor and hard disk space for a computer.
+ * @param string $fullspecs
+ * A json string containing all the products full specifications.
+ * @param string $colors
+ * A json string containing the different colors available for the product.
+ * @param string $categories
+ * A json string containing the products categories.
+ * @param string $features
+ * A summary about a product, something like a blog post.
+ * @param string $mi
+ * Unique name for main product image. The said image has already been uploaded in the previous function.
+ * @param string $si1
+ * Unique name for side product image 1. The said image has already been uploaded in the previous function.
+ * @param string $si2
+ * Unique name for side product image 2. The said image has already been uploaded in the previous function.
+ * @param string $si3
+ * Unique name for side product image 3. The said image has already been uploaded in the previous function.
+ * 
+ * @see admin/functions/functions.php/processNewProduct() for details on the product image upload.
+ * 
+ * @return void
+ * When the function is complete, and the data is succesfully added to the database, the user is sent to admin/products.php
+ */
 function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $mi, $si1, $si2, $si3)
 {
+    //adds the prepared data into the database
+
     //This simply adds the filtered and cleansed data into the database 
     global $db;
     $admin = $_SESSION['admin_id'];
@@ -347,38 +430,53 @@ function AddProduct($title, $price, $stock, $discount, $tax, $specsummary, $full
         gotoPage("products.php");
     } else {
 
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
         die;
     }
     //mysqli_close($db);
 }
 
-//CREATE end
-
-//READ start
-
-//admin
+/**
+ * Get all products in the database
+ * 
+ * This loads all products from the database into the admin section for easy editing, updating and deleting
+ * 
+ * @return bool
+ * return true, after succesfully loading the product.
+ */
 function loadProducts()
 {
     global $db;
-    // $user = $_SESSION['username'];
-    // if (!empty($user)) {
     $query = "SELECT id, title, price, stock, sold, 	discount,	tax,  spec_summary, full_spec, colors, categories, features, main_img, side_img1, side_img2, side_img3, created_by  FROM item ORDER BY `id` DESC ";
     $response = @mysqli_query($db, $query);
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
+            //this function simply rendered the data in a way that we desire, using the product data fed to it.
             adminProductView($row);
             $checker = $row['id'];
+            return true;
         }
         if (empty($checker)) {
             echo '<p class="text-center">No Products Added Yet</p>';
         }
     }
-    //}
 }
 
+/**
+ * renders products in a table
+ * 
+ * Takes the product details contained inside the product array and returns fully rendered html table code.
+ * 
+ * @param array $productsArray
+ * An associative array with all attributes for a complete product, including the title, price, stock, tax and id.
+ * 
+ * @return bool
+ * returns true after all products have been successfully rendered.
+ */
 function adminProductView($productsArray)
 {
+    //this function simply renders the data in a way that we desire, using the product data fed to it.
+
     //id===========================
     echo '<tr><td>';
     echo $productsArray['id'];
@@ -518,37 +616,33 @@ function adminProductView($productsArray)
     return true;
 }
 
-//shows all the entries in the datamissing array or just a success message if everything went well
+/**
+ * Shows invalid or missing data in form submission
+ * 
+ * Shows all the entries in the datamissing array if it isnt empty.
+ * 
+ * @param array $datamissing
+ * An array containing information on errors in form submission, including invalid entries and empty forms
+ * @param bool $showSuccess
+ * [optional]
+ * 
+ * When set to yes a success message is echoed wherever the function is called.
+ * 
+ * @return void
+ * Depending on the content of $datamissing, a message will be echoed or not.
+ */
 function showDataMissing($datamissing, $showSuccess = null)
 {
-    //this function checks if the datamissing array passed in is empty. if it isnt it prints out all of its contents. if it is empty nothing happens
     if (isset($datamissing)) {
         foreach ($datamissing as $miss) {
-
-            //     echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-            //     <strong>Holy guacamole!</strong> Your username or password are incorrect.
-            //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            //       <span aria-hidden="true">&times;</span>
-            //     </button>
-            //   </div>';
-
-
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Holy guacamole! </strong>' . $miss . '
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
-
-            // echo '<p class="text-danger">';
-            // echo $miss;
-            // echo '</p>';
         }
     } elseif (isset($showSuccess)) {
-        // echo '<p class="text-success">';
-        // echo "Successful";
-        // echo '</p>';
-
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Holy guacamole! </strong> Successful
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -558,13 +652,51 @@ function showDataMissing($datamissing, $showSuccess = null)
     }
 }
 
-//READ end
-
-
-// UPDATE start
-
+/**
+ * Updates a product
+ * 
+ * This updates/edits a product row that has already been previously created.
+ * 
+ * @param int $id
+ * Unique identifier for product about to be updated.
+ * @param string $title
+ * The name of the product.
+ * @param int $price
+ * The price of the item.
+ * @param int $stock
+ * The number of items available for said product.
+ * @param int $discount
+ * The amount to be reduced in case of a promo or event.
+ * @param int $tax
+ * The amount charged for tax returns.
+ * @param string $specsummary
+ * A small summary for the specs of a product, like ram, processor and hard disk space for a computer.
+ * @param string $fullspecs
+ * A json string containing all the products full specifications.
+ * @param string $colors
+ * A json string containing the different colors available for the product.
+ * @param string $categories
+ * A json string containing the products categories.
+ * @param string $features
+ * A summary about a product, something like a blog post.
+ * @param string $mi
+ * Unique name for main product image. The said image has already been uploaded in the previous function.
+ * @param string $si1
+ * Unique name for side product image 1. The said image has already been uploaded in the previous function.
+ * @param string $si2
+ * Unique name for side product image 2. The said image has already been uploaded in the previous function.
+ * @param string $si3
+ * Unique name for side product image 3. The said image has already been uploaded in the previous function.
+ * 
+ * @see admin/functions/functions.php/processNewProduct() for details on the product image upload.
+ * 
+ * @return void
+ * When the function is complete, and the data is succesfully updated in the database, the user is sent to admin/products.php
+ */
 function EditProduct($id, $title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features, $mi, $si1, $si2, $si3)
 {
+    //this function simply edit the product in the database by passing in new data
+
     //This simply adds the filtered and cleansed data that is edited into the database 
     global $db;
     $sql = "UPDATE `item` SET `title` = '$title', `price` = '$price',  `stock` = '$stock', `discount` = '$discount', `tax` = '$tax', `spec_summary` = '$specsummary', `full_spec` = '$fullspecs', `colors` = '$colors', `categories` = '$categories', `features` = '$features', `main_img` = '$mi', `side_img1` = '$si1', `side_img2` = '$si2', `side_img3` = '$si3' WHERE `item`.`id` = $id ";
@@ -575,38 +707,83 @@ function EditProduct($id, $title, $price, $stock, $discount, $tax, $specsummary,
         $_SESSION['editproduct'] = null;
         gotoPage("products.php");
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
+/**
+ * Updates a product without touching the images
+ * 
+ * This updates/edits a product row that has already been previously created without affecting the images, this function is important because images can't be passed in programmatically due to security reasons. If a user wants to edit a product without touching the images a seperate function has to be created for it.
+ * 
+ * @param int $id
+ * Unique identifier for product about to be updated.
+ * @param string $title
+ * The name of the product.
+ * @param int $price
+ * The price of the item.
+ * @param int $stock
+ * The number of items available for said product.
+ * @param int $discount
+ * The amount to be reduced in case of a promo or event.
+ * @param int $tax
+ * The amount charged for tax returns.
+ * @param string $specsummary
+ * A small summary for the specs of a product, like ram, processor and hard disk space for a computer.
+ * @param string $fullspecs
+ * A json string containing all the products full specifications.
+ * @param string $colors
+ * A json string containing the different colors available for the product.
+ * @param string $categories
+ * A json string containing the products categories.
+ * @param string $features
+ * A summary about a product, something like a blog post.
+ * 
+ * @return void
+ * When the function is complete, and the data is succesfully updated in the database, the user is sent to admin/products.php
+ */
 function editProductWithoutImages($id, $title, $price, $stock, $discount, $tax, $specsummary, $fullspecs, $colors, $categories, $features)
 {
+    //this is another version of the editProduct function but works without the problematic files data
 
     //This simply adds the filtered and cleansed data that is edited into the database 
     global $db;
     $sql = "UPDATE `item` SET `title` = '$title', `price` = '$price',  `stock` = '$stock', `discount` = '$discount', `tax` = '$tax', `spec_summary` = '$specsummary', `full_spec` = '$fullspecs', `colors` = '$colors', `categories` = '$categories', `features` = '$features' WHERE `item`.`id` = $id ";
-    //$sql = "INSERT INTO posts(title, 	blog_post, 	imagename,	minread, 	tags 	) VALUES ('$title', '$bp', '$imagename', '$minread', '$tag')";
 
     if (mysqli_query($db, $sql)) {
         //$_SESSION['postJustAdded'] = 1;
         $_SESSION['editproduct'] = null;
         gotoPage("products.php");
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
-//UPDATE end
-
-//DELETE start
-
+/**
+ * Deletes a product
+ * 
+ * This deletes a product row that has already been previously created. It uses very few parameters because those are what are needed to delete a row. The image names are required because they have to be located in the product_images directory and deleted directly.
+ * 
+ * @param int $id
+ * Unique identifier for product about to be deleted.
+ * @param string $mi
+ * Unique name for main product image. Said image exists in the product_images folder.
+ * @param string $si1
+ * Unique name for side product image 1. Said image exists in the product_images folder.
+ * @param string $si2
+ * Unique name for side product image 2. Said image exists in the product_images folder.
+ * @param string $si3
+ * Unique name for side product image 3. Said image exists in the product_images folder.
+ * 
+ * @return void
+ * When the function is complete, and the data is succesfully deleted in the database, the user is sent to admin/products.php
+ */
 function deleteProduct($id, $imagename, $imagename1, $imagename2, $imagename3)
 {
     global $db;
 
-    //This sql statement deletes the course with the mentioned id
     $sql = "DELETE FROM `item`  WHERE item.id = '$id' ";
     if (mysqli_query($db, $sql)) {
 
@@ -621,20 +798,30 @@ function deleteProduct($id, $imagename, $imagename1, $imagename2, $imagename3)
         //echo '</p>';
         gotoPage('products.php');
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
-
-//DELETE end
-
-//checks if the input mail exists in the admins database. if it exists return false, if not return true
+/**
+ * Checks if email address is valid
+ * 
+ * This checks if passed in email address is valid and exists in the database, if it exists it returns false, if it doesnt it returns true. In the context of this application, it is used to check if someone trying to create a new account has already being registered.
+ * 
+ * @param string $email
+ * This is the email address or string about to be validated.
+ * 
+ * @return bool
+ * If the email address exists in the database, it returns false, if it doesnt it returns true.
+ */
 function validateMailAddress($email)
 {
     global $db;
+
     $sql = "SELECT * FROM `admins` WHERE `email`='$email'";
     $result = $db->query($sql);
+
+    //if the results are greater than 0, check if they are truly equal then return true. if not return false.
     if ($result->num_rows > 0) {
         $result = $result->fetch_assoc();
         if ($email == isset($result['email'])) {
@@ -650,12 +837,29 @@ function validateMailAddress($email)
     }
 }
 
+/**
+ * Validates new admin
+ * 
+ * This checks if all data entered for a new admin is correct and valid, if valid it moves to the next, if not it returns an error array.
+ * 
+ * @param array $formstream
+ * This is the $POST[] array containing all the items filled in the form in the admin/register page.
+ * @param int $editId
+ * [optional]
+ * 
+ * If this item is entered, it means an admin with that particular id needs to be updated.
+ * 
+ * @return array 
+ * returns an array $datamissing containing missing or invalid items if there are any.
+ * @return void
+ * returns nothing if there are no errors, and moves on to the next function.
+ */
 function processNewAdmin($formstream, $editId = null)
 {
-    //This function processes what user data is being stored and checks if they are accurate or entered at all.
-    //It also helps in confirming if what the user entered is Okay, like someone entering two different things in the password and confirm password box
+    //converts form input into variables.
     extract($formstream);
 
+    //checks if submit button was clicked.
     if (isset($submit)) {
 
         $datamissing = [];
@@ -747,6 +951,23 @@ function processNewAdmin($formstream, $editId = null)
     }
 }
 
+/**
+ * Creates a new admin
+ * 
+ * After the form entries are cleansed in the admin/functions/functions.php/processNewAdmin() function, it takes all the data, including the name, email and pasword and stores them in the database.
+ * 
+ * @param string $fname
+ * The admins first name. eg: Michael.
+ * @param string lname
+ * The admins last name. eg: Orji.
+ * @param string $em
+ * The admins unique email address.
+ * @param string $pass
+ * The admins case sensitive hashed password.
+ *
+ * @return void
+ * When a new admin is successfully created, they are sent to the admin/login.php page
+ */
 function addRegistered($fname, $lname, $em, $pass)
 {
     //This simply adds the filtered and cleansed data into the database 
@@ -763,9 +984,21 @@ function addRegistered($fname, $lname, $em, $pass)
     //mysqli_close($db);
 }
 
+/**
+ * Validates login credentials
+ * 
+ * Makes sure all admin credentials are valid before giving access or being logged into the system
+ * 
+ * @param array $formstream
+ * This is the $POST[] array containing all the items filled in the form in the admin/login page including email and case sensitive password.
+ * 
+ * @return array 
+ * returns an array $datamissing containing missing or invalid items if there are any.
+ * @return void
+ * Logs the admin in if all went well then sets the users data to a session to show theyve logged in
+ */
 function processLogin($formstream)
 {
-    //This simply queries the database to see if the users data is really available then sets the users data to a session to show theyve logged in
     extract($formstream);
     global $db;
 
@@ -813,17 +1046,6 @@ function processLogin($formstream)
                 setcookie("mem_mail",  $_SESSION['email'], time() + (10 * 365 * 24 * 60 * 60));
                 setcookie("mem_pass", '', time() + (10 * 365 * 24 * 60 * 60));
             }
-
-
-
-            // echo "<pre>";
-            // print_r($_COOKIE);
-            // die;
-
-            // echo "<br>";
-            // echo 'Logged In';
-            // echo "<pre>";
-            // print_r($result);
             gotoPage('index.php');
         } else {
 
@@ -839,6 +1061,17 @@ function processLogin($formstream)
     }
 }
 
+/**
+ * Validates password reset code
+ * 
+ * Checks if reset code passed in corresponds with what is in the database.
+ * 
+ * @param string $code
+ * The reset code sent to admins email address, then passed in through a $_GET[] array.
+ * 
+ * @return bool
+ * Returns true if the code is valid and false if the code is not found.
+ */
 function validateResetCode($code)
 {
     global $db;
@@ -860,23 +1093,48 @@ function validateResetCode($code)
     }
 }
 
+/**
+ * Reset user details
+ * 
+ * Stores reset data in database, this same reset data will have been sent to the email of the admin in question, so when they click on it, they can succesfully set a new password.
+ * 
+ * @param string $code
+ * Unique code used to change password.
+ * @param string $email
+ * Email address of admin who wants to change his or her password.
+ * 
+ * @return bool
+ * Return true if the data was succesfully added to the database and false if it wasnt.
+ */
 function addNewResetData($code, $email)
 {
-
-    //This simply adds the filtered and cleansed data that is edited into the database 
     global $db;
     $sql = "INSERT INTO resetpassword(  	email, 	code 	) VALUES ('$email', '$code')";
     $_SESSION['resetMail'] = strtoupper($email);
-    //$sql = "INSERT INTO posts(title, 	blog_post, 	imagename,	minread, 	tags 	) VALUES ('$title', '$bp', '$imagename', '$minread', '$tag')";
 
     if (mysqli_query($db, $sql)) {
         //gotoPage("login.php");
+        return true;
     } else {
+        return false;
         //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
+/**
+ * Process new password
+ * 
+ * Checks if new password is valid. This includes asking the admin to input their passwords twice then checking if they match or if the new password field is empty.
+ * 
+ * @param array $formstream
+ * A $_POST[] array containing all the items passed in a form.
+ * 
+ * @return array
+ * If any items are invalid an array $datamissing containing the error report is sent to the user
+ * @return void
+ * If all went well move on to the next function
+ */
 function ResetPassword($formstream)
 {
     extract($formstream);
@@ -918,6 +1176,19 @@ function ResetPassword($formstream)
     }
 }
 
+/**
+ * Update admin password in database
+ * 
+ * Updates said admins password in the database using the email address as a key.
+ * 
+ * @param string $email
+ * The admins email address, used as a unique key to find row belonging to admin.
+ * @param string $password
+ * The admins new validated and hashed case sensitive password.
+ * 
+ * @return void
+ * if all goes well, 'password updated' will be echoed to the screen, if not the oppposite will be done.
+ */
 function setNewPassword($email, $password)
 {
     $email = strtoupper($email);
@@ -935,6 +1206,17 @@ function setNewPassword($email, $password)
     //mysqli_close($db);
 }
 
+/**
+ * Delete updated reset password code
+ * 
+ * Delete the reset code sent to said admins email address, stored in the database, there is no need for it anymore.
+ * 
+ * @param string $email
+ * Email address of said admin, will be used as key in finding exact row to delete.
+ * 
+ * @return void
+ * Send admin to login page once code is deleted.
+ */
 function deleteResetPassword($email)
 {
     global $db;
@@ -951,7 +1233,14 @@ function deleteResetPassword($email)
     //mysqli_close($db);
 }
 
-
+/**
+ * Get current logged in admins name
+ * 
+ * Uses the values stored in the session global variable, to get and print the name of the admin from the database. The session global variable is filled automatically when the admin logs in.
+ * 
+ * @return void
+ * Prints users first names and last names.
+ */
 function getAdminName()
 {
     $id = $_SESSION['admin_id'];
@@ -960,7 +1249,7 @@ function getAdminName()
     $query = "SELECT lastname, firstname FROM admins WHERE id = $id";
     $result = mysqli_query($db, $query);
     if (!$result) {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     } else {
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
@@ -973,9 +1262,16 @@ function getAdminName()
     }
 }
 
+/**
+ * Get all admins in the database
+ * 
+ * Gets all admin data in the database and renders it into a table for updating, deleting and information purposes.
+ * 
+ * @return void
+ * Renders/echoes all admins into a table.
+ */
 function loadAdmins()
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT id, firstname, lastname, email, joined FROM admins ORDER BY `id` DESC ";
@@ -1045,6 +1341,14 @@ function loadAdmins()
     }
 }
 
+/**
+ * Delete an admin from the database
+ * 
+ * Deletes an admin from the database, using their unique id.
+ * 
+ * @param int $id
+ * Unique id for each row in the admin database table, used to accurately identify the desired row.
+ */
 function deleteAdmin($id)
 {
     global $db;
@@ -1063,6 +1367,17 @@ function deleteAdmin($id)
     //mysqli_close($db);
 }
 
+/**
+ * Shows active page for link groups
+ * 
+ * Shows that a link under a link group is active by checking through an array of pages under that particular link group.
+ * 
+ * @param array $pages
+ * List of pages/links under a link group. If the current page is contained in the array, then that link group is active.
+ * 
+ * @return void
+ * Echoes 'active' if the page is found.
+ */
 function findActivePage($pages)
 {
     for ($i = 0; $i < count($pages); $i++) {
@@ -1073,7 +1388,14 @@ function findActivePage($pages)
     }
 }
 
-//this is the paystack javascript code containing all the functions it needs, including the API keys. For security reasons, it has to be echoed from here.
+/**
+ * Load/print paystack javascript code
+ * 
+ * This is the paystack javascript code containing all the functions it needs, including the API keys. For security reasons, it has to be echoed from here.
+ * 
+ * @return void
+ * Simply echoes javascript code for paystack
+ */
 function loadPaystackCode()
 {
     $paystackCode = "<script>
@@ -1086,6 +1408,11 @@ function loadPaystackCode()
         e.preventDefault();
 
         let handler = PaystackPop.setup({
+
+            //pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7
+            //pk_live_21bba98bf9a683dc3215452aa76419d4204ce121
+
+            key: 'pk_live_21bba98bf9a683dc3215452aa76419d4204ce121', // Replace with your public key
 
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
@@ -1122,7 +1449,14 @@ function loadPaystackCode()
     return $paystackCode;
 }
 
-//after a user finishes paying, another page opens('verify_transaction.php') that makes sure we received the payment. if yes it takes us to the payment confirmed page('payment_confirmed.php').
+/**
+ * Verifies paystack payment
+ * 
+ * Uses a reference code passed into the get superglobal array to verify payments. After a user finishes paying, another page opens('verify_transaction.php') that makes sure we received the payment. if yes it takes us to the payment confirmed page('payment_confirmed.php'). If not it takes us to the payment_error.php page.
+ * 
+ * @return void
+ * If all goes well, another function is run to show the results
+ */
 function verifyPayment()
 {
     if (isset($_GET['reference'])) {
@@ -1157,7 +1491,6 @@ function verifyPayment()
     ));
 
 
-
     $response = curl_exec($curl);
 
     $err = curl_error($curl);
@@ -1165,15 +1498,13 @@ function verifyPayment()
     curl_close($curl);
 
 
-
     if ($err) {
-
         echo "cURL Error #:" . $err;
     } else {
 
-        $number = rand(100, 100000);
-        $t = time();
-        $random = $number . '' . $t;
+        // $number = rand(100, 100000);
+        // $t = time();
+        // $random = $number . '' . $t;
 
 
 
@@ -1285,7 +1616,19 @@ function verifyPayment()
     }
 }
 
-//This is the real function that confirms if the payment went through by reading through a paystack API response
+/**
+ * Reads through the paystack json response and stores in the database
+ * 
+ * Processes the json transaction results passed in through the admin/functions/functions.php/verifyPayment(). 
+ * 
+ * @param string $response
+ * A json string containing all the info concerning a transaction, including the amount paid, time paid, charges, account paid from etc.
+ * @param string $cart
+ * A json string containing all the items bought by the user from the store.
+ * 
+ * @return void
+ * If the transaction was successful, run the next function that stores all the info in the database, if not send the user back to the user home page.
+ */
 function processVerifyTransactionResult($response, $cart)
 {
     $phpclassresponse = json_decode($response, true);
@@ -1312,7 +1655,35 @@ function processVerifyTransactionResult($response, $cart)
     }
 }
 
-//This function stores the paystack API response(including the redeem code(message)) into the database for future reference.
+/**
+ * Store transaction response in database
+ * 
+ * Stores the paystack API response(including the redeem code) into the database for future reference.
+ * 
+ * @param string $status
+ * Contains 'true' if the transaction was successful
+ * @param string $redeem_code
+ * Unique code/identifier for particular purchase/transaction. It's also whats given to users to use for redeeming their goods.
+ * @param string $cart_items
+ * Cart items the user paid for from the store.
+ * @param string $amount
+ * Total amount charged for the sale.
+ * @param string $channel
+ * Channel through which customer paid. It can be through ussd, debit card transfer etc.
+ * @param string $ip
+ * The users ip address as at time of payment.
+ * @param string $paid_at
+ * Time the users payment was successfully made.
+ * @param string $created_at
+ * Time the user started the transaction, whether successful or not.
+ * @param string $fees
+ * Fees charged for processing the transaction.
+ * @param string $full_transaction_info_json
+ * Full json response for further reference.
+ * 
+ * @return void
+ * Sends the user to the payment confirmed page: admin/payment_confirmed.php if all goes well.
+ */
 function addTransactionDetail($status, $redeem_code, $cart_items, $amount, $channel, $ip, $paid_at, $created_at, $fees, $full_transaction_info_json)
 {
     $cart_items_decoded = json_decode($cart_items, true);
@@ -1332,12 +1703,25 @@ function addTransactionDetail($status, $redeem_code, $cart_items, $amount, $chan
         //gotoPage("products.php");
         gotoPage('payment_confirmed.php?redeem_code=' . $redeem_code);
     } else {
-        // echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
         // die;
     }
     //mysqli_close($db);
 }
 
+/**
+ * Update product stock and sold details
+ * 
+ * Updates the stock and sold details in the database by reducing from the stock when an item is bought and increasing the number of that item sold.
+ * 
+ * @param int $id
+ * Unique identifier for the product in the database.
+ * @param int $quantity
+ * The quantity being bought in that particular transaction.
+ * 
+ * @return true
+ * Returns true if database operation was successful.
+ */
 function updateStockAndSold($id, $quantity)
 {
     //this gets the previous stock of the item and subtracts the current quantity being bought
@@ -1360,11 +1744,22 @@ function updateStockAndSold($id, $quantity)
         return true;
         //gotoPage('../product_summary.php?fin=true');
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
+/**
+ * Get the stock of a particular product
+ * 
+ * Gets the value of stock a particular product in the product('item') table.
+ * 
+ * @param int $id
+ * Unique identifier for product in the database.
+ * 
+ * @return int
+ * Returns the product stock.
+ */
 function getCurrentStock($id)
 {
     global $db;
@@ -1375,7 +1770,7 @@ function getCurrentStock($id)
     $query = "SELECT stock FROM item WHERE id = $id";
     $result = mysqli_query($db, $query);
     if (!$result) {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     } else {
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
@@ -1387,6 +1782,17 @@ function getCurrentStock($id)
     return $oldStock;
 }
 
+/**
+ * Get number of items sold, for a particular product
+ * 
+ * Gets number of items sold, from the sold column in the products table.
+ * 
+ * @param int $id
+ * Unique identifier for a product in the database.
+ * 
+ * @return int
+ * Returns number of items sold for said product.
+ */
 function getCurrentSold($id)
 {
     global $db;
@@ -1397,7 +1803,7 @@ function getCurrentSold($id)
     $query = "SELECT sold FROM item WHERE id = $id";
     $result = mysqli_query($db, $query);
     if (!$result) {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     } else {
         if ($result) {
             while ($row = mysqli_fetch_array($result)) {
@@ -1409,7 +1815,21 @@ function getCurrentSold($id)
     return $oldSold;
 }
 
-//This function adds some extra details to the transaction table. these details are name and phone number which are not compulsory
+/**
+ * Updates transaction details in the database.
+ * 
+ * Adds some extra details to the transaction table. these details are name and phone number which are not compulsory.
+ * 
+ * @param string $redeem_code
+ * Unique code used to identify the sale/transaction made.
+ * @param string $name
+ * Name of the person making the transaction.
+ * @param string $phone
+ * Phone number of the person making the transaction.
+ * 
+ * @return void
+ * Sends the user to the product summary page if all went well. echoes an error message if all didnt go well.
+ */
 function UpdateTransactionDetail($redeem_code, $name, $phone)
 {
     $name = trim(Sanitize($name));
@@ -1422,14 +1842,24 @@ function UpdateTransactionDetail($redeem_code, $name, $phone)
     if (mysqli_query($db, $sql)) {
         gotoPage('../product_summary.php?fin=true');
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
+/**
+ * Validate a redeem code
+ * 
+ * This validates and gets all the info for a particular redeem code. It is used mainly by the admins, to confirm a user has made a purchase and handover their items to them.
+ * 
+ * @param array $formstream
+ * This is a post super global array, containing the info passed into the form on the admin/verify_transaction.php page.
+ * 
+ * @return void|array
+ * If the redeem code is valid, the user will be sent to a page detailing all the transaction info. if not a datamissing array containing the error will be returned.
+ */
 function processRedeemCode($formstream)
 {
-    //This simply queries the database to see if the users data is really available then sets the users data to a session to show theyve logged in
     extract($formstream);
     global $db;
 
@@ -1463,6 +1893,17 @@ function processRedeemCode($formstream)
     }
 }
 
+/**
+ * Layout the transaction info gotten from the redeem code into a table.
+ * 
+ * Parses through all the return variables, and lays them out in a clean table at the admin/showcart.php page. It also incorporates some price and item validation.
+ * 
+ * @param string $jsonCart
+ * A json string containing all the info about the transaction, including the items, total price, quantity etc.
+ * 
+ * @return void
+ * If all goes well, all the items will be accurately rendered into a table.
+ */
 function layoutCart($jsonCart)
 {
     $phpClassCart = json_decode($jsonCart, true);
@@ -1499,6 +1940,17 @@ function layoutCart($jsonCart)
     }
 }
 
+/**
+ * Gets the most basic info of the transaction.
+ * 
+ * Gets all the basic things of the transaction through the redeem code. including the name, phone number and total amount paid. The amount is also validated to make sure they correspond with everything.
+ * 
+ * @param string $jsonCart
+ * A json string containing all the info about the transaction, including the items, total price, quantity etc.
+ * 
+ * @return void
+ * Renders all the basic info if all goes well.
+ */
 function getCartBasicInfo($jsonCart)
 {
     $phpClassCart = json_decode($jsonCart, true);
@@ -1513,7 +1965,6 @@ function getCartBasicInfo($jsonCart)
         $id = $phpClassCart[$i]['id'];
         $price = $phpClassCart[$i]['price'];
         $discount = $phpClassCart[$i]['discount'];
-        $title = $phpClassCart[$i]['title'];
         $quantity = $phpClassCart[$i]['quantity'];
         $tax = $phpClassCart[$i]['tax'];
         $temptotal = ($price - $discount + $tax) * $quantity;
@@ -1536,6 +1987,23 @@ function getCartBasicInfo($jsonCart)
     }
 }
 
+/**
+ * Confirms if purchase data correspond with proprietary data
+ * 
+ * Confirms if the data in a transaction is accurate and not tampered with. This context is in the case an item price is tampered with by a user, the payment would go through but when processed by our admins, any difference made will immediately be identified and the purchase/transaction will immediately be nullified.
+ * 
+ * @param int $id
+ * The unique identifier for the transaction in the database.
+ * @param int $price
+ * The price for a particular product.
+ * @param int $discount
+ * The discount for a particular product.
+ * @param int $tax
+ * The tax for a particular product.
+ * 
+ * @return bool
+ * If all is well and all info is accurate, it returns true. The opposite is the case if something is wrong.
+ *  */
 function confirmItemData($id, $price, $discount, $tax)
 {
     global $db;
@@ -1557,6 +2025,19 @@ function confirmItemData($id, $price, $discount, $tax)
     }
 }
 
+/**
+ * Gets valid item price multiplied by the quantity
+ * 
+ * Get valid and up to date price from the database, then multiplies it by a quantity. The result is used for transaction validation.
+ * 
+ * @param int $id
+ * Unique identifier for product in the database.
+ * @param int $quantity
+ * The quantity of a particular product bought by a customer.
+ * 
+ * @return int
+ * Returns the product of price and quantity, returns 0 if something goes wrong.
+ */
 function getRealItemPrice($id, $quantity)
 {
     global $db;
@@ -1571,23 +2052,44 @@ function getRealItemPrice($id, $quantity)
     }
 }
 
+
+/**
+ * Shows an item has been redeemed or retrieved by the customer
+ * 
+ * Updates the database row of a particular of transaction to show the item has been retrieved by the customer.
+ * 
+ * @param string $redeem_id
+ * Unique identifier for a particular transaction row in the database table.
+ * 
+ * @return void
+ * Sends the admin to the admin/redeem.php page if all goes well.
+ */
 function finish_redeem($redeem_id)
 {
-    //This simply adds the filtered and cleansed data that is edited into the database 
     global $db;
     $sql = "UPDATE `transactions` SET `redeemed` = 1 WHERE `transactions`.`id` = '$redeem_id' ";
 
     if (mysqli_query($db, $sql)) {
         gotoPage('redeem.php');
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
     //mysqli_close($db);
 }
 
+/**
+ * Gets product title
+ * 
+ * Gets the title of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes title if its found and echoes an error if it isnt.
+ */
 function loadProductTitle($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT title FROM item WHERE id = $id";
@@ -1603,9 +2105,19 @@ function loadProductTitle($id)
     }
 }
 
+/**
+ * Returns the product title as a string
+ * 
+ * Returns the title of a particular product in the database as a string.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return string|void
+ * returns title if its found and echoes an error if it isnt.
+ */
 function getProductTitle($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT title FROM item WHERE id = $id";
@@ -1617,16 +2129,26 @@ function getProductTitle($id)
         }
     } else {
         echo $id;
-        echo 'Error! Meta title Not found.';
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        echo ' Error! title Not found.';
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
 
         //die;
     }
 }
 
+/**
+ * Returns product price
+ * 
+ * Returns the price of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return int|void
+ * Returns price if its found and echoes an error if it isnt.
+ */
 function getProductPrice($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT price FROM item WHERE id = $id";
@@ -1642,9 +2164,19 @@ function getProductPrice($id)
     }
 }
 
+/**
+ * Returns product specifications summary
+ * 
+ * Returns the specifications summary of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return string|void
+ * Returns specifications summary if its found and echoes an error if it isnt.
+ */
 function getProductSpec_summary($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT spec_summary FROM item WHERE id = $id";
@@ -1660,9 +2192,19 @@ function getProductSpec_summary($id)
     }
 }
 
+/**
+ * Returns product main image
+ * 
+ * Returns the main image of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return string
+ * Returns main image if its found and echoes an error if it isnt.
+ */
 function getProductMainImage($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT main_img FROM item WHERE id = $id";
@@ -1678,9 +2220,19 @@ function getProductMainImage($id)
     }
 }
 
+/**
+ * echoes product specifications summary
+ * 
+ * echoes the specifications summary of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes specifications summary if its found and echoes an error if it isnt.
+ */
 function loadSpecSummary($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT spec_summary FROM item WHERE id = $id";
@@ -1696,9 +2248,19 @@ function loadSpecSummary($id)
     }
 }
 
+/**
+ * echoes product main image
+ * 
+ * echoes the main image of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes main image if its found and echoes an error if it isnt.
+ */
 function loadProductImage1($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT main_img FROM item WHERE id = $id";
@@ -1714,9 +2276,19 @@ function loadProductImage1($id)
     }
 }
 
+/**
+ * echoes product side image 1
+ * 
+ * echoes the side image 1 of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes side image 1 if its found and echoes an error if it isnt.
+ */
 function loadProductImage2($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT side_img1 FROM item WHERE id = $id";
@@ -1732,9 +2304,19 @@ function loadProductImage2($id)
     }
 }
 
+/**
+ * echoes product side image 2
+ * 
+ * echoes the side image 2 of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes side image 2 if its found and echoes an error if it isnt.
+ */
 function loadProductImage3($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT side_img2 FROM item WHERE id = $id";
@@ -1750,9 +2332,19 @@ function loadProductImage3($id)
     }
 }
 
+/**
+ * echoes product side image 3
+ * 
+ * echoes the side image 3 of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes side image 3 if its found and echoes an error if it isnt.
+ */
 function loadProductImage4($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT side_img3 FROM item WHERE id = $id";
@@ -1768,9 +2360,19 @@ function loadProductImage4($id)
     }
 }
 
+/**
+ * echoes product full specifications
+ * 
+ * echoes the full specifications of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes full specifications if its found and echoes an error if it isnt.
+ */
 function loadFullSpecs($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT full_spec FROM item WHERE id = $id";
@@ -1796,9 +2398,19 @@ function loadFullSpecs($id)
     }
 }
 
+/**
+ * echoes product colors
+ * 
+ * echoes the colors of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes colors if its found and echoes an error if it isnt.
+ */
 function loadProductColors($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT colors FROM item WHERE id = $id";
@@ -1824,9 +2436,19 @@ function loadProductColors($id)
     }
 }
 
+/**
+ * echoes product features
+ * 
+ * echoes the features of a particular product in the database.
+ * 
+ * @param int $id
+ * Unique identifier for product in the product table.
+ * 
+ * @return void
+ * echoes features if its found and echoes an error if it isnt.
+ */
 function loadProductFeatures($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT features FROM item WHERE id = $id";
@@ -1846,9 +2468,19 @@ function loadProductFeatures($id)
     }
 }
 
+/**
+ * Loads all products under a particular category, renders in the block looking form.
+ * 
+ * Shows only products under a particular category, by checking if a product matches before showing them to the user.
+ * 
+ * @param string $category
+ * Particular category the product must be under. Eg Laptops
+ * 
+ * @return void
+ * Renders the products that match the category. If none are found it echoes 'Not found'
+ */
 function loadProductsWithCategories($category)
 {
-    //this loads up all the latest products in the database
     global $db;
 
     $query = "SELECT * FROM item";
@@ -1883,11 +2515,19 @@ function loadProductsWithCategories($category)
     }
 }
 
+/**
+ * Loads all products under a particular category, renders in text looking form.
+ * 
+ * Shows only products under a particular category, by checking if a product matches before showing them to the user.
+ * 
+ * @param string $category
+ * Particular category the product must be under. Eg Laptops
+ * 
+ * @return void
+ * Renders the products that match the category. If none are found it echoes 'Not found'
+ */
 function loadProductsWithCategoriesBlock($category)
 {
-
-
-    //this loads up all the latest products in the database
     global $db;
 
     $query = "SELECT * FROM item";
@@ -1929,9 +2569,19 @@ function loadProductsWithCategoriesBlock($category)
     }
 }
 
+/**
+ * Echoes the javascript add to cart code/function
+ * 
+ * Loads the javascript add to cart code with all the details needed for it to work, including the title, id and image.
+ * 
+ * @param int $id
+ * Unique identifier for each product in the database.
+ * 
+ * @return void
+ * Renders the javascript code, into the product block if all goes well. shows an error if it doesnt work.
+ */
 function loadProductCartInfo($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT * FROM item WHERE id = $id";
@@ -1972,9 +2622,19 @@ function loadProductCartInfo($id)
     }
 }
 
+/**
+ * Returns the javascript add to cart code as a string
+ * 
+ * Returns the javascript add to cart code/function with all the details needed for it to work, including the title, id and image.
+ * 
+ * @param int $id
+ * Unique identifier for each product in the database.
+ * 
+ * @return string|void
+ * Returns the javascript code, as a string if all goes well and shows an error if it doesnt work.
+ */
 function returnProductCartInfo($id)
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
 
     $query = "SELECT * FROM item WHERE id = $id";
@@ -1994,7 +2654,16 @@ function returnProductCartInfo($id)
     }
 }
 
-//frontend
+/**
+ * Loads/echoes the latest 10 products in block form
+ * 
+ * Loads products by order of last created, and loads only 10 at once so the home page isnt slowed.
+ * 
+ * @param int $id
+ * [optional]
+ * 
+ * Unique identifier for products in the database. If passed in, the function loads only that particular product.
+ */
 function loadLatestProducts($id = null)
 {
     //this loads up all the latest products in the database
@@ -2068,7 +2737,16 @@ function loadLatestProducts($id = null)
     }
 }
 
-//frontend
+/**
+ * Loads/echoes the latest 10 products in text form
+ * 
+ * Loads products by order of last created, and loads only 10 at once so the home page isnt slowed.
+ * 
+ * @param int $id
+ * [optional]
+ * 
+ * Unique identifier for products in the database. If passed in, the function loads only that particular product.
+ */
 function loadLatestProductsBlock($id = null)
 {
 
@@ -2154,6 +2832,17 @@ function loadLatestProductsBlock($id = null)
     }
 }
 
+/**
+ * Load related products to the one referenced in block form
+ * 
+ * Loads all products related to the one referenced. This works by getting all the referenced products categories, then loading all the products under each of them, without repeating any.
+ * 
+ * @param int $id
+ * Unique identifier for product in database.
+ * 
+ * @return void
+ * Echoes all products related to one referenced.
+ */
 function loadRelatedProducts($id)
 {
     global $db;
@@ -2195,6 +2884,17 @@ function loadRelatedProducts($id)
     }
 }
 
+/**
+ * Load related products to the one referenced in text form
+ * 
+ * Loads all products related to the one referenced. This works by getting all the referenced products categories, then loading all the products under each of them, without repeating any.
+ * 
+ * @param int $id
+ * Unique identifier for product in database.
+ * 
+ * @return void
+ * Echoes all products related to one referenced.
+ */
 function loadRelatedProductsBlock($id)
 {
     global $db;
@@ -2244,9 +2944,16 @@ function loadRelatedProductsBlock($id)
     }
 }
 
+/**
+ * Get all product categories
+ * 
+ * Combines all product categories stored in json, and converts them into a php array or object.
+ * 
+ * @return array|void
+ * returns an array containing all categories or echoes an error message if something goes wrong.
+ */
 function getAllProductCategories()
 {
-    //This loads up all the courses available and fills their links/options with the required items so they can be worked on and used to get more data on that particular course
     global $db;
     $allCategories = [];
     $query = "SELECT categories FROM item";
@@ -2271,6 +2978,17 @@ function getAllProductCategories()
     }
 }
 
+/**
+ * Gets a products categories
+ * 
+ * Gets the products categories stored as json in the database then converts it to a php array or object.
+ * 
+ * @param int $id
+ * Unique identifier for product in the database.
+ * 
+ * @return array|void
+ * Returns products category as array or echoes an error message if something goes wrong.
+ */
 function getParticularProductCategories($id)
 {
     global $db;
@@ -2289,10 +3007,21 @@ function getParticularProductCategories($id)
     }
 }
 
+/**
+ * Get id's of products under a list of categories
+ * 
+ * Gets id's of products under a category array by scanning through the database for products that match, skipping the product id for which the search was initiated. This helps in the loading of related products.
+ * 
+ * @param array $categories
+ * An array containing all the categories relevant for the operation.
+ * @param int $parentId
+ * Unique identifier for a particular product that must be skipped in the search. In the case of this product, where looking for its related products.
+ * 
+ * @return array|void
+ * Returns array containing the id's of the products that matched or an echoed error if something goes wrong.
+ */
 function getIdsOfProductsUnderCategories($categories, $parentId)
 {
-
-    //this loads up all the latest products in the database
     global $db;
     $idsOfProductsUnderCategory = [];
 
@@ -2318,6 +3047,17 @@ function getIdsOfProductsUnderCategories($categories, $parentId)
     return $idsOfProductsUnderCategory;
 }
 
+/**
+ * Cleans array of all product categories
+ * 
+ * Formats all product categories by sorting them and removing repetitions.
+ * 
+ * @param array $allCategories
+ * Array containing all the dirty categories, about to be cleaned.
+ * 
+ * @return array
+ * returns cleaned array containing all categories.
+ */
 function formatAllProductCategories($allCategories)
 {
     $allCategoriesFormatted = [];
@@ -2336,6 +3076,14 @@ function formatAllProductCategories($allCategories)
     return $allCategoriesFormatted;
 }
 
+/**
+ * Load all product categories into the sidebar
+ * 
+ * Gets all the categories for all products then renders them into links at the sidebar.
+ * 
+ * @return void
+ * Echo categories, wrapped in links, wrapped in lists.
+ */
 function loadCategories()
 {
     $allCategories = formatAllProductCategories(getAllProductCategories());
@@ -2352,6 +3100,17 @@ function loadCategories()
     }
 }
 
+/**
+ * Gets number of products under a category
+ * 
+ * Counts through an array of all categories, then searches for the number of products that match the category.
+ * 
+ * @param string $category
+ * Category used to search for products.
+ * 
+ * @return int
+ * Returns the number of products found or 0 if none. 
+ */
 function numberOfProductsUnderCategory($category)
 {
     $allCategories = getAllProductCategories();
@@ -2369,13 +3128,24 @@ function numberOfProductsUnderCategory($category)
     return $count;
 }
 
+/**
+ * Finds if a category exists in a products category group.
+ * 
+ * Works by comparing a single category string to a json array containing seperate categories. In this applications context, it checks if a product belongs to a single category. A product usually has up to 3 categories.
+ * 
+ * @param string $category
+ * Single category used to validate a product's category group.
+ * @param string $categoryjson
+ * A products category group in json.
+ * 
+ * @return bool
+ * returns true if the product belongs to the category or false if it doesnt.
+ */
 function validateProductCategory($category, $categoryjson)
 {
     $productCategories = json_decode($categoryjson, true);
     $result = false;
     for ($i = 0; $i < count($productCategories); $i++) {
-        //array_push($allCategoriesFormatted, $allCategories[$i][$j]['title']);
-        //if (in_array($category, $productCategories[$i])) {
         if ($category == $productCategories[$i]['title']) {
             $result = true;
         }
@@ -2384,6 +3154,15 @@ function validateProductCategory($category, $categoryjson)
     return $result;
 }
 
+
+/**
+ * Get total number of products
+ * 
+ * Queries the database for all products, then counts through the result array.
+ * 
+ * @return int|void
+ * Returns number of products found, echoes an error message if something wrong occurs.
+ */
 function getTotalNumberOfProducts()
 {
     global $db;
@@ -2402,6 +3181,14 @@ function getTotalNumberOfProducts()
     }
 }
 
+/**
+ * Load all product categories into the topbar
+ * 
+ * Gets all the categories for all products then renders them into links at the topbar.
+ * 
+ * @return void
+ * Echo categories, wrapped in links, wrapped in lists.
+ */
 function loadTopBarCategories()
 {
 
@@ -2419,6 +3206,14 @@ function loadTopBarCategories()
     }
 }
 
+/**
+ * Load all product categories into the search section
+ * 
+ * Gets all the categories for all products then renders them into links at the search section as a dropdown to help narrow down the search accuracy.
+ * 
+ * @return void
+ * Echo categories, wrapped in links, wrapped in lists.
+ */
 function loadSearchBarCategories()
 {
 
@@ -2435,7 +3230,17 @@ function loadSearchBarCategories()
     }
 }
 
-//frontend
+/**
+ * Show product search result
+ * 
+ * Searches through the database for matches to what the user input in the search bar. It uses categories as well to make the search more straight forward.
+ * 
+ * @param array $formstream
+ * Post superglobal array containing entries by the user in the search bar.
+ * 
+ * @return array|void
+ * Echoes search result if found. Returns datamissing array showing errors if error occurs. If nothing is found and no error occurs, it echoes 'not found'.
+ */
 function loadProductSearchResults($formstream)
 {
     global $db;
@@ -2524,24 +3329,83 @@ function loadProductSearchResults($formstream)
             echo '<li>Not found</li>';
         }
     } else {
-        echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
+        //echo  "<br>" . "Error: " . "<br>" . mysqli_error($db);
     }
 }
 
-// incomplete function
+/**
+ * (incomplete) Dynamically load pagination
+ * 
+ * Reads through the get super global array to know the location exact location that is active. It does this by dividing by ten.
+ * 
+ * @param int $pag
+ * [optional]
+ * 
+ * Value used to know the particular pagination link active. It divides this by 10. If not set, the page is automatically assumed to be at one.
+ */
 function loadPagination($pag = null)
 {
 
     if (isset($pag)) {
-        if ($pag == 'prev') {
+        // if ($pag == 'prev') {
+        //ceil(getTotalNumberOfProducts() / 10)
+        // }
+        if ($pag < 5) {
+            $modulus = $pag % 5;
+        } else {
+            $modulus = 0;
         }
+        $level = $pag - $modulus;
+        $level = $level/10;
+        $level++;
+        //echo $level;
+        //Prev button
+        //echo ceil(getTotalNumberOfProducts() / 10);
+        if ($level > 5) {
+            $prev = ($level - 5);
+            echo '<li><a href="index.php?pag=' . $prev . '>Prev</a></li>';
+        } else {
+            echo '<li class="disabled"><a>Prev</a></li>';
+        }
+
+        for ($i = $level; $i <= ceil(getTotalNumberOfProducts() / 10); $i++) {
+            echo '<li><a href="index.php?pag=' . $i . '">' . $i . '</a></li>';
+        }
+
+        //Next button
+        if ($level >= ceil(getTotalNumberOfProducts() / 10)) {
+            echo '<li class="disabled"><a>Next</a></li>';
+        } else {
+            $next = ((int)$level + (int)5);
+            echo '<li><a href="index.php?pag="' . $next . '>Next</a></li>';
+        }
+        // echo '<li class="disabled"><a href="#">Prev</a></li>
+        // 	<li class="active"><a href="#">1</a></li>
+        // 	<li><a href="#">2</a></li>
+        // 	<li><a href="#">3</a></li>
+        // 	<li><a href="#">4</a></li>
+        // 	<li><a href="#">Next</a></li>';
+
+
+
+
+
+
     } else {
         for ($i = 0; $i < ceil(getTotalNumberOfProducts() / 10); $i++) {
-            echo '<li><a href="#">2</a></li>';
+            // echo '<li><a href="#">'.$i.'</a></li>';
         }
     }
 }
 
+/**
+ * Return total monthly income
+ * 
+ * Sums through all monthly transactions made in the current month, and returns the result.
+ * 
+ * @return int
+ * Returns total monthly income as int.
+ */
 function getTotalMonthlyIncome()
 {
     global $db;
@@ -2565,6 +3429,14 @@ function getTotalMonthlyIncome()
     return $total;
 }
 
+/**
+ * Return total yearly income
+ * 
+ * Sums through all monthly transactions in the current year, and returns the result.
+ * 
+ * @return int
+ * Returns total yearly income as int.
+ */
 function getTotalYearlyIncome()
 {
     global $db;
@@ -2588,6 +3460,14 @@ function getTotalYearlyIncome()
     return $total;
 }
 
+/**
+ * Get income for the twelve months of the year
+ * 
+ * Gets income for each month from january to december, arrange and return as a json. Used mainly for the admin dashboard for income charts.
+ * 
+ * @return string
+ * Returns json array containing all income made for each of the twelve months.
+ */
 function getAllTwelveMonthsIncome()
 {
 
@@ -2643,6 +3523,14 @@ function getAllTwelveMonthsIncome()
     return $allMonthsReport;
 }
 
+/**
+ * Generate random string/number
+ * 
+ * Generates random string/number, using date and time.
+ * 
+ * @return string|int
+ * Returns random number as a string or an integer.
+ */
 function generateTrulyRandomNumber()
 {
     $number = rand(100, 100000);
@@ -2651,6 +3539,14 @@ function generateTrulyRandomNumber()
     return $random;
 }
 
+/**
+ * Deletes invalid images
+ * 
+ * Deletes invalid images located in the product images folder by checking whose names arent found in the database.
+ * 
+ * @return void
+ * Deletes any invalid images if found.
+ */
 function deleteDuplicateImages()
 {
     global $db;
@@ -2664,7 +3560,7 @@ function deleteDuplicateImages()
             array_push($validImages, $row['main_img'], $row['side_img1'], $row['side_img2'], $row['side_img3']);
         }
 
-        //the next three lines gets all the files in the product_images folder
+        //the next three lines gets all the files in the product_images folder and stores their names in an array
         $path = 'product_images/';
         $files = scandir($path);
         $files = array_diff(scandir($path), array('.', '..'));
@@ -2680,6 +3576,21 @@ function deleteDuplicateImages()
     }
 }
 
+/**
+ * Load page metadata.
+ * 
+ * Loads unique page metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaData($page, $uniqueId = null)
 {
 
@@ -2691,6 +3602,21 @@ function loadPageMetaData($page, $uniqueId = null)
     echo loadPageMetaType($page, $uniqueId = null);
 }
 
+/**
+ * Load page title metadata.
+ * 
+ * Loads unique page title metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaTitle($page, $uniqueId = null)
 {
     switch ($page) {
@@ -2820,6 +3746,21 @@ function loadPageMetaTitle($page, $uniqueId = null)
     }
 }
 
+/**
+ * Load page type metadata.
+ * 
+ * Loads unique page type metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaType($page, $uniqueId = null)
 {
     switch ($page) {
@@ -2913,6 +3854,21 @@ function loadPageMetaType($page, $uniqueId = null)
     return '<meta property="og:type" content="website">';
 }
 
+/**
+ * Load page description metadata.
+ * 
+ * Loads unique page description metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaDescription($page, $uniqueId = null)
 {
     switch ($page) {
@@ -3034,6 +3990,21 @@ function loadPageMetaDescription($page, $uniqueId = null)
     } //end of switch statement
 }
 
+/**
+ * Load page url metadata.
+ * 
+ * Loads unique page url metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaUrl($page, $uniqueId = null)
 {
     switch ($page) {
@@ -3126,6 +4097,21 @@ function loadPageMetaUrl($page, $uniqueId = null)
     return '<meta property="og:url" content="http://store.techac.net">';
 }
 
+/**
+ * Load page image metadata.
+ * 
+ * Loads unique page image metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaImage($page, $uniqueId = null)
 {
     switch ($page) {
@@ -3243,6 +4229,21 @@ function loadPageMetaImage($page, $uniqueId = null)
     // return '<meta property="og:image" content="https://techac.net/tats/themes/images/iplan_square.jpg">';
 }
 
+/**
+ * Load page keywords metadata.
+ * 
+ * Loads unique page metadata for each page, based on what is passed in. 
+ * 
+ * @param string $page
+ * The unique key, used to identify a particular page.
+ * @param  mixed $uniqueId
+ * [optional]
+ * 
+ * Unique id used for some pages that show dynamic content, like a product details page for a particular product.
+ * 
+ * @return void
+ * Loads/Echoes all the details needed for each particular page.
+ */
 function loadPageMetaKeywords($page, $uniqueId = null)
 {
     switch ($page) {

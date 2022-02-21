@@ -72,9 +72,9 @@ include 'includes/cache_top.php';
 						?>
 					</ul>
 					<!-- include pagination.php -->
-					<!-- <?php
+					<?php
 							require_once('includes/pagination.php');
-							?> -->
+							?>
 				</div>
 			</div>
 		</div>
