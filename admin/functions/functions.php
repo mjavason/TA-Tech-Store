@@ -1411,10 +1411,7 @@ function loadPaystackCode()
 
         let handler = PaystackPop.setup({
 
-            //pk_test_1048ab7f91600dfe9fbda1e16e191b778302a6b7
-            //pk_live_21bba98bf9a683dc3215452aa76419d4204ce121
-
-            key: 'pk_live_21bba98bf9a683dc3215452aa76419d4204ce121', // Replace with your public key
+            key: '', // Replace with your public key
 
             //email: document.getElementById('email-address').value,
             email: 'nomail@mail.com',
@@ -1484,7 +1481,7 @@ function verifyPayment()
 
         CURLOPT_HTTPHEADER => array(
 
-            "Authorization: Bearer sk_live_eb443ca5a5686ca06797b9bbccd044f9d9e97e70",
+            "Authorization: Bearer ",//pass in your secret key
 
             "Cache-Control: no-cache",
 
