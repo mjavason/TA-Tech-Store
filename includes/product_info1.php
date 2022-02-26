@@ -6,15 +6,15 @@
 
 	<div class="controls">
 		<a class="btn btn-large" href="product_summary.php">
-			<script><?php echo 'nairaFormat('.getProductPrice($_GET['id']).')' ?></script>
+			<script>
+				<?php echo 'nairaFormat(' . getProductPrice($_GET['id']) . ')' ?>
+			</script>
 		</a>
-		<?php if(getProductStock($_GET['id']) > 0 || getProductPrice($_GET['id']) > 1) { ?>
-
-		<button id="cartToggleButton<?php echo $_GET['id']; ?>" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
-		<?php }else{
-		echo '<span class="text-large text-warning pull-right">Out of stock!</span>';
-		}
-		?>
+		<?php if (getProductStock($_GET['id']) < 1 || getProductPrice($_GET['id']) < 2) { ?>
+			<span class="text-large text-warning pull-right">Out of stock!</span>
+		<?php } else { ?>
+			<button id="cartToggleButton<?php echo $_GET['id']; ?>" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+		<?php	} ?>
 
 	</div>
 </div>
