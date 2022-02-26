@@ -2508,7 +2508,7 @@ function loadProductsWithCategories($category)
             if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
             } else {
                 //if stock is less than 1, dont show it.
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     echo ' <li class="span3">
         <div class="thumbnail">
             <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
@@ -2560,7 +2560,7 @@ function loadProductsWithCategoriesBlock($category)
             if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
             } else {
                 //if stock is less than 1, dont show it
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     echo '
     <div class="row">
 	<div class="span2">
@@ -2704,7 +2704,7 @@ function loadLatestProducts($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     if ($row['id'] == $id) {
                     } else {
                         echo ' <li class="span3">
@@ -2728,7 +2728,7 @@ function loadLatestProducts($id = null)
             $count = 0;
 
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     if ($count != $itemLimit) {
                         //echo $row['side_img3'];
 
@@ -2789,7 +2789,7 @@ function loadLatestProductsBlock($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
 
                     if ($row['id'] == $id) {
                     } else {
@@ -2815,7 +2815,7 @@ function loadLatestProductsBlock($id = null)
         } else {
             $count = 0;
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     if ($count != $itemLimit) {
                         echo '
     <hr class="soft" /><div class="row">
@@ -2876,7 +2876,7 @@ function loadRelatedProducts($id)
     if ($response) {
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     if (in_array($row['id'], $productsArray)) {
                         //echo $row['side_img3'];
 
@@ -2928,7 +2928,7 @@ function loadRelatedProductsBlock($id)
     if ($response) {
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0 || $row['price'] != 1) {
+                if ($row['stock'] > 0) {
                     if (in_array($row['id'], $productsArray)) {
                         //echo $row['side_img3'];
 
@@ -3307,7 +3307,7 @@ function loadProductSearchResults($formstream)
     $response = @mysqli_query($db, $sql);
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            if ($row['stock'] > 0 || $row['price'] != 1) {
+            if ($row['stock'] > 0) {
                 //     if (validateProductCategory($category, html_entity_decode($row['categories'])) && 2 < 1) {
                 //         $checker = $row['id'];
                 //         echo ' <li class="span3">

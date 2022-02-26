@@ -8,7 +8,7 @@
 		<a class="btn btn-large" href="product_summary.php">
 			<script><?php echo 'nairaFormat('.getProductPrice($_GET['id']).')' ?></script>
 		</a>
-		<?php if(getProductStock($_GET['id']) > 0 || getProductPrice($_GET['id']) == 1) { ?>
+		<?php if(getProductStock($_GET['id']) > 0 || getProductPrice($_GET['id']) > 1) { ?>
 
 		<button id="cartToggleButton<?php echo $_GET['id']; ?>" onclick="<?php loadProductCartInfo($_GET['id']); ?>" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
 		<?php }else{
