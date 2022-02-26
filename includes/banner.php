@@ -3,20 +3,20 @@
 		
 		<div class="item active">
 			<div class="container">
-				<a href="product_details.php?id=53"><img style="width:100%" src="themes/images/carousel/1.jpg" alt="" /></a>
+				<a href="product_details.php?id=36"><img style="width:100%" src="themes/images/carousel/1.jpg" alt="" /></a>
 				
 			</div>
 		</div>
 		<div class="item">
 			<div class="container">
-				<a href="product_details.php?id=49"><img src="themes/images/carousel/2.jpg" alt="" /></a>
+				<a href="product_details.php?id=32"><img src="themes/images/carousel/2.jpg" alt="" /></a>
 				
 
 			</div>
 		</div>
 		<div class="item">
 			<div class="container">
-				<a href="product_details.php?id=48"><img src="themes/images/carousel/3.jpg" alt="" /></a>
+				<a href="product_details.php?id=21"><img src="themes/images/carousel/3.jpg" alt="" /></a>
 				
 
 			</div>
