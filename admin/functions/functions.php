@@ -454,12 +454,11 @@ function loadProducts()
             //this function simply rendered the data in a way that we desire, using the product data fed to it.
             adminProductView($row);
             $checker = $row['id'];
-           
         }
         if (empty($checker)) {
             echo '<p class="text-center">No Products Added Yet</p>';
-        }else{
-             return true;
+        } else {
+            return true;
         }
     }
 }
@@ -2191,6 +2190,23 @@ function getProductSpec_summary($id)
     }
 }
 
+function getProductStock($id)
+{
+    global $db;
+
+    $query = "SELECT stock FROM item WHERE id = $id";
+    $response = @mysqli_query($db, $query);
+
+    if ($response) {
+        while ($row = mysqli_fetch_array($response)) {
+            return $row['stock'];
+        }
+    } else {
+        echo 'Error! Not found.';
+        die;
+    }
+}
+
 /**
  * Returns product main image
  * 
@@ -2492,8 +2508,8 @@ function loadProductsWithCategories($category)
             if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
             } else {
                 //if stock is less than 1, dont show it.
-                if($row['stock'] > 0){
-                echo ' <li class="span3">
+                if ($row['stock'] > 0 || $row['price'] != 1) {
+                    echo ' <li class="span3">
         <div class="thumbnail">
             <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
             <div class="caption">
@@ -2544,8 +2560,8 @@ function loadProductsWithCategoriesBlock($category)
             if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
             } else {
                 //if stock is less than 1, dont show it
-                if($row['stock'] > 0){
-                echo '
+                if ($row['stock'] > 0 || $row['price'] != 1) {
+                    echo '
     <div class="row">
 	<div class="span2">
     <img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" />	</div>
@@ -2688,7 +2704,7 @@ function loadLatestProducts($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['stock'] > 0) {
+                if ($row['stock'] > 0 || $row['price'] != 1) {
                     if ($row['id'] == $id) {
                     } else {
                         echo ' <li class="span3">
@@ -2712,7 +2728,7 @@ function loadLatestProducts($id = null)
             $count = 0;
 
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0) {
+                if ($row['stock'] > 0 || $row['price'] != 1) {
                     if ($count != $itemLimit) {
                         //echo $row['side_img3'];
 
@@ -2773,7 +2789,7 @@ function loadLatestProductsBlock($id = null)
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
                 //echo $row['side_img3'];
-                if ($row['stock'] > 0) {
+                if ($row['stock'] > 0 || $row['price'] != 1) {
 
                     if ($row['id'] == $id) {
                     } else {
@@ -2799,7 +2815,7 @@ function loadLatestProductsBlock($id = null)
         } else {
             $count = 0;
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0) {
+                if ($row['stock'] > 0 || $row['price'] != 1) {
                     if ($count != $itemLimit) {
                         echo '
     <hr class="soft" /><div class="row">
@@ -2860,7 +2876,7 @@ function loadRelatedProducts($id)
     if ($response) {
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0) {
+                if ($row['stock'] > 0 || $row['price'] != 1) {
                     if (in_array($row['id'], $productsArray)) {
                         //echo $row['side_img3'];
 
@@ -2912,7 +2928,7 @@ function loadRelatedProductsBlock($id)
     if ($response) {
         if (isset($id)) {
             while ($row = mysqli_fetch_array($response)) {
-                if ($row['stock'] > 0) {
+                if ($row['stock'] > 0 || $row['price'] != 1) {
                     if (in_array($row['id'], $productsArray)) {
                         //echo $row['side_img3'];
 
@@ -3291,7 +3307,7 @@ function loadProductSearchResults($formstream)
     $response = @mysqli_query($db, $sql);
     if ($response) {
         while ($row = mysqli_fetch_array($response)) {
-            if ($row['stock'] > 0) {
+            if ($row['stock'] > 0 || $row['price'] != 1) {
                 //     if (validateProductCategory($category, html_entity_decode($row['categories'])) && 2 < 1) {
                 //         $checker = $row['id'];
                 //         echo ' <li class="span3">
@@ -3361,7 +3377,7 @@ function loadPagination($pag = null)
             $modulus = 0;
         }
         $level = $pag - $modulus;
-        $level = $level/10;
+        $level = $level / 10;
         $level++;
         //echo $level;
         //Prev button

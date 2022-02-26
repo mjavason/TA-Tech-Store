@@ -117,7 +117,7 @@ echo loadPageMetaType('home');
 
                                 <!-- price -->
                                 <div class="mb-5">
-                                    <label for="price">Product Price</label>
+                                    <label for="price">Product Price(If the price hasnt been finalized yet, set it to 1.)</label>
                                     <input type="number" name="price" id="price" class="container" required <?php
                                                                                                             if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                                                                                                                 echo 'value="';
