@@ -2491,6 +2491,8 @@ function loadProductsWithCategories($category)
             //echo $row['side_img3'];
             if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
             } else {
+                //if stock is less than 1, dont show it.
+                if($row['stock'] > 0){
                 echo ' <li class="span3">
         <div class="thumbnail">
             <a href="product_details.php?id=' . $row['id'] . '"><img src="product_images/' . $row['main_img'] . '" alt="picture of ' . $row['title'] . '" /></a>
@@ -2506,6 +2508,7 @@ function loadProductsWithCategories($category)
             </div>
         </div>
         </li>';
+                }
             }
         }
     } else {
@@ -2540,6 +2543,8 @@ function loadProductsWithCategoriesBlock($category)
 
             if (!validateProductCategory($category, html_entity_decode($row['categories']))) {
             } else {
+                //if stock is less than 1, dont show it
+                if($row['stock'] > 0){
                 echo '
     <div class="row">
 	<div class="span2">
@@ -2560,6 +2565,7 @@ function loadProductsWithCategoriesBlock($category)
 		</form>
 	</div>
     </div><hr class="soft" />';
+                }
             }
         }
     } else {
