@@ -5,14 +5,14 @@ require_once "functions/functions.php";
 
 
 if (!isset($_SESSION['log'])) {
-    gotoPage("login.php"); 
+    gotoPage("login.php");
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    
+
     <?php
     echo loadPageMetaTitle('dashboard');
     echo loadPageMetaDescription('dashboard');
@@ -116,4 +116,4 @@ if (!isset($_SESSION['log'])) {
 </html>
 
 <?php //include 'includes/cache_bottom.php';
- ?>
+?>
