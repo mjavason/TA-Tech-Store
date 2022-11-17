@@ -4,7 +4,7 @@
 echo "<script>
 function nairaFormat(number) {
     console.log('inside nairaFormat function');
-    document.write('₦')
+    document.write('₦');
     document.write(number.toLocaleString(undefined , {maximumFractionDigits: 0 }));
     //return ''.formater.format(number);
 }
@@ -1480,7 +1480,7 @@ function verifyPayment()
 
         CURLOPT_HTTPHEADER => array(
 
-            "Authorization: Bearer ",//pass in your secret key
+            "Authorization: Bearer ", //pass in your secret key
 
             "Cache-Control: no-cache",
 
