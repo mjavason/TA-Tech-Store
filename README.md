@@ -21,7 +21,7 @@ Make sure the virtual server is running, then go to this address in your browser
 
 On your browser go to this address: localhost/tats/ and the home page should load up.  
 ### How to use the site
-Once you load up the site, the rest should be easy, to login into the admin section, use 'admin' as the username and 'admin' as the password.  
+Once you load up the site, the rest should be easy. To login into the admin section, use 'admin@mail.com' as the email and 'admin' as the password.  
 If you're going to make use of the paystack payment gateway then go to this folder: localhost/tats/admin/functions/functions.php in the loadPaystackCode and verifyPayment functions, pass in your keys.
 ### How to contribute
 If you find any part of the site you can improve, just fork the project, work on your own copy then send me a pull request, i reply as soon as possible. Do try to make the pull request as small as possible, that way its easier to read through them.
