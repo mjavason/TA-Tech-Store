@@ -1,27 +1,45 @@
-# tats(Tech Acoustic Tech Store)
-This is a simple ecommerce site for electronics(pointing out electronics because the database is modelled after them. Needing fields like specs, ram etc).  
-  
-  The site is made with mainly PHP and JavaScript. There's no particular reason for the use of these two apart from availability and experimentation.  
-  
-  The site was challenging in that i had to find harmony in combining PHP and JavaScript and trying to make it as asynchronous as possible.  
-  I plan to make the sites frontend a bit more appealing. The cms should also be made a lot easier to use.  
-  ## Table of Contents
-  1. How to install and run the site locally
-  2. How to use the site(Admin/User)
-  3. How to contribute
-  
-  
-### How to install and run the site locally
-I use a windows operating system, so my explanation might be a bit limited, but with a little googling you should be able to do the same with any other OS.  
+# Tech Acoustic Tech Store (tats)
 
-The site is made mainly with php so you'll need a localhost to be able to run the code. I use XAMPP, an apache emulator. You can download it for any machine [here](https://www.apachefriends.org/download.html).  
-After installation, go to the folder you installed it in, then htdocs and copy the project to it. The file path will look something like this: C:\xampp\htdocs\tats  
+Welcome to Tech Acoustic Tech Store (tats), a simple and efficient e-commerce platform focused on electronics. The database is tailored to accommodate specific electronic product attributes like specifications, RAM, and more.
 
-Make sure the virtual server is running, then go to this address in your browser: localhost\phpmyadmin and create a database called tats. After the folder is succesfully created, import the mysql file 'tats.sql' located in the root folder of the project, if successful, your done.
+## Overview
 
-On your browser go to this address: localhost/tats/ and the home page should load up.  
-### How to use the site
-Once you load up the site, the rest should be easy. To login into the admin section, use 'admin@mail.com' as the email and 'admin' as the password.  
-If you're going to make use of the paystack payment gateway then go to this folder: localhost/tats/admin/functions/functions.php in the loadPaystackCode and verifyPayment functions, pass in your keys.
-### How to contribute
-If you find any part of the site you can improve, just fork the project, work on your own copy then send me a pull request, i reply as soon as possible. Do try to make the pull request as small as possible, that way its easier to read through them.
+tats is developed primarily using PHP and JavaScript. While the choice of these technologies was driven by their availability and my experimental approach, I've aimed to harmoniously integrate them to create a seamless user experience. My goal is to enhance the frontend aesthetics and improve the user-friendliness of the content management system (CMS).
+
+## Table of Contents
+
+1. [Installation and Local Setup](#installation-and-local-setup)
+2. [Using the Site](#using-the-site)
+3. [Contributing](#contributing)
+
+## Installation and Local Setup
+
+Follow these steps to set up tats locally on your machine:
+
+1. **Download XAMPP**: If you're using Windows, I recommend using XAMPP, an Apache emulator. You can download it from [here](https://www.apachefriends.org/download.html). For other operating systems, similar tools are available.
+
+2. **Install XAMPP**: After downloading XAMPP, install it. Once installed, navigate to the installation folder (e.g., `C:\xampp\htdocs`) and create a new folder named `tats`.
+
+3. **Database Setup**: Start the XAMPP control panel and ensure the Apache and MySQL services are running. Then, open your browser and visit `http://localhost/phpmyadmin`. Create a new database named `tats`. Import the `tats.sql` file located in the root folder of the project into this database.
+
+4. **Access the Site**: With the virtual server running, go to your browser and enter `http://localhost/tats/`. This should load the tats home page.
+
+## Using the Site
+
+Using tats is straightforward:
+
+- **Admin Login**: To access the admin section, use the email address `admin@mail.com` and the password `admin`.
+
+- **Paystack Integration**: If you intend to utilize the Paystack payment gateway, navigate to the folder `localhost/tats/admin/functions/functions.php`. Within the `loadPaystackCode` and `verifyPayment` functions, input your specific Paystack API keys.
+
+## Contributing
+
+I welcome your contributions to enhance the tats platform. Follow these steps to contribute:
+
+1. **Fork the Project**: Start by forking the tats repository.
+
+2. **Make Changes**: Create a copy of the project and work on your improvements.
+
+3. **Pull Request**: Once your changes are ready, submit a pull request. I will review and respond as promptly as possible. For better readability, keep your pull requests concise and focused.
+
+Your contributions help me grow and refine the tats platform. Thank you for being a part of my journey!
